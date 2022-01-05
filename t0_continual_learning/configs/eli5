@@ -1,0 +1,16 @@
+{
+   "hf_dataset_config": {
+      "name": "eli5",
+      "option": null,
+      "src": [
+         "text"
+      ],
+      "tgt": "question"
+   },
+   "prompt_T0": {
+      "template_name": null
+   },
+   "prompt_cutsom": {
+      "generate_a_question": "Given the following text, generate an inquisive question: [text]"
+   }
+}
