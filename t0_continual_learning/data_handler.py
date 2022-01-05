@@ -19,20 +19,25 @@ class PromptFormat():
     if template_params is not None:
       self.ag_news_prompts = DatasetTemplates(template_params[0], template_params[1])
   
-  def getCleanDataset(self, dataset):
+  def filterDataset(self, dataset):
+    
     return dataset
-  
-  def processAllExs(self, eval_mode, prompt_mode, prompt_name, limit_nb_examples=-1):
-
+    
+  def getDataset(self, eval_mode):
+    
     hf_config = self.config['hf_dataset_config']
     dataset = load_dataset(
         path=hf_config['name'], 
         name=None if hf_config['option'] == "" else hf_config['option'], 
         split=eval_mode
     )
+    dataset = self.filterDataset(dataset)
     
-    dataset = self.getCleanDataset(dataset):
+    return dataset
+  
+  def processAllExs(self, eval_mode, prompt_mode, prompt_name, limit_nb_examples=-1):
     
+    dataset = self.getDataset(eval_mode)
     print('Total nb examples:', len(dataset))
 
     i = 0
