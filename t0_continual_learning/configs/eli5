@@ -11,6 +11,11 @@
       "template_name": null
    },
    "prompt_cutsom": {
-      "generate_a_question": "Given the following text, generate an inquisive question: [text]"
+      "generate_a_question_1": [
+         "Given the following text, what could have been an inquisive question: \"[text]\"",
+         "Given the following text, write the possible curious question it answers: \"[text]\"",
+         "Write an inquisive question about the following text: \"[text]\"",
+         "[text]\n\n===\n\nGiven the above text, write the possible curious question it answers:"
+      ]
    }
 }
