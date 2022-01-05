@@ -3,7 +3,6 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import torch
 import torch.nn.functional as F
 
-
 class ApiT0():
   def __init__(self, name_or_path, batch_size=32, num_beams=1, is_cuda=True):
       self.name_or_path = name_or_path
@@ -101,14 +100,13 @@ class ApiT0():
 
     return d_loss
 
-
   def generateAll(self, path_src, path_pred, choice=None):
-    
+
     with open(path_src, 'r') as f:
       data = json.load(f)
-    
+
     d_pred = {'hyps': self.predict(data['src'])}
-    
+
     """
     usefull to check the class with the highest logit, but deactivate because we use only the raw text predicted
     if choice:
@@ -118,5 +116,25 @@ class ApiT0():
 
     with open(path_pred, 'w') as f_w:
       json.dump(d_pred, f_w)     
-    
+
     return
+
+  
+def generateAllPredictions(d_models, d_datasets, path_data, path_pred):
+
+  for model_name in d_models:
+
+    print(f'Loading {model_name}...')
+    model = ApiT0(d_models[model_name])
+    print("...Loaded.")
+
+    for dataset_name, d_prompt_modes in d_datasets.items():
+      for eval_mode, prompt_modes in d_prompt_modes.items():
+        for prompt_mode, d_prompt in prompt_modes.items():          
+          path_src = os.path.join(path_data, dataset_name, f'{prompt_mode}.{eval_mode}.json')
+          path_pred = os.path.join(path_pred, f'{dataset_name}.{eval_mode}.{prompt_mode}.{model_name}.json')
+          print(f'Start predictions for: {path_src})...')
+          model.generateAll(path_src, path_pred, d_prompt['choice'])
+          print("...predictions done.")
+
+    del model
