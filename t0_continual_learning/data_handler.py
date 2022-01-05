@@ -140,7 +140,7 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
         random.seed(666)
         srcs, tgts, src_infos = promptFormat.processAllExs(eval_mode, prompt_mode, prompt_name, limit_nb_examples)
         
-        final_folder = os.path.join(path_data, dataset_name')
+        final_folder = os.path.join(path_data, dataset_name)
         write_data(srcs, tgts, src_infos, final_folder, prompt_name, eval_mode)
 
         print('... done.')
