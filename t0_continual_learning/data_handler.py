@@ -148,3 +148,57 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
         print('... done.')
 
   return
+
+
+def format2train(config_reharsal, reharsal_datasets, path_data):
+  
+  list_output = []
+
+  doFormat = lambda s, t, d: json.dumps(
+      {"translation": {"en1": s, "en2": t, "dataset": d}}
+      , ensure_ascii=False
+      )
+
+  def sampleFromPath(path_complete):
+    with open(path_complete, 'r') as f:
+        data = json.load(f)
+    nb_total = len(data["src"])
+    random.seed(666)
+    list_idx = random.choices(range(nb_total), k=nb_to_sample)
+
+    for i, idx in enumerate(list_idx):
+      list_output.append(
+          doFormat(data["src"][idx], data["tgt"][idx], dataset_name)
+          )
+
+    return 
+
+  
+  dataset_name = config_reharsal['new_dataset']['name']
+  dataset_prompts = config_reharsal['new_dataset']['prompts']
+  print(f"Starting sampling {dataset_name}")
+  for prompt, nb_to_sample in dataset_prompts.items():
+    path_complete = os.path.join(path_data, dataset_name, f'{prompt}.train.json')
+    sampleFromPath(path_complete)
+
+  dataset_names = config_reharsal['reharsal']['list_datasets']
+  nb_to_sample = config_reharsal['reharsal']['number']
+  print(f"Starting sampling reharsal ({len(dataset_names)} datasets), nb_to_sample={nb_to_sample}")
+  for dataset_name in dataset_names:
+    for path_complete in os.listdir(os.path.join(path_data, dataset_name)):
+      if '__RANDOM__' not in path_complete:
+        continue
+      sampleFromPath(os.path.join(path_data, dataset_name, path_complete))
+  
+  print('Sampling completed. Now shuffling')
+  random.shuffle(list_output)
+
+  final_folder = os.path.join(path_data, '_training_files')
+  if not os.path.exists(final_folder):
+    os.mkdir(final_folder)
+
+  print('Shuffling completed. Now serializing')
+  with open(os.path.join(final_folder, config_reharsal['name_exp']), "w") as f_w:
+    f_w.writelines(list_output)
+
+  return list_output
