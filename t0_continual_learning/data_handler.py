@@ -129,7 +129,7 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
   
   for dataset_name, dataset_modes  in d_datasets.items():
     
-    with open(os.path.join(configs, f'{dataset_name}.json'), 'r') as f:
+    with open(os.path.join('configs', f'{dataset_name}.json'), 'r') as f:
       config = json.load(f)  
     promptFormat = PromptFormat(config)
 
