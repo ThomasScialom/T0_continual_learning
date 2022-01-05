@@ -1,0 +1,26 @@
+{
+   "hf_dataset_config": {
+      "name": "covidfact",
+      "option": null,
+      "src": [
+         "sentence1",
+         "sentence2"
+      ],
+      "tgt": "label"
+   },
+   "prompt_T0": {
+      "template_name": [
+         "GPT-3 style",
+         "MNLI crowdsource",
+         "based on the previous passage",
+         "can we infer",
+         "does it follow that",
+         "does this imply",
+         "guaranteed true",
+         "justified in saying",
+         "must be true",
+         "should assume"
+      ]
+   },
+   "prompt_cutsom": {}
+}
