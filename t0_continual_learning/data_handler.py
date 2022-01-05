@@ -11,7 +11,7 @@ random.seed(666)
 
 
 class PromptFormat():
-  def __init__(self, config):
+  def __ nit__(self, config):
     
     self.config = config
 
@@ -33,18 +33,18 @@ class PromptFormat():
     i = 0
     list_src_formated, list_tgt, list_ex = [], [], []
     for i in range(len(dataset)):
-      
-      if i != -1 and i > limit_nb_examples:
-        break
-      if i % 5000 == 0:
-        print("Examples processed:", i)
-      
+         
       ex = dataset[i]
 
       src, tgt = self.apply(ex, prompt_mode, prompt_name)
       list_tgt.append(tgt)
       list_src_formated.append(src)
       list_ex.append(ex)
+      
+      if i != -1 and i > limit_nb_examples:
+        break
+      if i % 5000 == 0:
+        print("Examples processed:", i)
       
     return list_src_formated, list_tgt, list_ex
 
