@@ -125,11 +125,11 @@ def write_data(srcs, tgts, src_infos, final_folder, prompt_name, eval_mode):
     json.dump({'src': srcs, 'tgt': tgts, 'src_info':src_infos}, f)
 
 
-def process_datasets(d_datasets, limit_nb_examples):
+def process_datasets(d_datasets, limit_nb_examples, path=""):
   
   for dataset_name, dataset_modes  in d_datasets.items():
     
-    with open(os.path.join(GLOBAL_PATH, f'configs/{dataset_name}.json'), 'r') as f:
+    with open(os.path.join(path, f'configs/{dataset_name}.json'), 'r') as f:
       config = json.load(f)  
     promptFormat = PromptFormat(config)
 
@@ -140,7 +140,7 @@ def process_datasets(d_datasets, limit_nb_examples):
         random.seed(666)
         srcs, tgts, src_infos = promptFormat.processAllExs(eval_mode, prompt_mode, prompt_name, limit_nb_examples)
         
-        final_folder = f'{GLOBAL_PATH}/data/{dataset_name}'
+        final_folder = os.path.join(path, f'/data/{dataset_name}')
         write_data(srcs, tgts, src_infos, final_folder, prompt_name, eval_mode)
 
         print('... done.')
