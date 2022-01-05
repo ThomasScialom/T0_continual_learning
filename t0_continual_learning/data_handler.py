@@ -11,7 +11,7 @@ random.seed(666)
 
 
 class PromptFormat():
-  def __ nit__(self, config):
+  def __init__(self, config):
     
     self.config = config
 
