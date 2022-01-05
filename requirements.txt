@@ -1,6 +1,6 @@
 datasets==1.17.0
-transformers=4.15.0
-PyYAM=6.0
+transformers==4.15.0
+PyYAM==6.0
 promptsource @ git+https://github.com/bigscience-workshop/promptsource
 sentencepiece
 rouge_score
