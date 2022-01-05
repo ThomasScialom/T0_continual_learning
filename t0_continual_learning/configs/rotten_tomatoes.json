@@ -1,0 +1,15 @@
+{
+   "hf_dataset_config": {
+      "name": "rotten_tomatoes",
+      "option": "",
+      "src": [],
+      "tgt": ""
+   },
+   "prompt_T0": {
+      "template_name": [
+         "rotten_tomatoes",
+         ""
+      ]
+   },
+   "prompt_cutsom": {}
+}

@@ -1,0 +1,15 @@
+{
+   "hf_dataset_config": {
+      "name": "adversarial_qa",
+      "option": "dbert",
+      "src": [],
+      "tgt": ""
+   },
+   "prompt_T0": {
+      "template_name": [
+         "adversarial_qa",
+         "dbert"
+      ]
+   },
+   "prompt_cutsom": {}
+}

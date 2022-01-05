@@ -1,0 +1,15 @@
+{
+   "hf_dataset_config": {
+      "name": "amazon_polarity",
+      "option": "",
+      "src": [],
+      "tgt": ""
+   },
+   "prompt_T0": {
+      "template_name": [
+         "amazon_polarity",
+         ""
+      ]
+   },
+   "prompt_cutsom": {}
+}

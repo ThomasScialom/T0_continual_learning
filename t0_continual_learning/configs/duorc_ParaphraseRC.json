@@ -1,0 +1,15 @@
+{
+   "hf_dataset_config": {
+      "name": "duorc",
+      "option": "ParaphraseRC",
+      "src": [],
+      "tgt": ""
+   },
+   "prompt_T0": {
+      "template_name": [
+         "duorc",
+         "ParaphraseRC"
+      ]
+   },
+   "prompt_cutsom": {}
+}

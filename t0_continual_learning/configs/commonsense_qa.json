@@ -1,0 +1,18 @@
+{
+   "hf_dataset_config": {
+      "name": "commonsense_qa",
+      "option": "",
+      "src": [
+         "question",
+         "choices"
+      ],
+      "tgt": "answerKey"
+   },
+   "prompt_T0": {
+      "template_name": [
+         "commonsense_qa",
+         ""
+      ]
+   },
+   "prompt_cutsom": {}
+}

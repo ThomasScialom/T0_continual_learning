@@ -1,0 +1,19 @@
+{
+   "hf_dataset_config": {
+      "name": "dream",
+      "option": "",
+      "src": [
+         "question",
+         "choices",
+         "dialogue"
+      ],
+      "tgt": "answer"
+   },
+   "prompt_T0": {
+      "template_name": [
+         "dream",
+         ""
+      ]
+   },
+   "prompt_cutsom": {}
+}

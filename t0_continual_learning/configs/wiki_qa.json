@@ -1,0 +1,15 @@
+{
+   "hf_dataset_config": {
+      "name": "wiki_qa",
+      "option": "",
+      "src": [],
+      "tgt": ""
+   },
+   "prompt_T0": {
+      "template_name": [
+         "wiki_qa",
+         ""
+      ]
+   },
+   "prompt_cutsom": {}
+}

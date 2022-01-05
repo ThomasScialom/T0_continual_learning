@@ -1,0 +1,15 @@
+{
+   "hf_dataset_config": {
+      "name": "sciq",
+      "option": "",
+      "src": [],
+      "tgt": ""
+   },
+   "prompt_T0": {
+      "template_name": [
+         "sciq",
+         ""
+      ]
+   },
+   "prompt_cutsom": {}
+}

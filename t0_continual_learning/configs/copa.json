@@ -1,0 +1,34 @@
+{
+   "hf_dataset_config": {
+      "name": "super_glue",
+      "option": "copa",
+      "src": [
+         "premise",
+         "choice1",
+         "choice2",
+         "question"
+      ],
+      "tgt": "label"
+   },
+   "prompt_T0": {
+      "template_name": [
+         "super_glue",
+         "copa"
+      ],
+      "prompt_names": [
+         "C1 or C2? premise, so/because\u2026",
+         "best_option",
+         "cause_effect",
+         "choose",
+         "exercise",
+         "i_am_hesitating",
+         "more likely",
+         "plausible_alternatives",
+         "\u2026As a result, C1 or C2?",
+         "\u2026What could happen next, C1 or C2?",
+         "\u2026which may be caused by",
+         "\u2026why? C1 or C2"
+      ]
+   },
+   "prompt_cutsom": {}
+}

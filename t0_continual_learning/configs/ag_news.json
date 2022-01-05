@@ -1,0 +1,15 @@
+{
+   "hf_dataset_config": {
+      "name": "ag_news",
+      "option": "",
+      "src": [],
+      "tgt": ""
+   },
+   "prompt_T0": {
+      "template_name": [
+         "ag_news",
+         ""
+      ]
+   },
+   "prompt_cutsom": {}
+}
