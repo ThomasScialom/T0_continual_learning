@@ -152,6 +152,30 @@ class ELI5promptFormat(PromptFormat):
     return clean_exs
   
   
+class CovidFactPromptFormat(PromptFormat):
+  
+  def __init__(self, config):
+    super().__init__(config)
+
+  def getDataset(self, eval_mode):
+
+    path = os.path.join(DIR, 'additional_datasets/covidfact', f'{evalmode}.tsv')
+
+    examples = []
+    with open(path, 'r') as tsv_file:
+      data = csv.reader(tsv_file, delimiter="\t")
+      headers = next(data)
+      headers[1], headers[2] = 'premise', 'hypothesis'
+    
+      for row in data:
+        ex = {k: v for k, v in zip(headers, row)}
+        ex['label'] = 1 if ex['entailment'] == 'entailment' else 0
+        examples.append(ex)
+    
+    return examples
+        
+        
+        
 # utils functions 
 def write_data(srcs, tgts, src_infos, final_folder, prompt_name, eval_mode):
   if not os.path.exists(final_folder):
@@ -171,6 +195,8 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
     
     if dataset_name == 'eli5':
       promptFormat = ELI5promptFormat(config)
+    elif dataset_name == 'covidfact':
+      promptFormat = CovidFactPromptFormat(config)
     else:
       promptFormat = PromptFormat(config)
 
