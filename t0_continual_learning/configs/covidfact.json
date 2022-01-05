@@ -13,7 +13,18 @@
          "super_glue",
          "rte"
       ],
-      
+      "prompt_names": [
+         "MNLI crowdsource",
+         "guaranteed true",
+         "can we infer",
+         "GPT-3 style",
+         "does this impl",
+         "should assume",
+         "does it follow that",
+         "based on the previous passage",
+         "justified in saying",
+         "must be true"
+      ]
    },
    "prompt_cutsom": {}
 }
