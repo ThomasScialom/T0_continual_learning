@@ -10,17 +10,10 @@
    },
    "prompt_T0": {
       "template_name": [
-         "GPT-3 style",
-         "MNLI crowdsource",
-         "based on the previous passage",
-         "can we infer",
-         "does it follow that",
-         "does this imply",
-         "guaranteed true",
-         "justified in saying",
-         "must be true",
-         "should assume"
-      ]
+         "super_glue",
+         "rte"
+      ],
+      
    },
    "prompt_cutsom": {}
 }
