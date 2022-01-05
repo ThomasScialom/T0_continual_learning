@@ -159,7 +159,7 @@ class CovidFactPromptFormat(PromptFormat):
 
   def getDataset(self, eval_mode):
 
-    path = os.path.join(DIR, 'additional_datasets/covidfact', f'{evalmode}.tsv')
+    path = os.path.join(DIR, 'additional_datasets/covidfact', f'{eval_mode}.tsv')
 
     examples = []
     with open(path, 'r') as tsv_file:
