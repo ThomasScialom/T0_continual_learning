@@ -1,6 +1,7 @@
 import os
 import json
 import random
+from collections import Counter
 
 from datasets import load_dataset
 from promptsource.templates import DatasetTemplates
@@ -128,6 +129,29 @@ class PromptFormat():
     return additional_src_keys
 
 
+class ELI5promptFormat(PromptFormat):
+  def __init__(self, config):
+    super().__init__(config)
+
+  def filterDataset(self, dataset):
+    
+    print('In clean')
+    clean_exs = []
+    for ex in dataset:
+      
+      question = ex['title']
+      if not (question[0] in {'W', 'H'} and Counter(question)['?'] == 1):
+        continue
+
+      scores = ex['answers']['score']
+      text = ex['answers']['text'][scores.index(max(scores))]
+      
+      clean_exs.append({'question': question, 'text': text})
+    
+    return clean_exs
+  
+  
+# utils functions 
 def write_data(srcs, tgts, src_infos, final_folder, prompt_name, eval_mode):
   if not os.path.exists(final_folder):
     os.mkdir(final_folder)
@@ -142,8 +166,12 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
   for dataset_name, dataset_modes  in d_datasets.items():
     
     with open(os.path.join(DIR, 'configs', f'{dataset_name}.json'), 'r') as f:
-      config = json.load(f)  
-    promptFormat = PromptFormat(config)
+      config = json.load(f)
+    
+    if dataset_name == 'eli5':
+      promptFormat = ELI5promptFormat(config)
+    else:
+      promptFormat = PromptFormat(config)
 
     for eval_mode, prompt_modes in dataset_modes.items():
       for prompt_mode, prompt_name in prompt_modes:
@@ -160,6 +188,7 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
   return
 
 
+# formating the data to the training translation format, including reharsal data
 def format2train(config_reharsal, reharsal_datasets, path_data):
   
   list_output = []
