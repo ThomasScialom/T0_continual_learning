@@ -1,14 +1,14 @@
 {
    "hf_dataset_config": {
       "name": "adversarial_qa",
-      "option": "dbert",
+      "option": "droberta",
       "src": [],
       "tgt": ""
    },
    "prompt_T0": {
       "template_name": [
          "adversarial_qa",
-         "dbert"
+         "droberta"
       ]
    },
    "prompt_cutsom": {}
