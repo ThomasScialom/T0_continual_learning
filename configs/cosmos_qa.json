@@ -1,0 +1,15 @@
+{
+   "hf_dataset_config": {
+      "name": "cosmos_qa",
+      "option": "",
+      "src": [],
+      "tgt": ""
+   },
+   "prompt_T0": {
+      "template_name": [
+         "cosmos_qa",
+         ""
+      ]
+   },
+   "prompt_cutsom": {}
+}

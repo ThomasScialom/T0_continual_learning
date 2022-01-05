@@ -1,0 +1,15 @@
+{
+   "hf_dataset_config": {
+      "name": "quail",
+      "option": "",
+      "src": [],
+      "tgt": ""
+   },
+   "prompt_T0": {
+      "template_name": [
+         "quail",
+         ""
+      ]
+   },
+   "prompt_cutsom": {}
+}

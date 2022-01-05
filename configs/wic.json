@@ -1,0 +1,31 @@
+{
+   "hf_dataset_config": {
+      "name": "super_glue",
+      "option": "wic",
+      "src": [
+         "sentence1",
+         "sentence2",
+         "word"
+      ],
+      "tgt": "label"
+   },
+   "prompt_T0": {
+      "template_name": [
+         "super_glue",
+         "wic"
+      ],
+      "prompt_names": [
+         "question-context-meaning-with-label",
+         "question-context-meaning",
+         "grammar_homework",
+         "affirmation_true_or_false",
+         "GPT-3-prompt",
+         "same_sense",
+         "question-context",
+         "GPT-3-prompt-with-label",
+         "polysemous",
+         "similar-sense"
+      ]
+   },
+   "prompt_cutsom": {}
+}

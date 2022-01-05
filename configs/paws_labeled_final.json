@@ -1,0 +1,15 @@
+{
+   "hf_dataset_config": {
+      "name": "paws",
+      "option": "labeled_final",
+      "src": [],
+      "tgt": ""
+   },
+   "prompt_T0": {
+      "template_name": [
+         "paws",
+         "labeled_final"
+      ]
+   },
+   "prompt_cutsom": {}
+}

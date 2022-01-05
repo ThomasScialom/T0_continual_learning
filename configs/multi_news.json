@@ -1,0 +1,15 @@
+{
+   "hf_dataset_config": {
+      "name": "multi_news",
+      "option": "",
+      "src": [],
+      "tgt": ""
+   },
+   "prompt_T0": {
+      "template_name": [
+         "multi_news",
+         ""
+      ]
+   },
+   "prompt_cutsom": {}
+}

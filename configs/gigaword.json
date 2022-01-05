@@ -1,0 +1,79 @@
+{
+   "hf_dataset_config": {
+      "name": "gigaword",
+      "option": "3.0.0",
+      "src": [
+         "document"
+      ],
+      "tgt": "summary"
+   },
+   "prompt_T0": {
+      "template_name": [
+         "gigaword",
+         ""
+      ],
+      "prompt_names": [
+         "TLDR",
+         "first_sentence_title",
+         "generate_summary_for_this",
+         "in_a_nutshell",
+         "make_a_title",
+         "reverse_writing",
+         "write_a_title_for_this_sentence",
+         "write_an_article",
+         "write_its_sentence"
+      ]
+   },
+   "prompt_cutsom": {
+      "constrain_start+make_a_title": [
+         "Make a title for this article, starting with \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article that starts with \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article, begining with \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article that begins with \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article which begins with \"[TO_REPLACE_1]\": [document]"
+      ],
+      "constrain_contain+make_a_title": [
+         "Make a title for this article, containing \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article that contains \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article, mentioning \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article that mentions \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article, including \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article that includes \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article which includes \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article with \"[TO_REPLACE_1]\": [document]"
+      ],
+      "constrain_end+make_a_title": [
+         "Make a title for this article, ending with \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article,by ending with \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article that ends with \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article, finishing with \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article that finishes with \"[TO_REPLACE_1]\": [document]",
+         "Make a title for this article which ends with \"[TO_REPLACE_1]\": [document]"
+      ],
+      "constrain_start+write_its_sentence": [
+         "[document]\n\n===\n\nGiven the above sentence, write its title, starting with \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title that starts with \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title, begining with \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title that begins with \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title which begins with \"[TO_REPLACE_1]\":"
+      ],
+      "constrain_contain+write_its_sentence": [
+         "[document]\n\n===\n\nGiven the above sentence, write its title, containing \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title that contains \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title, mentioning \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title that mentions \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title, including \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title that includes \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title which includes \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title with \"[TO_REPLACE_1]\":"
+      ],
+      "constrain_end+write_its_sentence": [
+         "[document]\n\n===\n\nGiven the above sentence, write its title, ending with \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title, by ending with \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title that ends with \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title, finishing with \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title that finishes with \"[TO_REPLACE_1]\":",
+         "[document]\n\n===\n\nGiven the above sentence, write its title which ends with \"[TO_REPLACE_1]\":"
+      ]
+   }
+}

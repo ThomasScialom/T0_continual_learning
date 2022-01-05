@@ -1,0 +1,15 @@
+{
+   "hf_dataset_config": {
+      "name": "quartz",
+      "option": "",
+      "src": [],
+      "tgt": ""
+   },
+   "prompt_T0": {
+      "template_name": [
+         "quartz",
+         ""
+      ]
+   },
+   "prompt_cutsom": {}
+}

@@ -1,0 +1,15 @@
+{
+   "hf_dataset_config": {
+      "name": "cnn_dailymail",
+      "option": "3.0.0",
+      "src": [],
+      "tgt": ""
+   },
+   "prompt_T0": {
+      "template_name": [
+         "cnn_dailymail",
+         "3.0.0"
+      ]
+   },
+   "prompt_cutsom": {}
+}
