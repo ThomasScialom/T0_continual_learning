@@ -175,10 +175,11 @@ def format2train(config_reharsal, reharsal_datasets, path_data):
 
   
   dataset_name = config_reharsal['new_dataset']['name']
+  eval_mode = config_reharsal['new_dataset']['eval_mode']
   dataset_prompts = config_reharsal['new_dataset']['prompts']
   print(f"Starting sampling {dataset_name}")
   for prompt, nb_to_sample in dataset_prompts.items():
-    path_complete = os.path.join(path_data, dataset_name, f'{prompt}.train.json')
+    path_complete = os.path.join(path_data, dataset_name, f'{prompt}.{eval_mode}.json')
     sampleFromPath(path_complete)
 
   dataset_names = config_reharsal['reharsal']['list_datasets']
