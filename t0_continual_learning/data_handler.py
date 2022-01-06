@@ -250,7 +250,7 @@ def buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, percenta
     sampleFromPath(path_complete)
 
   dataset_names = config_reharsal['reharsal']['list_datasets']
-  nb_to_sample = (config_reharsal['reharsal']['number'] 
+  nb_to_sample = config_reharsal['reharsal']['number'] 
   print(f"Starting sampling reharsal ({len(dataset_names)} datasets), nb_to_sample={nb_to_sample}")
   for dataset_name in dataset_names:
     for path_complete in os.listdir(os.path.join(path_data, dataset_name)):
@@ -270,12 +270,12 @@ def format2train(config_reharsal, reharsal_datasets, path_data):
     os.mkdir(final_folder)
     
   list_output = buildReharsalDataset(config_reharsal, reharsal_datasets, path_data)
-  with open(os.path.join(final_folder, config_reharsal['name_exp'], 'train'), "w") as f_w:
+  with open(os.path.join(final_folder, f'{train.config_reharsal['name_exp']}'), "w") as f_w:
     for line in list_output:
       f_w.write(line + "\n")
       
   list_output = buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, percentage=0.03)
-  with open(os.path.join(final_folder, config_reharsal['name_exp'], 'validation'), "w") as f_w:
+  with open(os.path.join(final_folder, f'validation.{config_reharsal['name_exp']' ), "w") as f_w:
     for line in list_output:
       f_w.write(line + "\n")
 
