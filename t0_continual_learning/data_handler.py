@@ -165,7 +165,7 @@ class CovidFactPromptFormat(PromptFormat):
     with open(path, 'r') as tsv_file:
       data = csv.reader(tsv_file, delimiter="\t")
       headers = next(data)
-      headers[1], headers[2] = 'premise', 'hypothesis'
+      headers = ['index', 'premise', 'hypothesis', 'entailment']
     
       for row in data:
         ex = {k: v for k, v in zip(headers, row)}
