@@ -266,6 +266,7 @@ def format2train(config_reharsal, reharsal_datasets, path_data):
 
   print('Shuffling completed. Now serializing')
   with open(os.path.join(final_folder, config_reharsal['name_exp']), "w") as f_w:
-    f_w.writelines(list_output)
+    for line in list_output:
+      f_w.write(line + "\n")
 
   return list_output
