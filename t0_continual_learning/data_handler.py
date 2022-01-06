@@ -216,12 +216,13 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
 
 
 # formating the data to the training translation format, including reharsal data
-def format2train(config_reharsal, reharsal_datasets, path_data):
+
+def buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, percentage=1):
   
   list_output = []
 
   doFormat = lambda s, t, d: json.dumps(
-      {"translation": {"en1": s, "en2": t, "dataset": d}}
+      {"translation": {"en1": s, "en2": t}}
       , ensure_ascii=False
       )
 
@@ -230,7 +231,7 @@ def format2train(config_reharsal, reharsal_datasets, path_data):
         data = json.load(f)
     nb_total = len(data["src"])
     random.seed(666)
-    list_idx = random.choices(range(nb_total), k=nb_to_sample)
+    list_idx = random.choices(range(nb_total), k=int(nb_to_sample*percentage))
 
     for i, idx in enumerate(list_idx):
       list_output.append(
@@ -249,7 +250,7 @@ def format2train(config_reharsal, reharsal_datasets, path_data):
     sampleFromPath(path_complete)
 
   dataset_names = config_reharsal['reharsal']['list_datasets']
-  nb_to_sample = config_reharsal['reharsal']['number']
+  nb_to_sample = (config_reharsal['reharsal']['number'] 
   print(f"Starting sampling reharsal ({len(dataset_names)} datasets), nb_to_sample={nb_to_sample}")
   for dataset_name in dataset_names:
     for path_complete in os.listdir(os.path.join(path_data, dataset_name)):
@@ -259,13 +260,22 @@ def format2train(config_reharsal, reharsal_datasets, path_data):
   
   print('Sampling completed. Now shuffling')
   random.shuffle(list_output)
-
+  
+  return list_output
+  
+def format2train(config_reharsal, reharsal_datasets, path_data):
+  
   final_folder = os.path.join(path_data, '_training_files')
   if not os.path.exists(final_folder):
     os.mkdir(final_folder)
-
-  print('Shuffling completed. Now serializing')
-  with open(os.path.join(final_folder, config_reharsal['name_exp']), "w") as f_w:
+    
+  list_output = buildReharsalDataset(config_reharsal, reharsal_datasets, path_data)
+  with open(os.path.join(final_folder, config_reharsal['name_exp'], 'train'), "w") as f_w:
+    for line in list_output:
+      f_w.write(line + "\n")
+      
+  list_output = buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, percentage=0.03)
+  with open(os.path.join(final_folder, config_reharsal['name_exp'], 'validation'), "w") as f_w:
     for line in list_output:
       f_w.write(line + "\n")
 
