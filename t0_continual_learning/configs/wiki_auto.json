@@ -1,7 +1,7 @@
 {
   "hf_dataset_config": {
     "name": "wiki_auto", 
-    "option": "auto_full_with_split", 
+    "option": "auto_acl", 
     "src": ["normal_sentence"], 
     "tgt": "simple_sentence"
   }, 
