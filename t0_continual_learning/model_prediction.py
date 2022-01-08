@@ -101,7 +101,7 @@ class ApiT0():
 
     return d_loss
 
-  def generateAll(self, path_src, path_pred, choice=None):
+  def generateAll(self, path_src, path_hyp, choice=None):
 
     with open(path_src, 'r') as f:
       data = json.load(f)
@@ -115,13 +115,13 @@ class ApiT0():
       d_pred = {**d_pred, **d_loss}
     """
 
-    with open(path_pred, 'w') as f_w:
+    with open(path_hyp, 'w') as f_w:
       json.dump(d_pred, f_w)     
 
     return
 
   
-def generateAllPredictions(d_models, d_datasets, path_data, path_pred, use_logs=True):
+def generateAllPredictions(d_models, d_datasets, path_data, path_predictions, use_logs=True):
 
   for model_name in d_models:
 
@@ -133,12 +133,12 @@ def generateAllPredictions(d_models, d_datasets, path_data, path_pred, use_logs=
       for eval_mode, prompt_modes in d_prompt_modes.items():
         for prompt_mode, d_prompt in prompt_modes.items():          
           path_src = os.path.join(path_data, dataset_name, f'{prompt_mode}.{eval_mode}.json')
-          path_pred = os.path.join(path_pred, f'{dataset_name}.{eval_mode}.{prompt_mode}.{model_name}.json')
+          path_hyp = os.path.join(path_predictions, f'{dataset_name}.{eval_mode}.{prompt_mode}.{model_name}.json')
           print(f'Start predictions for: {path_src})...')
-          if os.path.exists(path_pred):
+          if os.path.exists(path_hyp):
             print("...predictions ALREADY done and use_logs==True, continue.")
             continue
-          model.generateAll(path_src, path_pred, d_prompt['choice'])
+          model.generateAll(path_src, path_hyp, d_prompt['choice'])
           print("...predictions done.")
 
     del model
