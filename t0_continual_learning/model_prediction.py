@@ -5,13 +5,14 @@ import torch
 import torch.nn.functional as F
 
 class ApiT0():
-  def __init__(self, name_or_path, batch_size=32, num_beams=1, is_cuda=True):
+  def __init__(self, name_or_path, batch_size=32, max_length=512, num_beams=1, is_cuda=True):
       self.name_or_path = name_or_path
       self.tokenizer = AutoTokenizer.from_pretrained(name_or_path)
       self.model = AutoModelForSeq2SeqLM.from_pretrained(name_or_path, low_cpu_mem_usage=True)
       self.num_beams = num_beams
       self.batch_size = batch_size
-
+      self.max_length = max_length
+      
       self.is_cuda = is_cuda
       if is_cuda:
         self.model.cuda()
@@ -25,7 +26,14 @@ class ApiT0():
         print(f'........batch {batch_i}/{len(srcs)//self.batch_size}')
 
       batch_srcs = srcs[idx:idx+self.batch_size]
-      inputs = self.tokenizer(batch_srcs, padding=True, return_tensors="pt")
+      inputs = self.tokenizer(
+        batch_srcs, 
+        padding=True, 
+        return_tensors="pt",
+        max_length=self.max_length, 
+        truncation=True
+      )
+      
       if self.is_cuda:
         inputs['input_ids'] = inputs['input_ids'].cuda()
         inputs['attention_mask'] = inputs['attention_mask'].cuda()
