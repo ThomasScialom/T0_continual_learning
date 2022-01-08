@@ -1,6 +1,32 @@
 {
   "hf_dataset_config": {
     "name": "wiki_auto", 
-    "option": "manual", 
+    "option": "auto_full_with_split", 
     "src": ["normal_sentence"], 
-    "tgt": "simple_sentence"}, "prompt_T0": {"template_name": null, "prompt_names": null}, "prompt_cutsom": {"simplification_1": ["[normal_sentence]\n\n===\n\nGiven the above text, write it with, simpler words:", "[normal_sentence]\n\n===\n\nGiven this text, write it with, simpler words:", "[normal_sentence]\n\n===\n\nGiven the above text, rewrite it so it is easier to understand:", "[normal_sentence]\n\n===\n\nGiven the above text, rewrite it so it is easier to read:", "[normal_sentence]\n\n===\n\nGiven the above text, reformulate it so it is easier to read:", "[normal_sentence]\n\n===\n\nGiven the above text, reformulate it with simpler words:", "Make this text simpler: \"[normal_sentence]\"", "Reformulate this text with simpler words: \"[normal_sentence]\"", "Reformulate the following text with simpler words: \"[normal_sentence]\"", "Rewrite this text so it becomes easier to understand: \"[normal_sentence]\"", "Generate a text easier to understand, with similar content than this text: \"[normal_sentence]\""], "simplification_2": ["[normal_sentence]\n\n===\n\nGiven the above text, simplify it:", "Simplify this text: \"[normal_sentence]\"", "[normal_sentence]\n\n===\n\nGiven this text, rewrite it so it is easier to read:"]}}
+    "tgt": "simple_sentence"
+  }, 
+  "prompt_T0": {
+    "template_name": null, 
+    "prompt_names": null
+  }, 
+  "prompt_cutsom": {
+    "simplification_1": 
+    ["[normal_sentence]\n\n===\n\nGiven the above text, write it with, simpler words:", 
+     "[normal_sentence]\n\n===\n\nGiven this text, write it with, simpler words:", 
+     "[normal_sentence]\n\n===\n\nGiven the above text, rewrite it so it is easier to understand:", 
+     "[normal_sentence]\n\n===\n\nGiven the above text, rewrite it so it is easier to read:", 
+     "[normal_sentence]\n\n===\n\nGiven the above text, reformulate it so it is easier to read:", 
+     "[normal_sentence]\n\n===\n\nGiven the above text, reformulate it with simpler words:", 
+     "Make this text simpler: \"[normal_sentence]\"", 
+     "Reformulate this text with simpler words: \"[normal_sentence]\"", 
+     "Reformulate the following text with simpler words: \"[normal_sentence]\"", 
+     "Rewrite this text so it becomes easier to understand: \"[normal_sentence]\"", 
+     "Generate a text easier to understand, with similar content than this text: \"[normal_sentence]\""
+    ], 
+    "simplification_2": [
+      "[normal_sentence]\n\n===\n\nGiven the above text, simplify it:", 
+      "Simplify this text: \"[normal_sentence]\"", 
+      "[normal_sentence]\n\n===\n\nGiven this text, rewrite it so it is easier to read:"
+    ]
+  }
+}
