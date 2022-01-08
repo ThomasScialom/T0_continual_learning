@@ -12,7 +12,7 @@ continual_train = {
       ],
   },
   'wiki_auto': {
-      'full': [
+      'train': [
         ('custom', 'simplification_1'),
       ]
   },
