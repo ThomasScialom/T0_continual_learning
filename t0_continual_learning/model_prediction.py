@@ -5,7 +5,7 @@ import torch
 import torch.nn.functional as F
 
 class ApiT0():
-  def __init__(self, name_or_path, batch_size=32, max_length=512, num_beams=1, is_cuda=True):
+  def __init__(self, name_or_path, batch_size=16, max_length=512, num_beams=1, is_cuda=True):
       self.name_or_path = name_or_path
       self.tokenizer = AutoTokenizer.from_pretrained(name_or_path)
       self.model = AutoModelForSeq2SeqLM.from_pretrained(name_or_path, low_cpu_mem_usage=True)
