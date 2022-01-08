@@ -174,7 +174,22 @@ class CovidFactPromptFormat(PromptFormat):
     
     return examples
         
-        
+class WikiAutoPromptFormat(PromptFormat):
+  
+  def __init__(self, config):
+    super().__init__(config)
+
+  def getDataset(self, eval_mode):
+    
+    dataset = super(WikiAutoPromptFormat, self).getDataset('full')
+    random.seed(666)
+    random.shuffle(dataset)
+    if eval_mode == 'train':
+      dataset = dataset[:-10000]
+    if eval_mode == 'test':
+      dataset = dataset[-4000:]
+      
+    return dataset
         
 # utils functions 
 def write_data(srcs, tgts, src_infos, final_folder, prompt_name, eval_mode):
@@ -197,6 +212,8 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
       promptFormat = ELI5promptFormat(config)
     elif dataset_name == 'covidfact':
       promptFormat = CovidFactPromptFormat(config)
+    elif dataset_name == 'wiki_auto':
+      promptFormat = WikiAutoPromptFormat(config)
     else:
       promptFormat = PromptFormat(config)
 
