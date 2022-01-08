@@ -121,12 +121,20 @@ class ApiT0():
     return
 
   
-def generateAllPredictions(d_models, d_datasets, path_data, path_predictions, use_logs=True):
+def generateAllPredictions(
+  d_models, 
+  d_datasets, 
+  path_data, 
+  path_predictions, 
+  use_logs=True, 
+  batch_size=32, 
+  is_cuda=True
+):
 
   for model_name in d_models:
 
     print(f'Loading {model_name}...')
-    model = ApiT0(d_models[model_name])
+    model = ApiT0(d_models[model_name], batch_size=32, num_beams=1, is_cuda=True)
     print("...Loaded.")
 
     for dataset_name, d_prompt_modes in d_datasets.items():
