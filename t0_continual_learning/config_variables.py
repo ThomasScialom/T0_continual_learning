@@ -180,17 +180,17 @@ evaluation_new_tasks = {
         'constrain_start+make_a_title': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge', 'constrain_accuracy']
+            'metrics': ['rouge', 'constrain_start']
         },
         'constrain_contain+make_a_title': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge', 'constrain_accuracy']
+            'metrics': ['rouge', 'constrain_contain']
         },
         'constrain_end+make_a_title': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge', 'constrain_accuracy']
+            'metrics': ['rouge', 'constrain_end']
         },
       },
   },
