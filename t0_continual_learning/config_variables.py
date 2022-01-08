@@ -204,7 +204,7 @@ evaluation_new_tasks = {
       }
   },
   'eli5': {
-      'test': {
+      'test_asks': {
         'generate_a_question_1': {
             'type': 'custom',
             'choice': '',
