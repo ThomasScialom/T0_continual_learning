@@ -151,7 +151,7 @@ def generateAllPredictions(
           path_src = os.path.join(path_data, dataset_name, f'{prompt_mode}.{eval_mode}.json')
           path_hyp = os.path.join(path_predictions, f'{dataset_name}.{eval_mode}.{prompt_mode}.{model_name}.json')
           print(f'Start predictions for: {path_src})...')
-          if os.path.exists(path_hyp):
+          if use_logs and os.path.exists(path_hyp):
             print("...predictions ALREADY done and use_logs==True, continue.")
             continue
           model.generateAll(path_src, path_hyp, d_prompt['choice'])
