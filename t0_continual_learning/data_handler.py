@@ -182,8 +182,7 @@ class WikiAutoPromptFormat(PromptFormat):
   def getDataset(self, eval_mode):
     
     dataset = super(WikiAutoPromptFormat, self).getDataset('full')
-    random.seed(666)
-    random.shuffle(dataset)
+    dataset = [ex for ex in dataset]
     if eval_mode == 'train':
       dataset = dataset[:-10000]
     if eval_mode == 'test':
