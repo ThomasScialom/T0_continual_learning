@@ -120,7 +120,7 @@ class ApiT0():
     return
 
   
-def generateAllPredictions(d_models, d_datasets, path_data, path_pred):
+def generateAllPredictions(d_models, d_datasets, path_data, path_pred, use_logs=True):
 
   for model_name in d_models:
 
@@ -134,6 +134,9 @@ def generateAllPredictions(d_models, d_datasets, path_data, path_pred):
           path_src = os.path.join(path_data, dataset_name, f'{prompt_mode}.{eval_mode}.json')
           path_pred = os.path.join(path_pred, f'{dataset_name}.{eval_mode}.{prompt_mode}.{model_name}.json')
           print(f'Start predictions for: {path_src})...')
+          if os.path.exists(path_pred):
+            print("...predictions ALREADY done and use_logs==True, continue.")
+            continue
           model.generateAll(path_src, path_pred, d_prompt['choice'])
           print("...predictions done.")
 
