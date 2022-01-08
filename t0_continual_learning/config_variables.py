@@ -88,7 +88,7 @@ list_config_reharsals = [
   {
       'name_exp': "wiki_auto.continual1000.json", 
       'new_dataset': {
-          'eval_mode': 'train',
+          'eval_mode': 'full',
           'name': 'wiki_auto',
           'prompts': {
               'simplification_1': 100000,
