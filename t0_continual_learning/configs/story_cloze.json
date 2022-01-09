@@ -1,0 +1,27 @@
+{
+   "hf_dataset_config": {
+      "name": "story_cloze",
+      "option": "2016",
+      "src": [
+         "premise",
+         "choice1",
+         "choice2",
+         "question"
+      ],
+      "tgt": "label"
+   },
+   "prompt_T0": {
+      "template_name": [
+         "story_cloze",
+         "2016"
+      ],
+      "prompt_names": [
+        "Answer Given options",
+        "Choose Story Ending",
+        "Movie What Happens Next",
+        "Story Continuation and Options",
+        "Novel Correct Ending",
+    ],
+   },
+   "prompt_cutsom": {}
+}
