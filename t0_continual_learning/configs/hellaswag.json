@@ -1,0 +1,26 @@
+{
+   "hf_dataset_config": {
+      "name": "hellaswag",
+      "option": None,
+      "src": [
+         "premise",
+         "choice1",
+         "choice2",
+         "question"
+      ],
+      "tgt": "label"
+   },
+   "prompt_T0": {
+      "template_name": [
+         "hellaswag",
+         None
+      ],
+      "prompt_names": [
+        "Predict ending with hint",
+        "Randomized prompts template",
+        "complete_first_then",
+        "if_begins_how_continues",
+    ],
+   },
+   "prompt_cutsom": {}
+}
