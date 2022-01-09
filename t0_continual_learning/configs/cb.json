@@ -1,0 +1,35 @@
+{
+   "hf_dataset_config": {
+      "name": "super_glue",
+      "option": "cb",
+      "src": [
+         "hypothesis",
+         "premise",
+      ],
+      "tgt": "label"
+   },
+   "prompt_T0": {
+      "template_name": [
+         "super_glue",
+         "cb"
+      ],
+      "prompt_names": [
+        "can we infer",
+        "based on the previous passage",
+        "claim true/false/inconclusive",
+        "does it follow that",
+        "justified in saying",
+        "always/sometimes/never",
+        "GPT-3 style",
+        "consider always/sometimes/never",
+        "guaranteed true",
+        "must be true",
+        "guaranteed/possible/impossible",
+        "does this imply",
+        "MNLI crowdsource",
+        "should assume",
+        "take the following as truth",
+    ]
+   },
+   "prompt_cutsom": {}
+}
