@@ -16,11 +16,11 @@
          null
       ],
       "prompt_names": [
-        "Predict ending with hint",
-        "Randomized prompts template",
-        "complete_first_then",
-        "if_begins_how_continues",
-    ],
+         "Predict ending with hint",
+         "Randomized prompts template",
+         "complete_first_then",
+         "if_begins_how_continues"
+      ]
    },
    "prompt_cutsom": {}
 }
