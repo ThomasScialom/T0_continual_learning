@@ -1,7 +1,7 @@
 {
    "hf_dataset_config": {
       "name": "hellaswag",
-      "option": None,
+      "option": null,
       "src": [
          "premise",
          "choice1",
@@ -13,7 +13,7 @@
    "prompt_T0": {
       "template_name": [
          "hellaswag",
-         None
+         null
       ],
       "prompt_names": [
         "Predict ending with hint",
