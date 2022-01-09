@@ -64,7 +64,7 @@ continual_test = {
   'wic': {'validation': [('t0_template', "same_sense")]},
   'copa': {'validation': [('t0_template', "choose")]}, 
   'hellaswag': {'validation': [('t0_template', "__RANDOM__")]}, 
-  'anli': {'test': [('t0_template', "__RANDOM__")]}, 
+  'anli': {'test_r1': [('t0_template', "__RANDOM__")]}, 
   'cb': {'validation': [('t0_template', "__RANDOM__")]}, 
   'wsc': {'validation': [('t0_template', "__RANDOM__")]}, 
   'hellaswag': {'validation': [('t0_template', "__RANDOM__")]}, 
