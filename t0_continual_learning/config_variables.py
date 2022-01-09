@@ -67,8 +67,7 @@ continual_test = {
   'anli': {'test_r1': [('t0_template', "__RANDOM__")]}, 
   'cb': {'validation': [('t0_template', "__RANDOM__")]}, 
   'wsc': {'validation': [('t0_template', "__RANDOM__")]}, 
-  'hellaswag': {'validation': [('t0_template', "__RANDOM__")]}, 
-  'story_cloze': {'validation': [('t0_template', "__RANDOM__")]}, 
+  #'story_cloze': {'validation': [('t0_template', "__RANDOM__")]}, 
 }
 
 
@@ -265,5 +264,44 @@ evaluation_T0evalsets = {
         'metrics': ['rouge']
       }
     }
-  }
+  },
+  'hellaswag': { 
+      'validation': {
+          "__RANDOM__": {
+            'type': 't0_template',
+            'choice': '',
+            'metrics': ['rouge']
+          }
+      }
+  },
+
+  'anli': { 
+      'test_r1': {
+          "__RANDOM__": {
+            'type': 't0_template',
+            'choice': '',
+            'metrics': ['rouge']
+          }
+      }
+  },
+
+  'cb': { 
+      'validation': {
+          "__RANDOM__": {
+            'type': 't0_template',
+            'choice': '',
+            'metrics': ['rouge']
+          }
+      }
+  },
+
+  'wsc': { 
+      'validation': {
+          "__RANDOM__": {
+            'type': 't0_template',
+            'choice': '',
+            'metrics': ['rouge']
+          }
+      }
+  },
 }
