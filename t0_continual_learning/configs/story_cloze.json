@@ -16,12 +16,12 @@
          "2016"
       ],
       "prompt_names": [
-        "Answer Given options",
-        "Choose Story Ending",
-        "Movie What Happens Next",
-        "Story Continuation and Options",
-        "Novel Correct Ending",
-    ],
+         "Answer Given options",
+         "Choose Story Ending",
+         "Movie What Happens Next",
+         "Story Continuation and Options",
+         "Novel Correct Ending"
+      ]
    },
    "prompt_cutsom": {}
 }
