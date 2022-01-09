@@ -1,7 +1,7 @@
 {
    "hf_dataset_config": {
       "name": "anli",
-      "option": None,
+      "option": null,
       "src": [
          "hypothesis",
          "premise",
@@ -12,7 +12,7 @@
    "prompt_T0": {
       "template_name": [
          "anli",
-         None
+         null
       ],
       "prompt_names": [
         "MNLI crowdsource",
