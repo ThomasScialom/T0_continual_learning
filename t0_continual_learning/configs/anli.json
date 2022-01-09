@@ -15,22 +15,22 @@
          null
       ],
       "prompt_names": [
-        "MNLI crowdsource",
-        "should assume",
-        "does it follow that",
-        "GPT-3 style",
-        "based on the previous passage",
-        "justified in saying",
-        "take the following as truth",
-        "must be true",
-        "can we infer",
-        "guaranteed/possible/impossible",
-        "always/sometimes/never",
-        "does this imply",
-        "consider always/sometimes/never",
-        "claim true/false/inconclusive",
-        "guaranteed true",
-    ]
+         "MNLI crowdsource",
+         "should assume",
+         "does it follow that",
+         "GPT-3 style",
+         "based on the previous passage",
+         "justified in saying",
+         "take the following as truth",
+         "must be true",
+         "can we infer",
+         "guaranteed/possible/impossible",
+         "always/sometimes/never",
+         "does this imply",
+         "consider always/sometimes/never",
+         "claim true/false/inconclusive",
+         "guaranteed true"
+      ]
    },
    "prompt_cutsom": {}
 }
