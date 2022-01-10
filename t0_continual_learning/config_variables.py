@@ -67,7 +67,7 @@ continual_test = {
   'anli': {'test_r1': [('t0_template', "__RANDOM__")]}, 
   'cb': {'validation': [('t0_template', "__RANDOM__")]}, 
   'wsc': {'validation': [('t0_template', "__RANDOM__")]}, 
-  #'story_cloze': {'validation': [('t0_template', "__RANDOM__")]}, 
+  'story_cloze': {'validation': [('t0_template', "__RANDOM__")]}, 
 }
 
 
