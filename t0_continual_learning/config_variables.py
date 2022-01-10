@@ -73,7 +73,7 @@ continual_test = {
 
 list_config_reharsals = [
   {
-      'name_exp': "gigaword.continual1000.json", 
+      'name_exp': "gigaword", 
       'new_dataset': {
           'eval_mode': 'train',
           'name': 'gigaword',
@@ -89,7 +89,7 @@ list_config_reharsals = [
   },
 
   {
-      'name_exp': "wiki_auto.continual1000.json", 
+      'name_exp': "wiki_auto", 
       'new_dataset': {
           'eval_mode': 'train',
           'name': 'wiki_auto',
@@ -103,7 +103,7 @@ list_config_reharsals = [
   },
 
   {
-      'name_exp': "covidfact.continual1000.json", 
+      'name_exp': "covidfact", 
       'new_dataset': {
           'eval_mode': 'train',
           'name': 'covidfact',
@@ -117,7 +117,7 @@ list_config_reharsals = [
   },
 
   {
-      'name_exp': "eli5.continual1000.json", 
+      'name_exp': "eli5", 
       'new_dataset': {
           'eval_mode': 'train_asks',
           'name': 'eli5',
