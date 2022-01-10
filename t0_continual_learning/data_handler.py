@@ -252,7 +252,7 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
 
 # formating the data to the training translation format, including reharsal data
 
-def buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, percentage=1):
+def buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, reharsal_number, percentage=1):
   
   list_output = []
 
@@ -285,7 +285,7 @@ def buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, percenta
     sampleFromPath(path_complete)
 
   dataset_names = config_reharsal['reharsal']['list_datasets']
-  nb_to_sample = config_reharsal['reharsal']['number'] 
+  nb_to_sample = reharsal_number
   print(f"Starting sampling reharsal ({len(dataset_names)} datasets), nb_to_sample={nb_to_sample}")
   for dataset_name in dataset_names:
     for path_complete in os.listdir(os.path.join(path_data, dataset_name)):
