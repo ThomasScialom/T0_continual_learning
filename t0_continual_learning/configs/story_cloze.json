@@ -3,12 +3,14 @@
       "name": "story_cloze",
       "option": "2016",
       "src": [
-         "premise",
-         "choice1",
-         "choice2",
-         "question"
+         "input_sentence_1",
+         "input_sentence_2",
+         "input_sentence_3",
+         "input_sentence_4",
+         "sentence_quiz1",
+         "sentence_quiz2",
       ],
-      "tgt": "label"
+      "tgt": "answer_right_ending"
    },
    "prompt_T0": {
       "template_name": [
