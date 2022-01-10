@@ -8,7 +8,7 @@
          "input_sentence_3",
          "input_sentence_4",
          "sentence_quiz1",
-         "sentence_quiz2",
+         "sentence_quiz2"
       ],
       "tgt": "answer_right_ending"
    },
