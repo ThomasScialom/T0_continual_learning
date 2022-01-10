@@ -1,7 +1,7 @@
 {
    "hf_dataset_config": {
       "name": "story_cloze",
-      "option": "2016",
+      "option": null,
       "src": [
          "input_sentence_1",
          "input_sentence_2",
