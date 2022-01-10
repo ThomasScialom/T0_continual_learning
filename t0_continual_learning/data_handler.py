@@ -298,18 +298,18 @@ def buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, reharsal
   
   return list_output
   
-def format2train(config_reharsal, reharsal_datasets, path_data):
+def format2train(config_reharsal, reharsal_datasets, path_data, reharsal_number):
   
   final_folder = os.path.join(path_data, '_training_files')
   if not os.path.exists(final_folder):
     os.mkdir(final_folder)
     
-  list_output = buildReharsalDataset(config_reharsal, reharsal_datasets, path_data)
+  list_output = buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, reharsal_number)
   with open(os.path.join(final_folder, f"train.{config_reharsal['name_exp']}"), "w") as f_w:
     for line in list_output:
       f_w.write(line + "\n")
       
-  list_output = buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, percentage=0.03)
+  list_output = buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, reharsal_number, percentage=0.03)
   with open(os.path.join(final_folder, f"validation.{config_reharsal['name_exp']}"), "w") as f_w:
     for line in list_output:
       f_w.write(line + "\n")
