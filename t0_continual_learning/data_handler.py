@@ -189,7 +189,24 @@ class WikiAutoPromptFormat(PromptFormat):
       dataset = dataset[-4000:]
       
     return dataset
-        
+
+class StoryClozePromptFormat(PromptFormat):
+  
+  def __init__(self, config):
+    super().__init__(config)
+
+  def getDataset(self, eval_mode):
+    
+    hf_config = self.config['hf_dataset_config']
+    dataset = load_dataset(
+        path=hf_config['name'], 
+        split=eval_mode,
+        data_dir = os.join(DIR, 'additional_datasets/story_cloze/')
+    )
+    dataset = self.filterDataset(dataset)
+          
+    return dataset
+
 # utils functions 
 def write_data(srcs, tgts, src_infos, final_folder, prompt_name, eval_mode):
   if not os.path.exists(final_folder):
@@ -213,6 +230,8 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
       promptFormat = CovidFactPromptFormat(config)
     elif dataset_name == 'wiki_auto':
       promptFormat = WikiAutoPromptFormat(config)
+    elif dataset_name == 'story_cloze':
+      promptFormat = StoryClozePromptFormat(config)
     else:
       promptFormat = PromptFormat(config)
 
