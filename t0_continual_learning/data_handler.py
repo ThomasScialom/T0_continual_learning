@@ -201,7 +201,7 @@ class StoryClozePromptFormat(PromptFormat):
     dataset = load_dataset(
         path=hf_config['name'], 
         split=eval_mode,
-        data_dir = os.join(DIR, 'additional_datasets/story_cloze/')
+        data_dir = os.path.join(DIR, 'additional_datasets/story_cloze/')
     )
     dataset = self.filterDataset(dataset)
           
