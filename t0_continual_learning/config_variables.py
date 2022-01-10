@@ -84,7 +84,6 @@ list_config_reharsals = [
           }
       },
       'reharsal': {
-          'number': 1000,
           'list_datasets': t0_train_datasets
       }
   },
@@ -99,7 +98,6 @@ list_config_reharsals = [
           }
       },
       'reharsal': {
-          'number': 1000,
           'list_datasets': t0_train_datasets
       }
   },
@@ -114,7 +112,6 @@ list_config_reharsals = [
           }
       },
       'reharsal': {
-          'number': 1000,
           'list_datasets': t0_train_datasets
       }
   },
@@ -129,7 +126,6 @@ list_config_reharsals = [
           }
       },
       'reharsal': {
-          'number': 1000,
           'list_datasets': t0_train_datasets
       }
   },
