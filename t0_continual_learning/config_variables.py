@@ -300,4 +300,14 @@ evaluation_T0evalsets = {
           }
       }
   },
+
+  'story_cloze': { 
+      'validation': {
+          "__RANDOM__": {
+            'type': 't0_template',
+            'choice': '',
+            'metrics': ['rouge']
+          }
+      }
+  },
 }
