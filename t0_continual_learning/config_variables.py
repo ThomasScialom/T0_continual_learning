@@ -25,7 +25,12 @@ continual_train = {
       'train': [
         ('t0_template', "__RANDOM__"),
       ]
-  }
+  },
+  'haiku': {
+      'train': [
+        ('custom', "do_nothing"),
+      ]
+  },
 }
 
 continual_test = {
@@ -56,6 +61,12 @@ continual_test = {
   'covidfact': {
       'test': [
         ('t0_template', "__RANDOM__"),
+      ]
+  },
+  
+  'haiku': {
+      'test': [
+        ('custom', "do_nothing"),
       ]
   },
 
@@ -216,6 +227,16 @@ evaluation_new_tasks = {
       'test': {
         '__RANDOM__': {
             'type': 't0_template',
+            'choice': '',
+            'metrics': ['rouge']
+        }
+      }
+  },
+  
+  'haiku': {
+      'test': {
+        'do_nothing': {
+            'type': 'custom',
             'choice': '',
             'metrics': ['rouge']
         }
