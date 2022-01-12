@@ -1,0 +1,16 @@
+{
+   "hf_dataset_config": {
+      "name": "haiku",
+      "option": null,
+      "src": [
+         "en1"
+      ],
+      "tgt": "en2"
+   },
+   "prompt_T0": null,
+   "prompt_cutsom": {
+      "constrain_start+make_a_title": [
+         "[en1]"
+      ]
+   }
+}
