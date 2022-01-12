@@ -215,7 +215,7 @@ class HaikuPromptFormat(PromptFormat):
 
   def getDataset(self, eval_mode):
     
-    with open(os.path.join(DIR, f'additional_datasets/haiku{eval_mode}.json'), 'r') as f:
+    with open(os.path.join(DIR, f'additional_datasets/haiku/haiku{eval_mode}.json'), 'r') as f:
       lines = f.readlines()
 
     dataset = [json.loads(line)["translation"] for line in lines]
