@@ -7,7 +7,9 @@
       ],
       "tgt": "en2"
    },
-   "prompt_T0": null,
+   "prompt_T0": {
+      'template_name': null,
+   }
    "prompt_cutsom": {
       "do_nothing": [
          "[en1]"
