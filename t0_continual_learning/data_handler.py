@@ -207,6 +207,22 @@ class StoryClozePromptFormat(PromptFormat):
           
     return dataset
 
+  
+class HaikuPromptFormat(PromptFormat):
+  
+  def __init__(self, config):
+    super().__init__(config)
+
+  def getDataset(self, eval_mode):
+    
+    with open(os.path.join(DIR, f'additional_datasets/haiku{eval_mode}.json'), 'r') as f:
+      lines = f.readlines()
+
+    dataset = [json.load(line)["translation"] for line in lines]
+          
+    return dataset
+  
+  
 # utils functions 
 def write_data(srcs, tgts, src_infos, final_folder, prompt_name, eval_mode):
   if not os.path.exists(final_folder):
@@ -232,6 +248,8 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
       promptFormat = WikiAutoPromptFormat(config)
     elif dataset_name == 'story_cloze':
       promptFormat = StoryClozePromptFormat(config)
+    elif dataset_name == 'haiku':
+      promptFormat = HaikuPromptFormat(config)
     else:
       promptFormat = PromptFormat(config)
 
