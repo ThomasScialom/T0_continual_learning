@@ -140,6 +140,20 @@ list_config_reharsals = [
           'list_datasets': t0_train_datasets
       }
   },
+  
+  {
+      'name_exp': "haiku", 
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'haiku',
+          'prompts': {
+              'do_nothing': 100000,
+          }
+      },
+      'reharsal': {
+          'list_datasets': t0_train_datasets
+      }
+  },
 
 ]
 
