@@ -142,7 +142,7 @@ def generateAllPredictions(
   for model_name in d_models:
 
     print(f'Loading {model_name}...')
-    model = ApiT0(d_models[model_name], batch_size=batch_size, num_beams=1, is_cuda=True)
+    model = ApiT0(d_models[model_name], batch_size=batch_size, num_beams=1, is_cuda=is_cuda)
     print("...Loaded.")
 
     for dataset_name, d_prompt_modes in d_datasets.items():
