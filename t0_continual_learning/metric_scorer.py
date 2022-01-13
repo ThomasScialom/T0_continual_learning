@@ -120,7 +120,7 @@ class MetricScorer():
     nb_files = len(list_files)
     for i, file in enumerate(list_files):
       
-      if i % 20 == 0:
+      if i % 50 == 0:
         print(f'{i}/{nb_files}')
 
       if "T0_3B" in file:
