@@ -14,7 +14,7 @@ class ApiT0():
       self.max_length = max_length
       
       self.is_cuda = is_cuda
-      if is_cuda:
+      if is_cuda == True:
         self.model.cuda()
 
   def predict(self, srcs):
