@@ -147,8 +147,8 @@ class MetricScorer():
         
 def whatMetric(dataset_name, prompt_name, force_nlg='bleu', force_nlu='accuracy'):
   
-  nlg_datasets = {'haiku', 'covidfact', 'eli5', 'wiki_auto', 'gigaword'}
-  nlu_datasets = { 'rte', 'copa', 'wic', 'winogrande', 'hellaswag', 'anli', 'cb', 'wsc', 'story_cloze'}
+  nlg_datasets = {'haiku', 'eli5', 'wiki_auto', 'gigaword'}
+  nlu_datasets = { 'rte', 'copa', 'wic', 'winogrande', 'hellaswag', 'anli', 'cb', 'wsc', 'story_cloze', 'covidfact'}
 
   if 'constrain' in prompt_name:
     if 'constrain_start' in prompt_name:
