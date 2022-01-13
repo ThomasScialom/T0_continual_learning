@@ -109,7 +109,7 @@ class MetricScorer():
     return {constr_type: correct/len(src_infos)}
 
 
-  def getAllScores(self, path_folder_preds, path_folder_data, init_from_sratch=False, path_dscores=None):
+  def getAllScores(self, path_folder_preds, path_folder_data, init_from_sratch=False):
     
     if init_from_sratch == True:
       self.d_scores = {}
@@ -141,7 +141,7 @@ class MetricScorer():
       self.d_scores[key] = self.getScore(prompt_config, path_ex, path_pred)
 
     if self.path_dscores:
-      with open(path_dscores, 'w') as f:
+      with open(self.path_dscores, 'w') as f:
         json.dump(metricScorer.d_scores, f, indent=3)
         
         
