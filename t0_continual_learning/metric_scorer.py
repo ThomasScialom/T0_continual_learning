@@ -109,7 +109,7 @@ class MetricScorer():
     return {constr_type: correct/len(src_infos)}
 
 
-  def getAllScores(self, path_folder_preds, path_folder_data, init_from_sratch=False):
+  def getAllScores(self, path_folder_preds, path_folder_data, init_from_sratch=False, path_dscores=None):
     
     if init_from_sratch == True:
       self.d_scores = {}
