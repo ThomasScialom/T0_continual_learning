@@ -200,22 +200,22 @@ evaluation_new_tasks = {
         'make_a_title': {
             'type': 't0_template',
             'choice': '',
-            'metrics': ['rouge']
+            'metrics': ['rouge', 'bleu']
         },
         'constrain_start+make_a_title': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge', 'constrain_start']
+            'metrics': ['rouge', 'bleu', 'constrain_start']
         },
         'constrain_contain+make_a_title': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge', 'constrain_contain']
+            'metrics': ['rouge', 'bleu', 'constrain_contain']
         },
         'constrain_end+make_a_title': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge', 'constrain_end']
+            'metrics': ['rouge', 'bleu', 'constrain_end']
         },
       },
   },
@@ -224,7 +224,7 @@ evaluation_new_tasks = {
         'simplification_1': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge']
+            'metrics': ['rouge', 'bleu', 'accuracy']
         }
       }
   },
@@ -233,7 +233,7 @@ evaluation_new_tasks = {
         'generate_a_question_1': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge']
+            'metrics': ['rouge', 'bleu']
         }
       }
   },
@@ -242,7 +242,7 @@ evaluation_new_tasks = {
         '__RANDOM__': {
             'type': 't0_template',
             'choice': '',
-            'metrics': ['rouge']
+            'metrics': ['rouge', 'bleu', 'accuracy']
         }
       }
   },
@@ -252,7 +252,7 @@ evaluation_new_tasks = {
         'do_nothing': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge']
+            'metrics': ['rouge', 'bleu']
         }
       }
   },
@@ -265,7 +265,7 @@ evaluation_T0evalsets = {
           "fill in the blank": {
             'type': 't0_template',
             'choice': 'option1_option2',
-            'metrics': ['rouge']
+            'metrics': ['rouge', 'bleu', 'accuracy']
           }
       }
   },
@@ -274,7 +274,7 @@ evaluation_T0evalsets = {
           "can we infer": {
             'type': 't0_template',
             'choice': 'yes_no',
-            'metrics': ['rouge']
+            'metrics': ['rouge', 'bleu', 'accuracy']
           }
       }
   },
@@ -283,7 +283,7 @@ evaluation_T0evalsets = {
           "same_sense": {
             'type': 't0_template',
             'choice': 'yes_no',
-            'metrics': ['rouge']
+            'metrics': ['rouge', 'bleu', 'accuracy']
           }
       }
   },
@@ -292,7 +292,7 @@ evaluation_T0evalsets = {
       "choose": {
         'type': 't0_template',
         'choice': 'option1_option2',
-        'metrics': ['rouge']
+        'metrics': ['rouge', 'bleu', 'accuracy']
       }
     }
   },
@@ -301,7 +301,7 @@ evaluation_T0evalsets = {
           "__RANDOM__": {
             'type': 't0_template',
             'choice': '',
-            'metrics': ['rouge']
+            'metrics': ['rouge', 'bleu', 'accuracy']
           }
       }
   },
@@ -311,7 +311,7 @@ evaluation_T0evalsets = {
           "__RANDOM__": {
             'type': 't0_template',
             'choice': '',
-            'metrics': ['rouge']
+            'metrics': ['rouge', 'bleu', 'accuracy']
           }
       }
   },
@@ -321,7 +321,7 @@ evaluation_T0evalsets = {
           "__RANDOM__": {
             'type': 't0_template',
             'choice': '',
-            'metrics': ['rouge']
+            'metrics': ['rouge', 'bleu', 'accuracy']
           }
       }
   },
@@ -331,7 +331,7 @@ evaluation_T0evalsets = {
           "__RANDOM__": {
             'type': 't0_template',
             'choice': '',
-            'metrics': ['rouge']
+            'metrics': ['rouge', 'bleu', 'accuracy']
           }
       }
   },
@@ -341,7 +341,7 @@ evaluation_T0evalsets = {
           "__RANDOM__": {
             'type': 't0_template',
             'choice': '',
-            'metrics': ['rouge']
+            'metrics': ['rouge', 'bleu', 'accuracy']
           }
       }
   },
