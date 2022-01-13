@@ -142,7 +142,7 @@ class MetricScorer():
 
     if self.path_dscores:
       with open(self.path_dscores, 'w') as f:
-        json.dump(metricScorer.d_scores, f, indent=3)
+        json.dump(self.d_scores, f, indent=3)
         
         
 def whatMetric(dataset_name, prompt_name, force_nlg='bleu', force_nlu='accuracy'):
