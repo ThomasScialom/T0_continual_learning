@@ -206,7 +206,7 @@ def print_nicely(
   if not get_color_custom:
     get_color_custom = get_color
    
-  d_line_styles = {0: 'loosely dotted', 250: 'loosely dashed', 1000: 'solid'}
+  d_line_styles = {0: (0, (1, 10)), 250: (0, (5, 10)), 1000: 'solid'}
                    
   for group_name, group_datasets in d_datasets.items():
     for rehearsal in rehearsals:
