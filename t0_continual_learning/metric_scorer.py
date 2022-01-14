@@ -206,6 +206,8 @@ def print_nicely(
   if not get_color_custom:
     get_color_custom = get_color
    
+  d_line_styles = {0: 'loosely dotted', 250: 'loosely dashed', 1000: 'solid'}
+                   
   for group_name, group_datasets in d_datasets.items():
     for rehearsal in rehearsals:
         scores = []
@@ -226,7 +228,7 @@ def print_nicely(
           scores = [scores[i]/scores[0] for i in range(len(steps))]
 
 
-        plt.plot(scores, label=f'{group_name}({rehearsal})', color=get_color_custom(group_name))
+        plt.plot(scores, label=f'{group_name}({rehearsal})', color=get_color_custom(group_name), linestyle=d_line_styles[rehearsal])
 
   plt.xticks(range(len(steps)), steps) #rotation='vertical')
   plt.legend() #bbox_to_anchor=(1.1, 1.05)
