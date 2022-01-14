@@ -194,7 +194,7 @@ def print_nicely(
     d_datasets, 
     d_scores, 
     steps, 
-    rehearsal,
+    rehearsals,
     save_dir,
     force_nlg='bleu', 
     force_nlu='accuracy',
@@ -207,25 +207,26 @@ def print_nicely(
     get_color_custom = get_color
    
   for group_name, group_datasets in d_datasets.items():
-    scores = []
-    for step in steps:
-      step_scores = []
-      for dataset_name, prompt_name, eval_mode in group_datasets:
-          
-        if step == 0:
-          key = f'T0_3B.{dataset_name}.{eval_mode}.{prompt_name}'
-        else:
-          key = f'{model_name}.rehearsal{rehearsal}.{step}.{dataset_name}.{eval_mode}.{prompt_name}'
+    for rehearsal in rehearsals:
+        scores = []
+        for step in steps:
+          step_scores = []
+          for dataset_name, prompt_name, eval_mode in group_datasets:
 
-        step_scores.append(d_scores[key][whatMetric(dataset_name, prompt_name, force_nlg, force_nlu)])
+            if step == 0:
+              key = f'T0_3B.{dataset_name}.{eval_mode}.{prompt_name}'
+            else:
+              key = f'{model_name}.rehearsal{rehearsal}.{step}.{dataset_name}.{eval_mode}.{prompt_name}'
 
-      scores.append(sum(step_scores)/len(step_scores))
+            step_scores.append(d_scores[key][whatMetric(dataset_name, prompt_name, force_nlg, force_nlu)])
 
-    if do_normalise:
-      scores = [scores[i]/scores[0] for i in range(len(steps))]
-         
+          scores.append(sum(step_scores)/len(step_scores))
 
-    plt.plot(scores, label=f'{group_name}', color=get_color_custom(group_name))
+        if do_normalise:
+          scores = [scores[i]/scores[0] for i in range(len(steps))]
+
+
+    plt.plot(scores, label=f'{group_name}({rehearsal})', color=get_color_custom(group_name))
 
   plt.xticks(range(len(steps)), steps) #rotation='vertical')
   plt.legend() #bbox_to_anchor=(1.1, 1.05)
