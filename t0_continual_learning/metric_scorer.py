@@ -226,7 +226,7 @@ def print_nicely(
           scores = [scores[i]/scores[0] for i in range(len(steps))]
 
 
-    plt.plot(scores, label=f'{group_name}({rehearsal})', color=get_color_custom(group_name))
+        plt.plot(scores, label=f'{group_name}({rehearsal})', color=get_color_custom(group_name))
 
   plt.xticks(range(len(steps)), steps) #rotation='vertical')
   plt.legend() #bbox_to_anchor=(1.1, 1.05)
