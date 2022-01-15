@@ -193,8 +193,7 @@ def print_nicely(
     model_name, 
     d_datasets, 
     d_scores, 
-    steps, 
-    rehearsals,
+    d_rehearsals,
     save_dir,
     force_nlg='bleu', 
     force_nlu='accuracy',
@@ -209,7 +208,7 @@ def print_nicely(
   d_line_styles = {0: (0, (1, 10)), 250: (0, (5, 10)), 1000: 'solid'}
                    
   for group_name, group_datasets in d_datasets.items():
-    for rehearsal in rehearsals:
+    for rehearsal, steps in d_rehearsals.items():
         scores = []
         for step in steps:
           step_scores = []
