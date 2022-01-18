@@ -157,6 +157,68 @@ list_config_reharsals = [
 
 ]
 
+
+list_config_reharsals_sequential = [
+ {
+      'name_exp': "sequencial.gigaword.from.wiki_auto", 
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'gigaword',
+          'prompts': {
+              'constrain_start+make_a_title': 33000,
+              'constrain_contain+make_a_title': 33000,
+              'constrain_end+make_a_title': 34000,
+          }
+      },
+      'reharsal': {
+          'list_datasets': t0_train_datasets + ['wiki_auto']
+      }
+  },
+ 
+  {
+      'name_exp': "sequencial.covidfact.from.wiki_auto->gigaword", 
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'covidfact',
+          'prompts': {
+              "__RANDOM__": 100000,
+          }
+      },
+      'reharsal': {
+          'list_datasets': t0_train_datasets + ['wiki_auto', 'gigaword']
+      }
+  },
+ 
+  {
+      'name_exp': "sequencial.haiku.from.wiki_auto->gigaword->covidfact", 
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'haiku',
+          'prompts': {
+              "do_nothing": 100000,
+          }
+      },
+      'reharsal': {
+          'list_datasets': t0_train_datasets + ['wiki_auto', 'gigaword', 'covidfact']
+      }
+  },
+ 
+ {
+      'name_exp': "sequencial.eli5.from.wiki_auto->gigaword->covidfact->haiku", 
+      'new_dataset': {
+          'eval_mode': 'train_asks',
+          'name': 'eli5',
+          'prompts': {
+              "generate_a_question_1": 100000,
+          }
+      },
+      'reharsal': {
+          'list_datasets': t0_train_datasets + ['wiki_auto', 'gigaword', 'covidfact', 'haiku']
+      }
+  },
+
+]
+
 evaluation_zero_shot  = {
   'gigaword': {
       'test': {
