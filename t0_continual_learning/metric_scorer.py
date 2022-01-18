@@ -230,7 +230,7 @@ def print_nicely(
         plt.plot(scores, label=f'{group_name}({rehearsal})', color=get_color_custom(group_name), linestyle=d_line_styles[rehearsal])
 
   plt.xticks(range(len(steps)), steps) #rotation='vertical')
-  plt.legend() #bbox_to_anchor=(1.1, 1.05)
+  plt.legend(bbox_to_anchor=(1.1, 1.05))
   plt.title(f'{model_name}')
   plt.savefig(os.path.join(save_dir, f'{model_name}.{"normalized" if do_normalise else "absolute"}'), format='pdf')
   plt.show()
