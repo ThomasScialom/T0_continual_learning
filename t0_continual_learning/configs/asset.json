@@ -1,7 +1,7 @@
 {
   "hf_dataset_config": {
     "name": "asset", 
-    "option": "null", 
+    "option": "simplification", 
     "src": ["original"], 
     "tgt": "simplifications"
   }, 
