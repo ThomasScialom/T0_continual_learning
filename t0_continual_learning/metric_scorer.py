@@ -44,7 +44,10 @@ class MetricScorer():
 
       if metric == "bleu":
         d_res = {**d_res, **self.computeBleu(preds, refs)}
-
+      
+      if metric == "sari":
+        d_res = {**d_res, **self.computeSari(preds, refs, src_infos['src'])} 
+            
       if metric == "accuracy":
         d_res = {**d_res, **self.computeAcc(preds, refs)}
       
@@ -66,6 +69,14 @@ class MetricScorer():
     d_res = rouge.compute()
 
     return {k:v.mid.fmeasure  for k, v in d_res.items()}
+
+  def computeSari(self, preds, refs, srcs):
+    
+    sari = load_metric("sari")
+    sari.add_batch(predictions=preds, references=[[ref] for ref in refs])
+    d_res = sari.compute(sources=srcs)
+
+    return d_res
 
   def computeBleu(self, preds, refs):
     
