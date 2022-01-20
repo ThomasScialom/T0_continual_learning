@@ -1,7 +1,7 @@
 {
   "hf_dataset_config": {
-    "name": null, 
-    "option": "auto_acl", 
+    "name": "asset", 
+    "option": "null", 
     "src": ["original"], 
     "tgt": "simplifications"
   }, 
