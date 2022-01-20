@@ -1,0 +1,32 @@
+{
+  "hf_dataset_config": {
+    "name": null, 
+    "option": "auto_acl", 
+    "src": ["original"], 
+    "tgt": "simplifications"
+  }, 
+  "prompt_T0": {
+    "template_name": null, 
+    "prompt_names": null
+  }, 
+  "prompt_cutsom": {
+    "simplification_1": 
+    ["[original]\n\n===\n\nGiven the above text, write it with, simpler words:", 
+     "[original]\n\n===\n\nGiven this text, write it with, simpler words:", 
+     "[original]\n\n===\n\nGiven the above text, rewrite it so it is easier to understand:", 
+     "[original]\n\n===\n\nGiven the above text, rewrite it so it is easier to read:", 
+     "[original]\n\n===\n\nGiven the above text, reformulate it so it is easier to read:", 
+     "[original]\n\n===\n\nGiven the above text, reformulate it with simpler words:", 
+     "Make this text simpler: \"[original]\"", 
+     "Reformulate this text with simpler words: \"[original]\"", 
+     "Reformulate the following text with simpler words: \"[original]\"", 
+     "Rewrite this text so it becomes easier to understand: \"[original]\"", 
+     "Generate a text easier to understand, with similar content than this text: \"[original]\""
+    ], 
+    "simplification_2": [
+      "[original]\n\n===\n\nGiven the above text, simplify it:", 
+      "Simplify this text: \"[original]\"", 
+      "[original]\n\n===\n\nGiven this text, rewrite it so it is easier to read:"
+    ]
+  }
+}
