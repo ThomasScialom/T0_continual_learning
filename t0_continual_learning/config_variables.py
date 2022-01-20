@@ -46,14 +46,13 @@ continual_test = {
         ('custom', 'constrain_end+write_its_sentence'),
       ]
   },
-
   'wiki_auto': {
       'test': [
        ('custom', 'simplification_1'),
        ('custom', 'simplification_2'),
       ] 
   },
-  {'asset': {
+  'asset': {
       'validation': [
         ('custom', 'simplification_1'),
         ('custom', 'simplification_2')
