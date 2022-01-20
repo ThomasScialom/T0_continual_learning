@@ -53,6 +53,12 @@ continual_test = {
        ('custom', 'simplification_2'),
       ] 
   },
+  {'asset': {
+      'validation': [
+        ('custom', 'simplification_1'),
+        ('custom', 'simplification_2')
+      ]
+  },
   'eli5': {
       'test_asks': [
         ('custom', 'generate_a_question_1'),
@@ -286,9 +292,18 @@ evaluation_new_tasks = {
         'simplification_1': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge', 'bleu', 'accuracy', 'sari']
+            'metrics': ['rouge', 'bleu', 'sari']
         }
       }
+  },
+  'asset': {
+    'validation': {
+      'simplification_1': {
+        'choice': '',
+        'metrics': ['rouge', 'bleu', 'sari'],
+        'type': 'custom'
+      }
+    }
   },
   'eli5': {
       'test_asks': {
