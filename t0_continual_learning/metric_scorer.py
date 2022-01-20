@@ -17,6 +17,7 @@ list_zero_shot = [
     ('story_cloze', "__RANDOM__", 'validation'),
   ]
 
+
 class MetricScorer():
   def __init__(self, path_dscores=None):
     
@@ -29,10 +30,12 @@ class MetricScorer():
   
   def getScore(self, prompt_config, path_ex, path_pred):
     
-    exs = self.openJsonFile(path_ex)
-    refs, src_infos = exs['tgt'], exs['src_info']
+    format = lambda xs: [x.strip() for x in xs]
 
-    preds = self.openJsonFile(path_pred)['hyps']
+    preds = format(self.openJsonFile(path_pred)['hyps'])
+
+    exs = self.openJsonFile(path_ex)
+    refs = format(exs['tgt'])
 
     assert len(preds) == len(refs)
       
@@ -46,13 +49,13 @@ class MetricScorer():
         d_res = {**d_res, **self.computeBleu(preds, refs)}
       
       if metric == "sari":
-        d_res = {**d_res, **self.computeSari(preds, refs, src_infos['src'])} 
+        d_res = {**d_res, **self.computeSari(preds, refs, exs['src'])} 
             
       if metric == "accuracy":
         d_res = {**d_res, **self.computeAcc(preds, refs)}
       
       if "constrain" in metric:
-        d_res = {**d_res, **self.computeConstrain(preds, refs, src_infos, metric)}
+        d_res = {**d_res, **self.computeConstrain(preds, refs, exs['src_info'], metric)}
 
     return d_res
         
@@ -120,12 +123,13 @@ class MetricScorer():
     return {constr_type: correct/len(src_infos)}
 
 
-  def getAllScores(self, path_folder_preds, path_folder_data, init_from_sratch=False):
+  def getAllScores(self, path_folder_preds, path_folder_data, init_from_sratch=False, evaluation_config=None):
     
     if init_from_sratch == True:
       self.d_scores = {}
 
-    evaluation_config = {**evaluation_new_tasks, **evaluation_T0evalsets}
+    if not evaluation_config:
+      evaluation_config = {**evaluation_new_tasks, **evaluation_T0evalsets}
 
     list_files = os.listdir(path_folder_preds)
     nb_files = len(list_files)
@@ -145,10 +149,12 @@ class MetricScorer():
         evalset, eval_mode , prompt_name, model_size, rehearsal, model_name, step, _ = file.split('.')
         key = f'{model_name}.{rehearsal}.{step}.{evalset}.{eval_mode}.{prompt_name}'
 
-      if key in self.d_scores:
-        continue 
-
       prompt_config = evaluation_config[evalset][eval_mode][prompt_name]
+
+      if key in self.d_scores:
+        if self.areMetricsDone(prompt_config['metrics'], self.d_scores[key]) == True:
+          continue 
+
       path_pred = os.path.join(path_folder_preds, file)
       path_ex = os.path.join(path_folder_data, evalset, f'{prompt_name}.{eval_mode}.json')
       
@@ -158,7 +164,29 @@ class MetricScorer():
       with open(self.path_dscores, 'w') as f:
         json.dump(self.d_scores, f, indent=3)
         
+  def areMetricsDone(self, metrics, dict_res):
+    all_metric_done = True
         
+    for metric in metrics:
+      if metric == 'rouge' and 'rouge1' not in dict_res:
+        all_metric_done = False
+      if metric == 'bleu' and 'bleu' not in dict_res:
+        all_metric_done = False
+      if metric == 'constrain_contain' and 'contain' not in dict_res:
+        all_metric_done = False
+      if metric == 'constrain_end' and 'end' not in dict_res:
+        all_metric_done = False
+      if metric == 'constrain_start' and 'start' not in dict_res:
+        all_metric_done = False
+      if metric == 'accuracy' and 'accuracy' not in dict_res:
+        all_metric_done = False
+      if metric == 'sari' and 'sari' not in dict_res:
+        all_metric_done = False
+
+    return all_metric_done
+
+
+     
 def whatMetric(dataset_name, prompt_name, force_nlg='bleu', force_nlu='accuracy'):
   
   nlg_datasets = {'haiku', 'eli5', 'wiki_auto', 'gigaword'}
