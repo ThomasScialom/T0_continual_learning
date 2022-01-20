@@ -249,7 +249,7 @@ evaluation_zero_shot  = {
         'simplification_2': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge']
+            'metrics': ['rouge', ]
         }
       },
   },
@@ -286,7 +286,7 @@ evaluation_new_tasks = {
         'simplification_1': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge', 'bleu', 'accuracy']
+            'metrics': ['rouge', 'bleu', 'accuracy', 'sari']
         }
       }
   },
