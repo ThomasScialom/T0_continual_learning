@@ -199,12 +199,16 @@ def whatMetric(dataset_name, prompt_name, force_nlg='bleu', force_nlu='accuracy'
       metric = 'contain'
     elif 'constrain_end' in prompt_name:
       metric = 'end'
-
+  
+  elif dataset_name == 'asset': 
+    metric = 'sari'
+  
   elif dataset_name in nlg_datasets: 
     metric = force_nlg
 
   elif dataset_name in nlu_datasets: 
     metric = force_nlu
+  
   else:
     raise NotImplementedError
      
