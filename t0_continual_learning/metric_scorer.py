@@ -1,7 +1,12 @@
-import json
 import os
-import matplotlib.pyplot as plt
+import json
+import numpy as np
+from typing import List
+import scipy.stats
+import syllables
 from datasets import load_metric
+
+import matplotlib.pyplot as plt
 
 from t0_continual_learning.config_variables import evaluation_new_tasks, evaluation_T0evalsets
 
@@ -18,6 +23,9 @@ list_zero_shot = [
   ]
 
 
+
+
+
 class MetricScorer():
   def __init__(self, path_dscores=None):
     
@@ -30,12 +38,17 @@ class MetricScorer():
   
   def getScore(self, prompt_config, path_ex, path_pred):
     
-    format = lambda xs: [x.strip() for x in xs]
+    format = lambda xs: xs# [x.strip() for x in xs]
 
     preds = format(self.openJsonFile(path_pred)['hyps'])
 
     exs = self.openJsonFile(path_ex)
+    self.preds = preds
     refs = format(exs['tgt'])
+
+    list_refs = refs
+    if isinstance(refs[0], str):
+      list_refs = [[r] for r in refs]
 
     assert len(preds) == len(refs)
       
@@ -46,16 +59,23 @@ class MetricScorer():
         d_res = {**d_res, **self.computeRouge(preds, refs)}
 
       if metric == "bleu":
-        d_res = {**d_res, **self.computeBleu(preds, refs)}
+        d_res = {**d_res, **self.computeBleu(preds, list_refs)}
       
       if metric == "sari":
-        d_res = {**d_res, **self.computeSari(preds, refs, exs['src'])} 
+        d_res = {**d_res, **self.computeSari(preds, list_refs, exs['src'])} 
             
       if metric == "accuracy":
         d_res = {**d_res, **self.computeAcc(preds, refs)}
       
       if "constrain" in metric:
         d_res = {**d_res, **self.computeConstrain(preds, refs, exs['src_info'], metric)}
+
+      if metric == "haikuMetric":
+        bleu_score = self.computeBleu(preds, list_refs)['bleu']
+        d_res = {**d_res, **self.computeHaiku(preds, refs, exs['src'], bleu_score)} 
+      
+      if metric == "firstWordSim":
+        d_res = {**d_res, **self.computeFirstWordSim(preds, refs)}
 
     return d_res
         
@@ -73,20 +93,20 @@ class MetricScorer():
 
     return {k:v.mid.fmeasure  for k, v in d_res.items()}
 
-  def computeSari(self, preds, refs, srcs):
+  def computeSari(self, preds, list_refs, srcs):
     
     sari = load_metric("sari")
-    sari.add_batch(predictions=preds, references=[[ref] for ref in refs])
+    sari.add_batch(predictions=preds, references=list_refs)
     d_res = sari.compute(sources=srcs)
 
     return d_res
 
-  def computeBleu(self, preds, refs):
+  def computeBleu(self, preds, list_refs):
     
     bleu = load_metric("bleu")
     bleu.add_batch(
         predictions=[pred.split() for pred in preds], 
-        references=[[ref.split()] for ref in refs]
+        references=[[ref.split() for ref in refs] for refs in list_refs]
     )
     d_res = bleu.compute()
 
@@ -122,6 +142,90 @@ class MetricScorer():
     
     return {constr_type: correct/len(src_infos)}
 
+
+  def computeHaiku(self, preds, refs, srcs, bleu_score):
+    
+    normaliseDifScore = lambda nb_tgt, nb_hyp: 1-abs(nb_tgt - nb_hyp)/max([nb_tgt, nb_hyp])
+    constrainScorer = lambda src, hyp: 1 if ' '.join(src.split("'")[1:]).strip() in hyp else 0
+
+    d_score = {
+        'syllable': 0,
+        'comma': 0,
+        'constrain': 0,
+        'bleu': bleu_score
+    }
+
+    for tgt, hyp, src in zip(refs, preds, srcs):
+      d_score['syllable'] += normaliseDifScore(syllables.estimate(tgt), syllables.estimate(hyp)) 
+      d_score['comma'] += normaliseDifScore(len(tgt.split(',')), len(hyp.split(','))) 
+      d_score['constrain'] += constrainScorer(src, hyp) 
+    
+    for k in ['syllable', 'comma', 'constrain']:
+      d_score[k] /= len(preds)
+
+    d_score['eq_weighted'] = sum(d_score.values()) / len(d_score)
+
+    return d_score
+
+  def computeFirstWordSim(self, preds, refs):    
+
+    def jensen_shannon_distance(p, q):
+        """
+        Thanks to @sourcedexter (https://medium.com/@sourcedexter/how-to-find-the-similarity-between-two-probability-distributions-using-python-a7546e90a08d)
+        method to compute the Jenson-Shannon Distance 
+        between two probability distributions
+        """
+
+        # convert the vectors into numpy arrays in case that they aren't
+        p = np.array(p)
+        q = np.array(q)
+
+        # calculate m
+        m = (p + q) / 2
+
+        # compute Jensen Shannon Divergence
+        divergence = (scipy.stats.entropy(p, m) + scipy.stats.entropy(q, m)) / 2
+
+        # compute the Jensen Shannon Distance
+        distance = np.sqrt(divergence)
+
+        return distance
+
+
+    def getFirstTok(sent):
+      tok = ""
+      if sent:
+        tok = sent.split()[0].lower()
+
+      return tok
+
+    def getTok2idx(all_sents):
+      tok2idx = {}
+
+      count = 0
+      for sent in all_sents:
+        
+        tok = getFirstTok(sent)
+        if tok not in tok2idx:
+          tok2idx[tok] = count
+          count += 1
+
+      return tok2idx
+
+
+    def getArray(tok2idx, sents):
+
+      arr = [0] * len(tok2idx)
+
+      for sent in sents:
+        tok = getFirstTok(sent)
+        arr[tok2idx[tok]] += 1
+
+      return arr
+
+    tok2idx = getTok2idx(preds + refs)
+    d = jensen_shannon_distance(getArray(tok2idx, preds), getArray(tok2idx, refs))
+    return {'jensenFirstToken': 1/d}
 
   def getAllScores(self, path_folder_preds, path_folder_data, init_from_sratch=False, evaluation_config=None):
     
@@ -182,11 +286,15 @@ class MetricScorer():
         all_metric_done = False
       if metric == 'sari' and 'sari' not in dict_res:
         all_metric_done = False
+      if metric == 'haikuMetric' and 'comma' not in dict_res:
+        all_metric_done = False
+      if metric == 'firstWordSim' and 'jensenFirstToken' not in dict_res:
+        all_metric_done = False
 
     return all_metric_done
 
 
-     
+
 def whatMetric(dataset_name, prompt_name, force_nlg='bleu', force_nlu='accuracy'):
   
   nlg_datasets = {'haiku', 'eli5', 'wiki_auto', 'gigaword'}
@@ -202,7 +310,11 @@ def whatMetric(dataset_name, prompt_name, force_nlg='bleu', force_nlu='accuracy'
   
   elif dataset_name == 'asset': 
     metric = 'sari'
-  
+  elif dataset_name == 'haiku': 
+    metric = 'eq_weighted'
+  elif dataset_name == 'eli5': 
+    metric = 'jensenFirstToken'
+   
   elif dataset_name in nlg_datasets: 
     metric = force_nlg
 
@@ -214,6 +326,7 @@ def whatMetric(dataset_name, prompt_name, force_nlg='bleu', force_nlu='accuracy'
      
   
   return metric
+
 
 
 def get_color(group_name):
