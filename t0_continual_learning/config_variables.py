@@ -309,7 +309,7 @@ evaluation_new_tasks = {
         'generate_a_question_1': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge', 'bleu']
+            'metrics': ['rouge', 'bleu', 'firstWordSim']
         }
       }
   },
