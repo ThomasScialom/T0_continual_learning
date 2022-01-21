@@ -328,7 +328,7 @@ evaluation_new_tasks = {
         'do_nothing': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge', 'bleu']
+            'metrics': ['rouge', 'bleu', 'haikuMetric']
         }
       }
   },
