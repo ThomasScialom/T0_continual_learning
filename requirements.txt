@@ -7,3 +7,4 @@ rouge_score
 py7zr==0.17.2
 sacrebleu==2.0.0
 syllables==1.0.3
+scipy>=1.4.1
