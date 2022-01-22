@@ -233,8 +233,7 @@ class CovidQAPromptFormat(PromptFormat):
     hf_config = self.config['hf_dataset_config']
     dataset = load_dataset(
         path=hf_config['name'], 
-        split=eval_mode,
-        data_dir = os.path.join(DIR, 'additional_datasets/story_cloze/')
+        split='train',
     )
     dataset = self.filterDataset(dataset)
           
@@ -278,6 +277,8 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
       promptFormat = StoryClozePromptFormat(config)
     elif dataset_name == 'haiku':
       promptFormat = HaikuPromptFormat(config)
+    elif dataset_name == 'hf_dataset_config':
+      promptFormat = CovidQAPromptFormat(config)
     else:
       promptFormat = PromptFormat(config)
 
