@@ -1,0 +1,18 @@
+{
+   "hf_dataset_config": {
+      "name": "covid_qa_deepset",
+      "option": null,
+      "src": [
+         "question"
+      ],
+      "tgt": "answers"
+   },
+   "prompt_T0": {
+      "template_name": null
+   },
+   "prompt_cutsom": {
+      "covid_cloze_book_qa": [
+         "In the context of the COVID pandemic, [question]",
+      ]
+   }
+}
