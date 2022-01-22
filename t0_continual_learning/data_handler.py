@@ -227,17 +227,6 @@ class CovidQAPromptFormat(PromptFormat):
   
   def __init__(self, config):
     super().__init__(config)
-
-  def getDataset(self, eval_mode):
-    
-    hf_config = self.config['hf_dataset_config']
-    dataset = load_dataset(
-        path=hf_config['name'], 
-        split='train',
-    )
-    dataset = self.filterDataset(dataset)
-          
-    return dataset
   
   def filterDataset(self, dataset):
     
