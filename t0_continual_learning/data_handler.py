@@ -266,7 +266,7 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
       promptFormat = StoryClozePromptFormat(config)
     elif dataset_name == 'haiku':
       promptFormat = HaikuPromptFormat(config)
-    elif dataset_name == 'hf_dataset_config':
+    elif dataset_name == 'covid_qa_deepset':
       promptFormat = CovidQAPromptFormat(config)
     else:
       promptFormat = PromptFormat(config)
