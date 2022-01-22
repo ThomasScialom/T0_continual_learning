@@ -222,6 +222,34 @@ class HaikuPromptFormat(PromptFormat):
           
     return dataset
   
+
+class CovidQAPromptFormat(PromptFormat):
+  
+  def __init__(self, config):
+    super().__init__(config)
+
+  def getDataset(self, eval_mode):
+    
+    hf_config = self.config['hf_dataset_config']
+    dataset = load_dataset(
+        path=hf_config['name'], 
+        split=eval_mode,
+        data_dir = os.path.join(DIR, 'additional_datasets/story_cloze/')
+    )
+    dataset = self.filterDataset(dataset)
+          
+    return dataset
+  
+  def filterDataset(self, dataset):
+    
+    clean_exs = []
+    for ex in dataset:
+      if ex["is_impossible"] == True:
+        continue
+      ex['tgt'] = ex['answers']['text'][0]
+      clean_exs.append(ex)
+        
+    return clean_exs
   
 # utils functions 
 def write_data(srcs, tgts, src_infos, final_folder, prompt_name, eval_mode):
