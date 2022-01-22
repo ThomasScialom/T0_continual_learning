@@ -229,7 +229,7 @@ class CovidQAPromptFormat(PromptFormat):
   def __init__(self, config):
     super().__init__(config)
   
-  def filterDataset(self, dataset):
+  def filterDataset(self, dataset, limit=2500):
     
     clean_exs = []
     for ex in dataset:
@@ -239,7 +239,7 @@ class CovidQAPromptFormat(PromptFormat):
       ex['question'] = ex['question'][0].lower() + ex['question'][1:]
       clean_exs.append(ex)
         
-    return clean_exs
+    return clean_exs[:limit]
   
   
 class RankSummaryOpenAI(PromptFormat):
