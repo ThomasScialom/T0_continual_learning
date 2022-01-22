@@ -181,21 +181,7 @@ list_config_reharsals_sequential = [
   },
  
   {
-      'name_exp': "sequencial.covidfact.from.wiki_auto->gigaword", 
-      'new_dataset': {
-          'eval_mode': 'train',
-          'name': 'covidfact',
-          'prompts': {
-              "__RANDOM__": 100000,
-          }
-      },
-      'reharsal': {
-          'list_datasets': t0_train_datasets + ['wiki_auto', 'gigaword']
-      }
-  },
- 
-  {
-      'name_exp': "sequencial.haiku.from.wiki_auto->gigaword->covidfact", 
+      'name_exp': "sequencial.haiku.from.wiki_auto->gigaword", 
       'new_dataset': {
           'eval_mode': 'train',
           'name': 'haiku',
@@ -204,12 +190,12 @@ list_config_reharsals_sequential = [
           }
       },
       'reharsal': {
-          'list_datasets': t0_train_datasets + ['wiki_auto', 'gigaword', 'covidfact']
+          'list_datasets': t0_train_datasets + ['wiki_auto', 'gigaword']
       }
   },
  
  {
-      'name_exp': "sequencial.eli5.from.wiki_auto->gigaword->covidfact->haiku", 
+      'name_exp': "sequencial.eli5.from.wiki_auto->gigaword->haiku", 
       'new_dataset': {
           'eval_mode': 'train_asks',
           'name': 'eli5',
@@ -218,7 +204,7 @@ list_config_reharsals_sequential = [
           }
       },
       'reharsal': {
-          'list_datasets': t0_train_datasets + ['wiki_auto', 'gigaword', 'covidfact', 'haiku']
+          'list_datasets': t0_train_datasets + ['wiki_auto', 'gigaword', 'haiku']
       }
   },
 
