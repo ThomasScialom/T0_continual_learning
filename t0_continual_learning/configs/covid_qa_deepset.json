@@ -5,7 +5,7 @@
       "src": [
          "question"
       ],
-      "tgt": "answers"
+      "tgt": "tgt"
    },
    "prompt_T0": {
       "template_name": null
