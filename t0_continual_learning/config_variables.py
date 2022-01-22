@@ -111,7 +111,6 @@ list_config_reharsals = [
           'list_datasets': t0_train_datasets
       }
   },
-
   {
       'name_exp': "wiki_auto", 
       'new_dataset': {
@@ -125,7 +124,6 @@ list_config_reharsals = [
           'list_datasets': t0_train_datasets
       }
   },
-
   {
       'name_exp': "covidfact", 
       'new_dataset': {
@@ -139,7 +137,6 @@ list_config_reharsals = [
           'list_datasets': t0_train_datasets
       }
   },
-
   {
       'name_exp': "eli5", 
       'new_dataset': {
@@ -153,7 +150,6 @@ list_config_reharsals = [
           'list_datasets': t0_train_datasets
       }
   },
-  
   {
       'name_exp': "haiku", 
       'new_dataset': {
@@ -161,6 +157,32 @@ list_config_reharsals = [
           'name': 'haiku',
           'prompts': {
               'do_nothing': 100000,
+          }
+      },
+      'reharsal': {
+          'list_datasets': t0_train_datasets
+      }
+  },
+  {
+      'name_exp': "covid_qa_deepset", 
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'covid_qa_deepset',
+          'prompts': {
+              'covid_cloze_book_qa': 100000,
+          }
+      },
+      'reharsal': {
+          'list_datasets': t0_train_datasets
+      }
+  },
+  {
+      'name_exp': "rank_summary_OpenAI", 
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'rank_summary_OpenAI',
+          'prompts': {
+              'what_summary_is_the_best': 100000,
           }
       },
       'reharsal': {
