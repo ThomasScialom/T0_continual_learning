@@ -3,6 +3,7 @@ import json
 import random
 import csv
 from collections import Counter
+import urllib
 
 from datasets import load_dataset
 from promptsource.templates import DatasetTemplates
@@ -235,9 +236,42 @@ class CovidQAPromptFormat(PromptFormat):
       if ex["is_impossible"] == True:
         continue
       ex['tgt'] = ex['answers']['text'][0]
+      ex['question'] = ex['question'][0].lower() + ex['question'][1:]
       clean_exs.append(ex)
         
     return clean_exs
+  
+  
+class RankSummaryOpenAI(PromptFormat):
+  
+  def __init__(self, config):
+    super().__init__(config)
+
+  def getDataset(self, eval_mode):
+    
+    list_batch_id = [3, 4, 5, 6, 7, 8, 9] if eval_mode == 'train' else [13]
+    
+    data = []
+    for batch_id in list_batch_id:
+      url = f'https://openaipublic.blob.core.windows.net/summarize-from-feedback/dataset/comparisons/batch{batch_id}.json'
+
+      response = urllib.request.urlopen(url)
+      r = response.read().decode("utf-8") 
+      data += [json.loads(l) for l in r.strip().split('\n')]
+    
+    clean_data = []
+    for ex in data:
+     
+      clean_ex = {
+        'post': ex['info']['post'],
+        'sum0': ex['summaries'][0]['text'],
+        'sum1': ex['summaries'][1]['text'],
+        'label': ex['choice']
+      }
+      clean_data.append(clean_ex)
+          
+    return clean_data
+  
   
 # utils functions 
 def write_data(srcs, tgts, src_infos, final_folder, prompt_name, eval_mode):
@@ -268,6 +302,8 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
       promptFormat = HaikuPromptFormat(config)
     elif dataset_name == 'covid_qa_deepset':
       promptFormat = CovidQAPromptFormat(config)
+    elif dataset_name == 'rank_summary_OpenAI':
+      promptFormat = RankSummaryOpenAI(config)
     else:
       promptFormat = PromptFormat(config)
 
