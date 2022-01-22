@@ -1,0 +1,20 @@
+{
+   "hf_dataset_config": {
+      "name": "rank_summary_OpenAI",
+      "option": null,
+      "src": [
+         "post",
+         "sum0",
+         "sum1"
+      ],
+      "tgt": "label"
+   },
+   "prompt_T0": {
+      "template_name": null
+   },
+   "prompt_cutsom": {
+      "what_summary_is_the_best": [
+         "[post]\n\n===\n\n Given the above text, chose the most suited summary between 0 and 1: \n\n 0) [sum0] \n\n 1) [sum1]"
+      ]
+   }
+}
