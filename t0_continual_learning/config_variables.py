@@ -31,6 +31,11 @@ continual_train = {
         ('custom', "covid_cloze_book_qa"),
       ]
   },
+  'rank_summary_OpenAI': {
+      'train': [
+        ('custom', "what_summary_is_the_best"),
+      ]
+  },
 }
 
 continual_test = {
@@ -71,6 +76,11 @@ continual_test = {
   'covid_qa_deepset': {
       'train': [
         ('custom', "covid_cloze_book_qa"),
+      ]
+  },
+  'rank_summary_OpenAI': {
+      'test': [
+        ('custom', "what_summary_is_the_best"),
       ]
   },
   'winogrande': { 'validation': [('t0_template', "fill in the blank")]},
