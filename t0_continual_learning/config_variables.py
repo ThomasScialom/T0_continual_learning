@@ -69,7 +69,7 @@ continual_test = {
       ]
   },
   'covid_qa_deepset': {
-      'test': [
+      'train': [
         ('custom', "covid_cloze_book_qa"),
       ]
   },
