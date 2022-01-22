@@ -12,7 +12,7 @@
    },
    "prompt_cutsom": {
       "covid_cloze_book_qa": [
-         "In the context of the COVID pandemic, [question]",
+         "In the context of the COVID pandemic, [question]"
       ]
    }
 }
