@@ -21,14 +21,14 @@ continual_train = {
         ('custom', 'generate_a_question_1'),
       ]
   },
-  'covidfact': {
-      'train': [
-        ('t0_template', "__RANDOM__"),
-      ]
-  },
   'haiku': {
       'train': [
         ('custom', "do_nothing"),
+      ]
+  },
+  'covid_qa_deepset': {
+      'train': [
+        ('custom', "covid_cloze_book_qa"),
       ]
   },
 }
@@ -63,18 +63,16 @@ continual_test = {
         ('custom', 'generate_a_question_1'),
       ]
   },
-  'covidfact': {
-      'test': [
-        ('t0_template', "__RANDOM__"),
-      ]
-  },
-  
   'haiku': {
       'test': [
         ('custom', "do_nothing"),
       ]
   },
-
+  'covid_qa_deepset': {
+      'test': [
+        ('custom', "covid_cloze_book_qa"),
+      ]
+  },
   'winogrande': { 'validation': [('t0_template', "fill in the blank")]},
   'rte': {'validation': [('t0_template', "can we infer")]},
   'wic': {'validation': [('t0_template', "same_sense")]},
