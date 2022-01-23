@@ -338,13 +338,30 @@ evaluation_new_tasks = {
         }
       }
   },
-  
   'haiku': {
       'test': {
         'do_nothing': {
             'type': 'custom',
             'choice': '',
             'metrics': ['rouge', 'bleu', 'haikuMetric']
+        }
+      }
+  },
+  'covid_qa_deepset': {
+      'train': {
+        'covid_cloze_book_qa': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['rouge', 'bleu']
+        }
+      }
+  },
+  'rank_summary_OpenAI': {
+      'test': {
+        'what_summary_is_the_best': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['accuracy']
         }
       }
   },
