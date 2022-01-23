@@ -237,6 +237,32 @@ list_config_reharsals_sequential = [
           'list_datasets': t0_train_datasets + ['wiki_auto', 'gigaword', 'haiku']
       }
   },
+  {
+      'name_exp': "sequencial.covid_qa_deepset.from.wiki_auto->gigaword->haiku->eli5", 
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'covid_qa_deepset',
+          'prompts': {
+              'covid_cloze_book_qa': 100000,
+          }
+      },
+      'reharsal': {
+          'list_datasets': t0_train_datasets + ['wiki_auto', 'gigaword', 'haiku', 'eli5']
+      }
+  },
+  {
+      'name_exp': "sequencial.rank_summary_OpenAI.from.wiki_auto->gigaword->haiku->eli5->covid_qa_deepset", 
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'rank_summary_OpenAI',
+          'prompts': {
+              'what_summary_is_the_best': 100000,
+          }
+      },
+      'reharsal': {
+          'list_datasets': t0_train_datasets + ['wiki_auto', 'gigaword', 'haiku', 'eli5', 'covid_qa_deepset']
+      }
+  },
 
 ]
 
