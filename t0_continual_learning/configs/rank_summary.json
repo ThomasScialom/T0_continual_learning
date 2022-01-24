@@ -1,6 +1,6 @@
 {
    "hf_dataset_config": {
-      "name": "rank_summary_OpenAI",
+      "name": "rank_summary",
       "option": null,
       "src": [
          "post",
