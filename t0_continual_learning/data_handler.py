@@ -242,7 +242,7 @@ class CovidQAPromptFormat(PromptFormat):
     return clean_exs[:limit]
   
   
-class RankSummaryOpenAI(PromptFormat):
+class RankSummary(PromptFormat):
   
   def __init__(self, config):
     super().__init__(config)
@@ -302,8 +302,8 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
       promptFormat = HaikuPromptFormat(config)
     elif dataset_name == 'covid_qa_deepset':
       promptFormat = CovidQAPromptFormat(config)
-    elif dataset_name == 'rank_summary_OpenAI':
-      promptFormat = RankSummaryOpenAI(config)
+    elif dataset_name == 'rank_summary':
+      promptFormat = RankSummary(config)
     else:
       promptFormat = PromptFormat(config)
 
