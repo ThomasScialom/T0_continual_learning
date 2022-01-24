@@ -31,7 +31,7 @@ continual_train = {
         ('custom', "covid_cloze_book_qa"),
       ]
   },
-  'rank_summary_OpenAI': {
+  'rank_summary': {
       'train': [
         ('custom', "what_summary_is_the_best"),
       ]
@@ -78,7 +78,7 @@ continual_test = {
         ('custom', "covid_cloze_book_qa"),
       ]
   },
-  'rank_summary_OpenAI': {
+  'rank_summary': {
       'test': [
         ('custom', "what_summary_is_the_best"),
       ]
@@ -177,10 +177,10 @@ list_config_reharsals = [
       }
   },
   {
-      'name_exp': "rank_summary_OpenAI", 
+      'name_exp': "rank_summary", 
       'new_dataset': {
           'eval_mode': 'train',
-          'name': 'rank_summary_OpenAI',
+          'name': 'rank_summary',
           'prompts': {
               'what_summary_is_the_best': 100000,
           }
@@ -251,10 +251,10 @@ list_config_reharsals_sequential = [
       }
   },
   {
-      'name_exp': "sequencial.rank_summary_OpenAI.from.wiki_auto->gigaword->haiku->eli5->covid_qa_deepset", 
+      'name_exp': "sequencial.rank_summary.from.wiki_auto->gigaword->haiku->eli5->covid_qa_deepset", 
       'new_dataset': {
           'eval_mode': 'train',
-          'name': 'rank_summary_OpenAI',
+          'name': 'rank_summary',
           'prompts': {
               'what_summary_is_the_best': 100000,
           }
@@ -382,7 +382,7 @@ evaluation_new_tasks = {
         }
       }
   },
-  'rank_summary_OpenAI': {
+  'rank_summary': {
       'test': {
         'what_summary_is_the_best': {
             'type': 'custom',
