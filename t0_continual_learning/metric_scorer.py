@@ -298,7 +298,7 @@ class MetricScorer():
 def whatMetric(dataset_name, prompt_name, force_nlg='bleu', force_nlu='accuracy'):
   
   nlg_datasets = {'haiku', 'eli5', 'wiki_auto', 'gigaword', 'covid_qa_deepset'}
-  nlu_datasets = { 'rte', 'copa', 'wic', 'winogrande', 'hellaswag', 'anli', 'cb', 'wsc', 'story_cloze', 'covidfact','rank_summary_OpenAI'}
+  nlu_datasets = { 'rte', 'copa', 'wic', 'winogrande', 'hellaswag', 'anli', 'cb', 'wsc', 'story_cloze', 'covidfact','rank_summary'}
 
   if 'constrain' in prompt_name:
     if 'constrain_start' in prompt_name:
