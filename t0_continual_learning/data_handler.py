@@ -266,7 +266,7 @@ class RankSummary(PromptFormat):
         'post': ex['info']['post'],
         'sum0': ex['summaries'][0]['text'],
         'sum1': ex['summaries'][1]['text'],
-        'label': ex['choice']
+        'label': str(ex['choice'])
       }
       clean_data.append(clean_ex)
           
