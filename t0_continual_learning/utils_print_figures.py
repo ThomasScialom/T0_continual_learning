@@ -100,7 +100,8 @@ def getScoresSequencial(d_scores, models, config_evaluation, default_nlg='bleu',
 def printSequencialFigure(d_scores, models, config_evaluation, save_dir, do_normalise=True):
   
   scores, all_steps = getScoresSequencial(d_scores, models, config_evaluation)
-
+  
+  
   plt.figure(figsize=(8, 6))
   plt.xlabel('Steps')
   plt.ylabel('Relative Gain')
@@ -119,7 +120,7 @@ def printSequencialFigure(d_scores, models, config_evaluation, save_dir, do_norm
   plt.legend(bbox_to_anchor=(1.1, 1.05))
   plt.savefig(os.path.join(save_dir, '->'.join(models[-1][1] + [models[-1][0]])), format='pdf')
   plt.show()
-  
+  return scores
   
   
 def printNonSequencialFigure(
@@ -139,7 +140,8 @@ def printNonSequencialFigure(
     get_color_custom = get_color
    
   d_line_styles = {0: (0, (1, 10)), 250: (0, (5, 10)), 1000: 'solid'}
-                   
+  
+  d_scores_fig = {}
   for group_name, group_datasets in d_datasets.items():
     for rehearsal, steps in d_rehearsals.items():
         scores = []
@@ -159,7 +161,7 @@ def printNonSequencialFigure(
         if do_normalise:
           scores = [scores[i]/scores[0] for i in range(len(steps))]
 
-
+        d_scores_fig['{group_name}.{rehearsal}' = scores
         plt.plot(scores, label=f'{group_name}({rehearsal})', color=get_color_custom(group_name), linestyle=d_line_styles[rehearsal])
 
   plt.xticks(range(len(steps)), steps) #rotation='vertical')
@@ -167,6 +169,6 @@ def printNonSequencialFigure(
   plt.title(f'{model_name}')
   plt.savefig(os.path.join(save_dir, f'{model_name}.{"normalized" if do_normalise else "absolute"}'), format='pdf')
   plt.show()
-  return
+  return d_scores_fig
   
  
