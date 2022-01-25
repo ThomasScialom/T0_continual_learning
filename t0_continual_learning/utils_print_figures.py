@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import os
 
 list_zero_shot = [
     ('rte', "can we infer", 'validation'), 
