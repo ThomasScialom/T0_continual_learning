@@ -121,7 +121,7 @@ def printSequencialFigure(d_scores, models, config_evaluation, save_dir, do_norm
   
   
   
-  def printNonSequencialFigure(
+def printNonSequencialFigure(
     model_name, 
     d_datasets, 
     d_scores, 
