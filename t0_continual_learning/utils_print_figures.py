@@ -13,6 +13,57 @@ list_zero_shot = [
   ]
 
 
+def whatMetric(dataset_name, prompt_name, force_nlg='bleu', force_nlu='accuracy'):
+  
+  nlg_datasets = {'haiku', 'eli5', 'wiki_auto', 'gigaword', 'covid_qa_deepset'}
+  nlu_datasets = { 'rte', 'copa', 'wic', 'winogrande', 'hellaswag', 'anli', 'cb', 'wsc', 'story_cloze', 'covidfact', 'rank_summary'}
+
+  if 'constrain' in prompt_name:
+    if 'constrain_start' in prompt_name:
+      metric = 'start'
+    elif 'constrain_contain' in prompt_name:
+      metric = 'contain'
+    elif 'constrain_end' in prompt_name:
+      metric = 'end'
+  
+  elif dataset_name == 'asset': 
+    metric = 'sari'
+  elif dataset_name == 'haiku': 
+    metric = 'eq_weighted'
+  elif dataset_name == 'eli5': 
+    metric = 'jensenFirstToken'
+   
+  elif dataset_name in nlg_datasets: 
+    metric = force_nlg
+
+  elif dataset_name in nlu_datasets: 
+    metric = force_nlu
+  
+  else:
+    raise NotImplementedError
+     
+  return metric
+
+
+def get_color(group_name):
+
+  color = None
+  if group_name == 'T0_zero_shot_evalset':
+    color = 'lime'
+  elif group_name in {'wiki_auto', 'covidfact', 'gigaword_constrain'} :
+    color = 'blue'
+  elif group_name == 'gigaword':
+    color = 'lightgreen'
+  elif group_name == 'gigaword_start':
+    color = 'bisque'
+  elif group_name == 'gigaword_contain':
+    color = 'lavender'
+  elif group_name == 'gigaword_end':
+    color = 'lightgrey'
+  
+  return color
+
+
 def getScoresSequencial(d_scores, models, config_evaluation, force_nlg='bleu', force_nlu='accuracy'):
   
   scores = {}
@@ -117,4 +168,4 @@ def printSequencialFigure(d_scores, models, config_evaluation, save_dir, do_norm
   plt.show()
   return
   
-  
+ 
