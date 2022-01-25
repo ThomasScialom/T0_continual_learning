@@ -13,7 +13,7 @@ list_zero_shot = [
   ]
 
 
-def whatMetric(dataset_name, prompt_name, force_nlg='bleu', force_nlu='accuracy'):
+def whatMetric(dataset_name, prompt_name, default_nlg='bleu', default_nlu='accuracy'):
   
   nlg_datasets = {'haiku', 'eli5', 'wiki_auto', 'gigaword', 'covid_qa_deepset'}
   nlu_datasets = { 'rte', 'copa', 'wic', 'winogrande', 'hellaswag', 'anli', 'cb', 'wsc', 'story_cloze', 'covidfact', 'rank_summary'}
@@ -34,10 +34,10 @@ def whatMetric(dataset_name, prompt_name, force_nlg='bleu', force_nlu='accuracy'
     metric = 'jensenFirstToken'
    
   elif dataset_name in nlg_datasets: 
-    metric = force_nlg
+    metric = default_nlg
 
   elif dataset_name in nlu_datasets: 
-    metric = force_nlu
+    metric = default_nlu
   
   else:
     raise NotImplementedError
@@ -64,7 +64,7 @@ def get_color(group_name):
   return color
 
 
-def getScoresSequencial(d_scores, models, config_evaluation, force_nlg='bleu', force_nlu='accuracy'):
+def getScoresSequencial(d_scores, models, config_evaluation, default_nlg='bleu', default_nlu='accuracy'):
   
   scores = {}
 
@@ -88,8 +88,8 @@ def getScoresSequencial(d_scores, models, config_evaluation, force_nlg='bleu', f
           else:
             key = f'{model_name}.rehearsal{rehearsal}.{step}.{dataset_name}.{eval_mode}.{prompt_name}.{"->".join(model_from)}'
 
-          nlg_metric = force_nlg if dataset_name != 'wiki_auto' else 'sari'
-          step_score += d_scores[key][whatMetric(dataset_name, prompt_name, nlg_metric, force_nlu)]
+          nlg_metric = default_nlg if dataset_name != 'wiki_auto' else 'sari'
+          step_score += d_scores[key][whatMetric(dataset_name, prompt_name, nlg_metric, default_nlu)]
         scores[group_name].append(step_score/len(group_datasets))
       
       last_step += step
@@ -127,8 +127,8 @@ def printSequencialFigure(d_scores, models, config_evaluation, save_dir, do_norm
     d_scores, 
     d_rehearsals,
     save_dir,
-    force_nlg='bleu', 
-    force_nlu='accuracy',
+    default_nlg='bleu', 
+    default_nlu='accuracy',
     do_normalise=True,
     get_color_custom=None
     ):
@@ -151,7 +151,7 @@ def printSequencialFigure(d_scores, models, config_evaluation, save_dir, do_norm
             else:
               key = f'{model_name}.rehearsal{rehearsal}.{step}.{dataset_name}.{eval_mode}.{prompt_name}'
 
-            step_scores.append(d_scores[key][whatMetric(dataset_name, prompt_name, force_nlg, force_nlu)])
+            step_scores.append(d_scores[key][whatMetric(dataset_name, prompt_name, default_nlg, default_nlu)])
 
           scores.append(sum(step_scores)/len(step_scores))
 
