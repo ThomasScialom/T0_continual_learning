@@ -95,176 +95,6 @@ continual_test = {
 }
 
 
-list_config_reharsals = [
-  {
-      'name_exp': "gigaword", 
-      'new_dataset': {
-          'eval_mode': 'train',
-          'name': 'gigaword',
-          'prompts': {
-              'constrain_start+make_a_title': 33000,
-              'constrain_contain+make_a_title': 33000,
-              'constrain_end+make_a_title': 34000,
-          }
-      },
-      'reharsal': {
-          'list_datasets': t0_train_datasets
-      }
-  },
-  {
-      'name_exp': "wiki_auto", 
-      'new_dataset': {
-          'eval_mode': 'train',
-          'name': 'wiki_auto',
-          'prompts': {
-              'simplification_1': 100000,
-          }
-      },
-      'reharsal': {
-          'list_datasets': t0_train_datasets
-      }
-  },
-  {
-      'name_exp': "covidfact", 
-      'new_dataset': {
-          'eval_mode': 'train',
-          'name': 'covidfact',
-          'prompts': {
-              "__RANDOM__": 100000,
-          }
-      },
-      'reharsal': {
-          'list_datasets': t0_train_datasets
-      }
-  },
-  {
-      'name_exp': "eli5", 
-      'new_dataset': {
-          'eval_mode': 'train_asks',
-          'name': 'eli5',
-          'prompts': {
-              'generate_a_question_1': 100000,
-          }
-      },
-      'reharsal': {
-          'list_datasets': t0_train_datasets
-      }
-  },
-  {
-      'name_exp': "haiku", 
-      'new_dataset': {
-          'eval_mode': 'train',
-          'name': 'haiku',
-          'prompts': {
-              'do_nothing': 100000,
-          }
-      },
-      'reharsal': {
-          'list_datasets': t0_train_datasets
-      }
-  },
-  {
-      'name_exp': "covid_qa_deepset", 
-      'new_dataset': {
-          'eval_mode': 'train',
-          'name': 'covid_qa_deepset',
-          'prompts': {
-              'covid_cloze_book_qa': 100000,
-          }
-      },
-      'reharsal': {
-          'list_datasets': t0_train_datasets
-      }
-  },
-  {
-      'name_exp': "rank_summary", 
-      'new_dataset': {
-          'eval_mode': 'train',
-          'name': 'rank_summary',
-          'prompts': {
-              'what_summary_is_the_best': 100000,
-          }
-      },
-      'reharsal': {
-          'list_datasets': t0_train_datasets
-      }
-  },
-
-]
-
-
-list_config_reharsals_sequential = [
- {
-      'name_exp': "sequencial.gigaword.from.wiki_auto", 
-      'new_dataset': {
-          'eval_mode': 'train',
-          'name': 'gigaword',
-          'prompts': {
-              'constrain_start+make_a_title': 33000,
-              'constrain_contain+make_a_title': 33000,
-              'constrain_end+make_a_title': 34000,
-          }
-      },
-      'reharsal': {
-          'list_datasets': t0_train_datasets + ['wiki_auto']
-      }
-  },
- 
-  {
-      'name_exp': "sequencial.haiku.from.wiki_auto->gigaword", 
-      'new_dataset': {
-          'eval_mode': 'train',
-          'name': 'haiku',
-          'prompts': {
-              "do_nothing": 100000,
-          }
-      },
-      'reharsal': {
-          'list_datasets': t0_train_datasets + ['wiki_auto', 'gigaword']
-      }
-  },
- 
- {
-      'name_exp': "sequencial.eli5.from.wiki_auto->gigaword->haiku", 
-      'new_dataset': {
-          'eval_mode': 'train_asks',
-          'name': 'eli5',
-          'prompts': {
-              "generate_a_question_1": 100000,
-          }
-      },
-      'reharsal': {
-          'list_datasets': t0_train_datasets + ['wiki_auto', 'gigaword', 'haiku']
-      }
-  },
-  {
-      'name_exp': "sequencial.covid_qa_deepset.from.wiki_auto->gigaword->haiku->eli5", 
-      'new_dataset': {
-          'eval_mode': 'train',
-          'name': 'covid_qa_deepset',
-          'prompts': {
-              'covid_cloze_book_qa': 100000,
-          }
-      },
-      'reharsal': {
-          'list_datasets': t0_train_datasets + ['wiki_auto', 'gigaword', 'haiku', 'eli5']
-      }
-  },
-  {
-      'name_exp': "sequencial.rank_summary.from.wiki_auto->gigaword->haiku->eli5->covid_qa_deepset", 
-      'new_dataset': {
-          'eval_mode': 'train',
-          'name': 'rank_summary',
-          'prompts': {
-              'what_summary_is_the_best': 100000,
-          }
-      },
-      'reharsal': {
-          'list_datasets': t0_train_datasets + ['wiki_auto', 'gigaword', 'haiku', 'eli5', 'covid_qa_deepset']
-      }
-  },
-
-]
 
 evaluation_zero_shot  = {
   'gigaword': {
@@ -481,3 +311,148 @@ evaluation_T0evalsets = {
       }
   },
 }
+
+
+
+list_config_reharsals = {
+  "gigaword": {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'gigaword',
+          'prompts': {
+              'constrain_start+make_a_title': 33000,
+              'constrain_contain+make_a_title': 33000,
+              'constrain_end+make_a_title': 34000,
+          }
+      },
+      'reharsal': {
+          'inheritFrom': None
+      }
+  },
+  'wiki_auto': {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'wiki_auto',
+          'prompts': {
+              'simplification_1': 100000,
+          }
+      },
+      'reharsal': {
+          'inheritFrom': None
+      }
+  },
+  'covidfact': {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'covidfact',
+          'prompts': {
+              "__RANDOM__": 100000,
+          }
+      },
+      'reharsal': {
+          'inheritFrom': None
+      }
+  },
+  'eli5': {
+      'new_dataset': {
+          'eval_mode': 'train_asks',
+          'name': 'eli5',
+          'prompts': {
+              'generate_a_question_1': 100000,
+          }
+      },
+      'reharsal': {
+          'inheritFrom': None
+      }
+  },
+  'haiku': {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'haiku',
+          'prompts': {
+              'do_nothing': 100000,
+          }
+      },
+      'reharsal': {
+          'inheritFrom': None
+      }
+  },
+  'covid_qa_deepset': {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'covid_qa_deepset',
+          'prompts': {
+              'covid_cloze_book_qa': 100000,
+          }
+      },
+      'reharsal': {
+          'inheritFrom': None
+      }
+  },
+  'rank_summary': {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'rank_summary',
+          'prompts': {
+              'what_summary_is_the_best': 100000,
+          }
+      },
+      'reharsal': {
+          'inheritFrom': None
+      }
+  },
+
+  "sequencial.gigaword.from.wiki_auto": {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'gigaword',
+          'prompts': {
+              'constrain_start+make_a_title': 33000,
+              'constrain_contain+make_a_title': 33000,
+              'constrain_end+make_a_title': 34000,
+          }
+      },
+      'reharsal': {'inheritFrom': 'wiki_auto'}
+  },
+  "sequencial.haiku.from.wiki_auto->gigaword":  {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'haiku',
+          'prompts': {
+              "do_nothing": 100000,
+          }
+      },
+      'reharsal': {'inheritFrom': 'sequencial.gigaword.from.wiki_auto'}
+  },
+  "sequencial.eli5.from.wiki_auto->gigaword->haiku": {
+      'new_dataset': {
+          'eval_mode': 'train_asks',
+          'name': 'eli5',
+          'prompts': {
+              "generate_a_question_1": 100000,
+          }
+      },
+      'reharsal': {'inheritFrom': "sequencial.haiku.from.wiki_auto->gigaword"}
+  },
+  "sequencial.covid_qa_deepset.from.wiki_auto->gigaword->haiku->eli5": {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'covid_qa_deepset',
+          'prompts': {
+              'covid_cloze_book_qa': 100000,
+          }
+      },
+      'reharsal': {'inheritFrom': "sequencial.eli5.from.wiki_auto->gigaword->haiku"}
+  },
+  "sequencial.rank_summary.from.wiki_auto->gigaword->haiku->eli5->covid_qa_deepset": {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'rank_summary',
+          'prompts': {
+              'what_summary_is_the_best': 100000,
+          }
+      },
+      'reharsal': {'inheritFrom': "sequencial.covid_qa_deepset.from.wiki_auto->gigaword->haiku->eli5"}
+  },
+}
+
