@@ -91,7 +91,7 @@ def getScoresSequencial(d_scores, models, config_evaluation, default_nlg='bleu',
 
           nlg_metric = default_nlg if dataset_name != 'wiki_auto' else 'sari'
           step_score += d_scores[key][whatMetric(dataset_name, prompt_name, nlg_metric, default_nlu)]
-        scores[group_name].append(step_score/len(group_datasets))
+        scores[group_name].append(step_score/len(group_datasets['list_dataset']))
       
       last_step += step
       
