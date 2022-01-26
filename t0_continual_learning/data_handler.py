@@ -325,6 +325,14 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
 # formating the data to the training translation format, including reharsal data
 
 def buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, reharsal_number, percentage=1):
+  """
+  Note that for rehearsal proportion, we do as follow:
+  - the main dataset has a number of examples corresponding to the sum of exs/prompts, as defined in config_reharsal['new_dataset']['prompts']
+  - for each dataset in config_reharsal['reharsal']['list_datasets'], we will add a number of examples N with N = reharsal_number * factor_sample
+    where factor_sample is 1 by default if not defined specifically in the config_reharsal
+    
+  In addition, we multiply the overall numbers by *percentage* which allows to have small validation files to evaluate during training on e.g. 0.1% of the training data.
+  """
   
   list_output = []
 
@@ -333,12 +341,12 @@ def buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, reharsal
       , ensure_ascii=False
       )
 
-  def sampleFromPath(path_complete):
+  def sampleFromPath(path_complete, factor_sample=1):
     with open(path_complete, 'r') as f:
         data = json.load(f)
     nb_total = len(data["src"])
     random.seed(666)
-    list_idx = random.choices(range(nb_total), k=int(nb_to_sample*percentage))
+    list_idx = random.choices(range(nb_total), k=int(nb_to_sample*factor_sample*percentage))
 
     for i, idx in enumerate(list_idx):
       list_output.append(
@@ -363,7 +371,12 @@ def buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, reharsal
     for path_complete in os.listdir(os.path.join(path_data, dataset_name)):
       if '__RANDOM__' not in path_complete:
         continue
-      sampleFromPath(os.path.join(path_data, dataset_name, path_complete))
+        
+      factor_sample = 1
+      if 'specific_rehearsal_factor' in config_reharsal['reharsal']:
+        if dataset_name in config_reharsal['reharsal']['specific_rehearsal_factor']:
+          factor_sample = config_reharsal['reharsal']['specific_rehearsal_factor']
+      sampleFromPath(os.path.join(path_data, dataset_name, path_complete), factor_sample)
   
   print('Sampling completed. Now shuffling')
   random.shuffle(list_output)
