@@ -375,7 +375,7 @@ def buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, reharsal
       factor_sample = 1
       if 'specific_rehearsal_factor' in config_reharsal['reharsal']:
         if dataset_name in config_reharsal['reharsal']['specific_rehearsal_factor']:
-          factor_sample = config_reharsal['reharsal']['specific_rehearsal_factor']
+          factor_sample = config_reharsal['reharsal']['specific_rehearsal_factor'][dataset_name]
       sampleFromPath(os.path.join(path_data, dataset_name, path_complete), factor_sample)
   
   print('Sampling completed. Now shuffling')
