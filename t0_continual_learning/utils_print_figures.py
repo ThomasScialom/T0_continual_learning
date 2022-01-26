@@ -157,11 +157,11 @@ def printNonSequencialFigure(
             step_scores.append(d_scores[key][whatMetric(dataset_name, prompt_name, default_nlg, default_nlu)])
 
           scores.append(sum(step_scores)/len(step_scores))
-
-        if do_normalise:
-          scores = [scores[i]/scores[0] for i in range(len(steps))]
-
+        
         d_scores_fig[f'{group_name}.{rehearsal}'] = scores
+        if do_normalise:
+          scores = [scores[i]/scores[0]-1 for i in range(len(steps))]
+        
         plt.plot(scores, label=f'{group_name}({rehearsal})', color=get_color_custom(group_name), linestyle=d_line_styles[rehearsal])
 
   plt.xticks(range(len(steps)), steps) #rotation='vertical')
