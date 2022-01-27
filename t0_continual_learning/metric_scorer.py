@@ -223,6 +223,10 @@ class MetricScorer():
     nb_files = len(list_files)
     for i, file in enumerate(list_files):
       
+      # if folder
+      if '.' not in file:
+        continue
+      
       if i % 50 == 0:
         print(f'{i}/{nb_files}')
 
