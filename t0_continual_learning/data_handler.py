@@ -324,7 +324,12 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
 
 # formating the data to the training translation format, including reharsal data
 
-def buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, reharsal_number, percentage=1):
+import os
+import json
+import random
+from t0_continual_learning.config_variables import t0_train_datasets
+
+def buildReharsalDataset(config_name, list_config_reharsals, rehearsal_number, path_data, percentage=1):
   """
   Note that for rehearsal proportion, we do as follow:
   - the main dataset has a number of examples corresponding to the sum of exs/prompts, as defined in config_reharsal['new_dataset']['prompts']
@@ -334,69 +339,65 @@ def buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, reharsal
   In addition, we multiply the overall numbers by *percentage* which allows to have small validation files to evaluate during training on e.g. 0.1% of the training data.
   """
   
-  list_output = []
+  random.seed(666)
 
-  doFormat = lambda s, t, d: json.dumps(
-      {"translation": {"en1": s, "en2": t}}
-      , ensure_ascii=False
-      )
+  def doFormat(s, t, d): 
+    return json.dumps({"translation": {"en1": s, "en2": t}}, ensure_ascii=False)
 
-  def sampleFromPath(path_complete, factor_sample=1):
+  def sampleFromPath(path_complete, k):
     with open(path_complete, 'r') as f:
         data = json.load(f)
+    
     nb_total = len(data["src"])
-    random.seed(666)
-    list_idx = random.choices(range(nb_total), k=int(nb_to_sample*factor_sample*percentage))
+    list_idx = random.choices(range(nb_total), k=k)
 
     for i, idx in enumerate(list_idx):
       list_output.append(
           doFormat(data["src"][idx], data["tgt"][idx], dataset_name)
-          )
+      )
 
     return 
 
-  
-  dataset_name = config_reharsal['new_dataset']['name']
-  eval_mode = config_reharsal['new_dataset']['eval_mode']
-  dataset_prompts = config_reharsal['new_dataset']['prompts']
-  print(f"Starting sampling {dataset_name}")
-  for prompt, nb_to_sample in dataset_prompts.items():
-    path_complete = os.path.join(path_data, dataset_name, f'{prompt}.{eval_mode}.json')
-    sampleFromPath(path_complete)
+  list_output = []
+  isFistExp = True
+  exp_name = config_name
+  while exp_name:
+    print(f"Starting sampling {exp_name}")
 
-  dataset_names = config_reharsal['reharsal']['list_datasets']
-  nb_to_sample = reharsal_number
-  print(f"Starting sampling reharsal ({len(dataset_names)} datasets), nb_to_sample={nb_to_sample}")
-  for dataset_name in dataset_names:
-    for path_complete in os.listdir(os.path.join(path_data, dataset_name)):
-      if '__RANDOM__' not in path_complete:
-        continue
-        
-      factor_sample = 1
-      if 'specific_rehearsal_factor' in config_reharsal['reharsal']:
-        if dataset_name in config_reharsal['reharsal']['specific_rehearsal_factor']:
-          factor_sample = config_reharsal['reharsal']['specific_rehearsal_factor'][dataset_name]
-      sampleFromPath(os.path.join(path_data, dataset_name, path_complete), factor_sample)
-  
+    config_dict = list_config_reharsals[exp_name]
+    dataset_name = config_dict['new_dataset']['name']
+    eval_mode = config_dict['new_dataset']['eval_mode']
+    
+    for prompt, nb_to_sample in config_dict['new_dataset']['prompts'].items():
+      if isFistExp == False:
+        nb_to_sample = rehearsal_number
+      path_complete = os.path.join(path_data, dataset_name, f'{prompt}.{eval_mode}.json')
+      sampleFromPath(path_complete, int(nb_to_sample*percentage))
+
+    exp_name = config_dict['reharsal']['inheritFrom']
+    isFistExp = False
+
+  prompt, eval_mode = '__RANDOM__', 'train'
+  for dataset_name in t0_train_datasets:
+    path_complete = os.path.join(path_data, dataset_name, f'{prompt}.{eval_mode}.json')
+    sampleFromPath(path_complete, int(rehearsal_number*percentage))
+
   print('Sampling completed. Now shuffling')
   random.shuffle(list_output)
   
   return list_output
   
-def format2train(config_reharsal, reharsal_datasets, path_data, reharsal_number):
+def format2train(config_name, list_config_reharsals, rehearsal_number, path_data):
   
   final_folder = os.path.join(path_data, '_training_files')
-  if not os.path.exists(final_folder):
-    os.mkdir(final_folder)
-    
-  list_output = buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, reharsal_number)
-  with open(os.path.join(final_folder, f"train.{config_reharsal['name_exp']}.continual{reharsal_number}.json"), "w") as f_w:
-    for line in list_output:
-      f_w.write(line + "\n")
-      
-  list_output = buildReharsalDataset(config_reharsal, reharsal_datasets, path_data, reharsal_number, percentage=0.03)
-  with open(os.path.join(final_folder, f"validation.{config_reharsal['name_exp']}.continual{reharsal_number}.json"), "w") as f_w:
-    for line in list_output:
-      f_w.write(line + "\n")
+  if list_config_reharsals[config_name]['reharsal']['inheritFrom'] is not None:
+    final_folder = os.path.join(final_folder, 'sequential')
+
+  for mode, percentage in zip(['validation', 'train'], [0.03, 1]):
+    print(mode, '.....')
+    list_output = buildReharsalDataset(config_name, list_config_reharsals, rehearsal_number, path_data, percentage=percentage)
+    with open(os.path.join(final_folder, f"{mode}.{config_name}.continual{rehearsal_number}.json"), "w") as f_w:
+      for line in list_output:
+        f_w.write(line + "\n")
 
   return list_output
