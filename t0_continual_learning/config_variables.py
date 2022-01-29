@@ -424,17 +424,7 @@ list_config_reharsals = {
       },
       'reharsal': {'inheritFrom': 'sequencial.gigaword.from.wiki_auto'}
   },
-  "sequencial.eli5.from.wiki_auto->gigaword->haiku": {
-      'new_dataset': {
-          'eval_mode': 'train_asks',
-          'name': 'eli5',
-          'prompts': {
-              "generate_a_question_1": 100000,
-          }
-      },
-      'reharsal': {'inheritFrom': "sequencial.haiku.from.wiki_auto->gigaword"}
-  },
-  "sequencial.covid_qa_deepset.from.wiki_auto->gigaword->haiku->eli5": {
+  "sequencial.covid_qa_deepset.from.wiki_auto->gigaword->haiku": {
       'new_dataset': {
           'eval_mode': 'train',
           'name': 'covid_qa_deepset',
@@ -442,7 +432,17 @@ list_config_reharsals = {
               'covid_cloze_book_qa': 100000,
           }
       },
-      'reharsal': {'inheritFrom': "sequencial.eli5.from.wiki_auto->gigaword->haiku"}
+      'reharsal': {'inheritFrom': "sequencial.haiku.from.wiki_auto->gigaword"}
+  },
+  "sequencial.eli5.from.wiki_auto->gigaword->haiku->covid_qa_deepset": {
+      'new_dataset': {
+          'eval_mode': 'train_asks',
+          'name': 'eli5',
+          'prompts': {
+              "generate_a_question_2": 100000,
+          }
+      },
+      'reharsal': {'inheritFrom': "sequencial.covid_qa_deepset.from.wiki_auto->gigaword->haiku"}
   },
   "sequencial.rank_summary.from.wiki_auto->gigaword->haiku->eli5->covid_qa_deepset": {
       'new_dataset': {
