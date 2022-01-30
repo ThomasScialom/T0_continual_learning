@@ -2,7 +2,7 @@ yarl==1.7.2
 datasets==1.17.0
 transformers==4.15.0
 PyYAML==6.0
-promptsource @ git+https://github.com/bigscience-workshop/promptsource
+promptsource @ git+https://github.com/bigscience-workshop/promptsource.git@v0.1.0
 sentencepiece
 rouge_score
 py7zr==0.17.2
