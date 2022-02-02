@@ -1,0 +1,19 @@
+{
+   "hf_dataset_config": {
+      "name": "tweeter_top20",
+      "option": null,
+      "src": [
+         "hashtag_token",
+         "author"
+      ],
+      "tgt": "content"
+   },
+   "prompt_T0": {
+      "template_name": null
+   },
+   "prompt_cutsom": {
+      "tweet_as+about": [
+         "Write a tweet about [hashtag_token], in the style of [author]"
+      ]
+   }
+}
