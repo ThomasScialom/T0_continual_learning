@@ -12,7 +12,7 @@
       "template_name": null
    },
    "prompt_cutsom": {
-      "constrain_start+make_a_title": [
+      "dialogue_with_emotion": [
          "Given that you are \"[context]\", what would be your response to the the following prompt: [prompt]"
       ]
    }
