@@ -314,7 +314,7 @@ class ExplanationSNLI(PromptFormat):
     return clean_data    
   
   
-class TweeterTop20(PromptFormat):
+class TwitterTop20(PromptFormat):
     
   """
   @article{tareaf2017r,
@@ -332,7 +332,7 @@ class TweeterTop20(PromptFormat):
   
   def getDataset(self, eval_mode):
   
-    with open(f'{GLOBAL_PATH}/tweets.csv', 'r') as f:
+    with open(os.path.join(DIR, f'additional_datasets/twitterTop20/tweets.csv'), 'r') as f:
       spamreader = csv.reader(f, delimiter=',')
       parsed_csv = list(spamreader)
 
@@ -418,8 +418,8 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
       promptFormat = RankSummary(config)
     elif dataset_name == 'eSNLI':
       promptFormat = ExplanationSNLI(config)
-    elif dataset_name == 'tweeter_top20':
-      promptFormat = TweeterTop20(config)
+    elif dataset_name == 'twitter_top20':
+      promptFormat = TwitterTop20(config)
     elif dataset_name == 'empathetic_dialogues':
       promptFormat = DialogueEmpathic(config)
       
