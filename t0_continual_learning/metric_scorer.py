@@ -230,16 +230,16 @@ class MetricScorer():
       if i % 50 == 0:
         print(f'{i}/{nb_files}')
 
-      if "T0_3B" in file:
+      if "T0_3B" in file or "T0pp" in file:
         evalset, eval_mode , prompt_name, model_name, _ = file.split('.')
-        assert model_name == 'T0_3B'
+        assert model_name == 'T0_3B' or model_name == 'T0pp'
         key = f'{model_name}.{evalset}.{eval_mode}.{prompt_name}'
       elif "sequencial" in file:
         evalset, eval_mode , prompt_name, model_size, rehearsal, _, model_name, _, model_from, step, _ = file.split('.')
-        key = f'{model_name}.{rehearsal}.{step}.{evalset}.{eval_mode}.{prompt_name}.{model_from}'
+        key = f'{model_name}.{model_size}.{rehearsal}.{step}.{evalset}.{eval_mode}.{prompt_name}.{model_from}'
       else:
         evalset, eval_mode , prompt_name, model_size, rehearsal, model_name, step, _ = file.split('.')
-        key = f'{model_name}.{rehearsal}.{step}.{evalset}.{eval_mode}.{prompt_name}'
+        key = f'{model_name}.{model_size}.{rehearsal}.{step}.{evalset}.{eval_mode}.{prompt_name}'
 
       prompt_config = evaluation_config[evalset][eval_mode][prompt_name]
 
