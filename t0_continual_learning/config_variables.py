@@ -41,7 +41,7 @@ continual_train = {
         ('custom', "dialogue_with_emotion"),
       ]
   },
-  'tweeter_top20': {
+  'twitter_top20': {
       'train': [
         ('custom', "tweet_as+about"),
       ]
@@ -103,7 +103,7 @@ continual_test = {
         ('custom', "dialogue_with_emotion"),
       ]
   },
-  'tweeter_top20': {
+  'twitter_top20': {
       'test': [
         ('custom', "tweet_as+about"),
       ]
@@ -495,10 +495,10 @@ list_config_reharsals = {
       },
       'reharsal': {'inheritFrom': "sequencial.empathetic_dialogues.from.wiki_auto->gigaword->haiku->covid_qa_deepset->eli5"}
   },
-  "sequencial.tweeter_top20.from.wiki_auto->gigaword->haiku->covid_qa_deepset->eli5->empathetic_dialogues->eSNLI": {
+  "sequencial.twitter_top20.from.wiki_auto->gigaword->haiku->covid_qa_deepset->eli5->empathetic_dialogues->eSNLI": {
       'new_dataset': {
           'eval_mode': 'train',
-          'name': 'tweeter_top20',
+          'name': 'twitter_top20',
           'prompts': {
               "tweet_as+abou": 100000,
           }
