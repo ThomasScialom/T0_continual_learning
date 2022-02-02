@@ -1,0 +1,19 @@
+{
+   "hf_dataset_config": {
+      "name": "empathetic_dialogues",
+      "option": null,
+      "src": [
+         "context",
+         "prompt"
+      ],
+      "tgt": "utterance"
+   },
+   "prompt_T0": {
+      "template_name": null
+   },
+   "prompt_cutsom": {
+      "constrain_start+make_a_title": [
+         "Given that you are \"[context]\", what would be your response to the the following prompt: [prompt]"
+      ]
+   }
+}
