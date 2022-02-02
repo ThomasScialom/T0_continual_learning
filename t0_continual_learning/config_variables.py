@@ -500,7 +500,7 @@ list_config_reharsals = {
           'eval_mode': 'train',
           'name': 'twitter_top20',
           'prompts': {
-              "tweet_as+abou": 100000,
+              "tweet_as+about": 100000,
           }
       },
       'reharsal': {'inheritFrom': "sequencial.eSNLI.from.wiki_auto->gigaword->haiku->covid_qa_deepset->eli5->empathetic_dialogues"}
