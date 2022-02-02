@@ -1,6 +1,6 @@
 {
    "hf_dataset_config": {
-      "name": "tweeter_top20",
+      "name": "twitter_top20",
       "option": null,
       "src": [
          "hashtag_token",
