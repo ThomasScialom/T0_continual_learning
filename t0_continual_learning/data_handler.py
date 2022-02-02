@@ -371,6 +371,20 @@ class TweeterTop20(PromptFormat):
     
     
     
+      
+class DialogueEmpathic(PromptFormat):
+  
+  def __init__(self, config):
+    super().__init__(config)
+  
+  def filterDataset(self, dataset):
+    
+    for ex in dataset:
+      ex['prompt'] = ex['prompt'].replace('_comma_', ',')
+    
+    return dataset
+    
+    
 # utils functions 
 def write_data(srcs, tgts, src_infos, final_folder, prompt_name, eval_mode):
   if not os.path.exists(final_folder):
@@ -406,6 +420,8 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
       promptFormat = ExplanationSNLI(config)
     elif dataset_name == 'tweeter_top20':
       promptFormat = TweeterTop20(config)
+    elif dataset_name == 'empathetic_dialogues':
+      promptFormat = DialogueEmpathic(config)
       
     else:
       promptFormat = PromptFormat(config)
