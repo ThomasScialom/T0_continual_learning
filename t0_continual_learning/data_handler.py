@@ -272,7 +272,105 @@ class RankSummary(PromptFormat):
           
     return clean_data
   
+class ExplanationSNLI(PromptFormat):
   
+  def __init__(self, config):
+    super().__init__(config)
+  
+  def getDataset(self, eval_mode):
+  
+    name_batches = ['train_1', 'train_2'] if eval_mode == 'train' else [eval_mode]
+
+    data = []
+    for name_batch in name_batches:
+      url = f'https://raw.githubusercontent.com/OanaMariaCamburu/e-SNLI/master/dataset/esnli_{name_batch}.csv'
+
+      response = urllib.request.urlopen(url)
+      r = response.read().decode("utf-8") 
+      lines = r.splitlines()
+      reader = csv.reader(lines)
+      parsed_csv = list(reader)
+
+      header = parsed_csv[0]
+      data += parsed_csv[1:]
+
+
+    d_gold_label = {
+      'entailment': 'entail each other',
+      'contradiction': 'do not entail each other',
+      'neutral': 'are unrelated',
+    }
+
+    clean_data = []
+    for ex in data:
+
+      clean_ex = {}
+      for key, value in zip(header, ex):
+        clean_ex[key] = value
+      clean_ex['gold_label_prompt'] = d_gold_label[clean_ex['gold_label']]
+      clean_ex['tgt'] = [v for k, v in clean_ex.items() if 'Explanation_' in k]
+      clean_data.append(clean_ex)
+
+    return clean_data    
+  
+  
+class TweeterTop20(PromptFormat):
+    
+  """
+  @article{tareaf2017r,
+    title={R.: Tweets dataset-top 20 most followed users in Twitter social platform},
+    author={Tareaf, Bin},
+    journal={Harvard Dataverse},
+    volume={2},
+    year={2017},
+    url={https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:10.7910/DVN/JBXKFD/F4FULO}
+  }
+  """
+  
+  def __init__(self, config):
+    super().__init__(config)
+  
+  def getDataset(self, eval_mode):
+  
+    with open(f'{GLOBAL_PATH}/tweets.csv', 'r') as f:
+      spamreader = csv.reader(f, delimiter=',')
+      parsed_csv = list(spamreader)
+
+      header = parsed_csv[0]
+      data = parsed_csv[1:]
+
+    clean_data = []
+    for ex in data:
+
+      d_ex = {k:v for k, v in zip(header, ex)}
+      
+      # we want to select only hashtag's tweets for our dataset to add this token to the prompt's instruction
+      if '#' not in d_ex['content'] or len(d_ex['content'].split('#')[1].split()) < 2:
+        continue
+
+      hashtag_token = '#' + d_ex['content'].split('#')[1].split()[0]
+      d_ex["hashtag_token"] = hashtag_token
+
+      clean_data.append(d_ex)
+    
+    
+    # Create the same split consistantly between test/val/train
+    random.seed(666)
+    random.shuffle(clean_data)
+
+    if eval_mode == 'test':
+      clean_data = clean_data[:250]
+    elif eval_mode == 'validation':
+      clean_data = clean_data[250:500]
+    elif eval_mode == 'train':
+      clean_data = clean_data[500:]
+    else:
+      raise NotImplementedError(eval_mode)
+
+    return clean_data
+    
+    
+    
 # utils functions 
 def write_data(srcs, tgts, src_infos, final_folder, prompt_name, eval_mode):
   if not os.path.exists(final_folder):
@@ -304,6 +402,11 @@ def process_datasets(d_datasets, limit_nb_examples, path_data="data"):
       promptFormat = CovidQAPromptFormat(config)
     elif dataset_name == 'rank_summary':
       promptFormat = RankSummary(config)
+    elif dataset_name == 'eSNLI':
+      promptFormat = ExplanationSNLI(config)
+    elif dataset_name == 'tweeter_top20':
+      promptFormat = TweeterTop20(config)
+      
     else:
       promptFormat = PromptFormat(config)
 
