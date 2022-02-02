@@ -1,0 +1,20 @@
+{
+   "hf_dataset_config": {
+      "name": "eSNLI",
+      "option": null,
+      "src": [
+         "gold_label_prompt",
+         "Sentence1",
+         "Sentence2"
+      ],
+      "tgt": "tgt"
+   },
+   "prompt_T0": {
+      "template_name": null
+   },
+   "prompt_cutsom": {
+      "explain_why": [
+         "Explain why the two following sentences [gold_label_prompt]: \"Sentence 1: [Sentence1]\"; Sentence 2: \"[Sentence2]\""
+      ]
+   }
+}
