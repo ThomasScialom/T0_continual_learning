@@ -36,6 +36,21 @@ continual_train = {
         ('custom', "what_summary_is_the_best"),
       ]
   },
+  'empathetic_dialogues': {
+      'train': [
+        ('custom', "dialogue_with_emotion"),
+      ]
+  },
+  'tweeter_top20': {
+      'train': [
+        ('custom', "tweet_as+about"),
+      ]
+  },
+  'eSNLI': {
+      'train': [
+        ('custom', "explain_why"),
+      ]
+  },
 }
 
 continual_test = {
@@ -81,6 +96,21 @@ continual_test = {
   'rank_summary': {
       'test': [
         ('custom', "what_summary_is_the_best"),
+      ]
+  },
+  'empathetic_dialogues': {
+      'test': [
+        ('custom', "dialogue_with_emotion"),
+      ]
+  },
+  'tweeter_top20': {
+      'test': [
+        ('custom', "tweet_as+about"),
+      ]
+  },
+  'eSNLI': {
+      'test': [
+        ('custom', "explain_why"),
       ]
   },
   'winogrande': { 'validation': [('t0_template', "fill in the blank")]},
