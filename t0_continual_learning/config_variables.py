@@ -444,6 +444,39 @@ list_config_reharsals = {
       },
       'reharsal': {'inheritFrom': "sequencial.covid_qa_deepset.from.wiki_auto->gigaword->haiku"}
   },
+  
+  "sequencial.empathetic_dialogues.from.wiki_auto->gigaword->haiku->covid_qa_deepset->eli5": {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'empathetic_dialogues',
+          'prompts': {
+              "dialogue_with_emotion": 100000,
+          }
+      },
+      'reharsal': {'inheritFrom': "sequencial.eli5.from.wiki_auto->gigaword->haiku->covid_qa_deepset"}
+  },
+  "sequencial.eSNLI.from.wiki_auto->gigaword->haiku->covid_qa_deepset->eli5->empathetic_dialogues": {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'eSNLI',
+          'prompts': {
+              "explain_why": 100000,
+          }
+      },
+      'reharsal': {'inheritFrom': "sequencial.empathetic_dialogues.from.wiki_auto->gigaword->haiku->covid_qa_deepset->eli5"}
+  },
+  "sequencial.tweeter_top20.from.wiki_auto->gigaword->haiku->covid_qa_deepset->eli5->empathetic_dialogues->eSNLI": {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'tweeter_top20',
+          'prompts': {
+              "tweet_as+abou": 100000,
+          }
+      },
+      'reharsal': {'inheritFrom': "sequencial.eSNLI.from.wiki_auto->gigaword->haiku->covid_qa_deepset->eli5->empathetic_dialogues"}
+  },
+  
+  
   "sequencial.rank_summary.from.wiki_auto->gigaword->haiku->eli5->covid_qa_deepset": {
       'new_dataset': {
           'eval_mode': 'train',
