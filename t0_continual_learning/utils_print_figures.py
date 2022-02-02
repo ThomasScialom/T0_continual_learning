@@ -65,7 +65,7 @@ def get_color(group_name):
   return color
 
 
-def getScoresSequencial(d_scores, models, config_evaluation, default_nlg='bleu', default_nlu='accuracy'):
+def getScoresSequencial(d_scores, models, config_evaluation, model_size, default_nlg='bleu', default_nlu='accuracy'):
   
   scores = {}
 
@@ -82,12 +82,12 @@ def getScoresSequencial(d_scores, models, config_evaluation, default_nlg='bleu',
         step_score = 0
         for dataset_name, prompt_name, eval_mode in group_datasets['list_dataset']:
           # calculate the score
-          if model_name == 'T0_3B':
-            key = f'T0_3B.{dataset_name}.{eval_mode}.{prompt_name}'
+          if model_name == 'T0_3B' or model_name == 'T0pp':
+            key = f'{model_name}.{dataset_name}.{eval_mode}.{prompt_name}'
           elif model_from == None:
-            key = f'{model_name}.rehearsal{rehearsal}.{step}.{dataset_name}.{eval_mode}.{prompt_name}'
+            key = f'{model_name}.{model_size}.rehearsal{rehearsal}.{step}.{dataset_name}.{eval_mode}.{prompt_name}'
           else:
-            key = f'{model_name}.rehearsal{rehearsal}.{step}.{dataset_name}.{eval_mode}.{prompt_name}.{"->".join(model_from)}'
+            key = f'{model_name}.{model_size}.rehearsal{rehearsal}.{step}.{dataset_name}.{eval_mode}.{prompt_name}.{"->".join(model_from)}'
 
           nlg_metric = default_nlg if dataset_name != 'wiki_auto' else 'sari'
           step_score += d_scores[key][whatMetric(dataset_name, prompt_name, nlg_metric, default_nlu)]
@@ -97,9 +97,9 @@ def getScoresSequencial(d_scores, models, config_evaluation, default_nlg='bleu',
       
   return scores, all_steps
 
-def printSequencialFigure(d_scores, models, config_evaluation, save_dir, do_normalise=True):
+def printSequencialFigure(d_scores, models, config_evaluation, save_dir, model_size='3B', do_normalise=True):
   
-  scores, all_steps = getScoresSequencial(d_scores, models, config_evaluation)
+  scores, all_steps = getScoresSequencial(d_scores, models, config_evaluation, model_size=model_size)
   
   
   plt.figure(figsize=(8, 6))
@@ -129,6 +129,7 @@ def printNonSequencialFigure(
     d_scores, 
     d_rehearsals,
     save_dir,
+    model_size='3B',
     default_nlg='bleu', 
     default_nlu='accuracy',
     do_normalise=True,
@@ -150,9 +151,10 @@ def printNonSequencialFigure(
           for dataset_name, prompt_name, eval_mode in group_datasets:
 
             if step == 0:
-              key = f'T0_3B.{dataset_name}.{eval_mode}.{prompt_name}'
+              baseline_name = 'T0_3B' if model_size == '3B' else 'T0pp'
+              key = f'{baseline_name}.{dataset_name}.{eval_mode}.{prompt_name}'
             else:
-              key = f'{model_name}.rehearsal{rehearsal}.{step}.{dataset_name}.{eval_mode}.{prompt_name}'
+              key = f'{model_name}.{model_size}.rehearsal{rehearsal}.{step}.{dataset_name}.{eval_mode}.{prompt_name}'
 
             step_scores.append(d_scores[key][whatMetric(dataset_name, prompt_name, default_nlg, default_nlu)])
 
