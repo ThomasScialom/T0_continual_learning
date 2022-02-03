@@ -16,7 +16,7 @@ list_zero_shot = [
 
 def whatMetric(dataset_name, prompt_name, default_nlg='bleu', default_nlu='accuracy'):
   
-  nlg_datasets = {'haiku', 'eli5', 'wiki_auto', 'gigaword', 'covid_qa_deepset'}
+  nlg_datasets = {'haiku', 'eli5', 'wiki_auto', 'gigaword', 'covid_qa_deepset', 'empathetic_dialogues', 'twitter_top20', 'eSNLI'}
   nlu_datasets = { 'rte', 'copa', 'wic', 'winogrande', 'hellaswag', 'anli', 'cb', 'wsc', 'story_cloze', 'covidfact', 'rank_summary'}
 
   if 'constrain' in prompt_name:
