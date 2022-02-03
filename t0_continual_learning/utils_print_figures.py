@@ -91,7 +91,7 @@ def getScoresSequencial(d_scores, models, config_evaluation, model_size, default
 
           nlg_metric = default_nlg if dataset_name != 'wiki_auto' else 'sari'
           if key not in step_score:
-            print(f'Break for {group_datasets['list_dataset']}: {key} does not exist')
+            print(f'Break for {group_datasets["list_dataset"]}: {key} does not exist')
             step_score = None
             break
           step_score += d_scores[key][whatMetric(dataset_name, prompt_name, nlg_metric, default_nlu)]
