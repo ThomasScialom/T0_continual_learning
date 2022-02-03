@@ -116,7 +116,10 @@ def printSequencialFigure(d_scores, models, config_evaluation, save_dir, model_s
   for k_name, v_scores in scores.items():  
 
     if do_normalise:
-        v_scores = [v_scores[i]/v_scores[0]-1 for i in range(len(v_scores))]
+        #v_scores = [v_scores[i]/v_scores[0]-1 for i in range(len(v_scores))]
+        v_scores = [v_scores[i]/v_scores[config_evaluation[k_name]['last_train']] 
+                    if v_scores[i] else None  for i in range(len(v_scores))]
+
 
     x = config_evaluation[k_name]['steps']
     y = [v_scores[i] for i in config_evaluation[k_name]['steps']]
