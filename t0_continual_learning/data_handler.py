@@ -380,10 +380,12 @@ class DialogueEmpathic(PromptFormat):
   
   def filterDataset(self, dataset):
     
-    for ex in dataset:
+    clean_dataset = []
+    for i, ex in enumerate(dataset):
       ex['input_text'] = ex.pop('prompt').replace('_comma_', ',')
+      clean_dataset.append(ex)
     
-    return dataset
+    return clean_dataset
     
     
 # utils functions 
