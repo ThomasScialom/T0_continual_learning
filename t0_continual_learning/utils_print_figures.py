@@ -90,7 +90,7 @@ def getScoresSequencial(d_scores, models, config_evaluation, model_size, default
             key = f'{model_name}.{model_size}.rehearsal{rehearsal}.{step}.{dataset_name}.{eval_mode}.{prompt_name}.{"->".join(model_from)}'
 
           nlg_metric = default_nlg if dataset_name != 'wiki_auto' else 'sari'
-          if key not in step_score:
+          if key not in d_scores:
             print(f'Break for {group_datasets["list_dataset"]}: {key} does not exist')
             step_score = None
             break
