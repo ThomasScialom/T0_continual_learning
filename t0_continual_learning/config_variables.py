@@ -250,8 +250,34 @@ evaluation_new_tasks = {
             'metrics': ['accuracy']
         }
       }
+  },  
+  'empathetic_dialogues': {
+      'test': {
+        'dialogue_with_emotion': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['rouge', 'bleu']
+        }
+      }
   },
-
+  'eSNLI': {
+      'test': {
+        'explain_why': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['rouge', 'bleu']
+        }
+      }
+  },
+  'twitter_top20': {
+      'test': {
+        'tweet_as+about': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['rouge', 'bleu']
+        }
+      }
+  },
 }
 
 evaluation_T0evalsets = {
