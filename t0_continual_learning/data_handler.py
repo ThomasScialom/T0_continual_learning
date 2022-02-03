@@ -2,6 +2,7 @@ import os
 import json
 import random
 import csv
+from typing import List
 from collections import Counter
 import urllib
 
@@ -461,6 +462,8 @@ def buildReharsalDataset(config_name, list_config_reharsals, rehearsal_number, p
   random.seed(666)
 
   def doFormat(s, t, d): 
+    if isinstance(t, List):
+      t = t[0]
     return json.dumps({"translation": {"en1": s, "en2": t}}, ensure_ascii=False)
 
   def sampleFromPath(path_complete, k):
