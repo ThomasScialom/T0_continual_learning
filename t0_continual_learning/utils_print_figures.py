@@ -95,7 +95,10 @@ def getScoresSequencial(d_scores, models, config_evaluation, model_size, default
             step_score = None
             break
           step_score += d_scores[key][whatMetric(dataset_name, prompt_name, nlg_metric, default_nlu)]
-        scores[group_name].append(step_score/len(group_datasets['list_dataset']))
+        
+        if step_score is not None:
+            step_score = step_score/len(group_datasets['list_dataset'])
+        scores[group_name].append(step_score)
       
       last_step += step
       
