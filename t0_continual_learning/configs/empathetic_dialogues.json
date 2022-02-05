@@ -13,7 +13,7 @@
    },
    "prompt_cutsom": {
       "dialogue_with_emotion": [
-         "Given that you are \"[context]\", what would be your response to the the following prompt:\n\n===\n\n[input_text]"
+         "Given that you are \"[context]\", what would be your response to the the following conversation:\n\n===\n\n[input_text]"
       ]
    }
 }
