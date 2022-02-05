@@ -379,13 +379,62 @@ class DialogueEmpathic(PromptFormat):
     super().__init__(config)
   
   def filterDataset(self, dataset):
-    
-    clean_dataset = []
-    for i, ex in enumerate(dataset):
-      ex['input_text'] = ex.pop('prompt').replace('_comma_', ',')
-      clean_dataset.append(ex)
-    
-    return clean_dataset
+      
+    clean_data = []
+
+    ex = dataset[0]
+    speaker_idx = ex['speaker_idx']
+    utterance_idx = ex['utterance_idx']
+    clean_ex  = {
+        'conv_id': ex['conv_id'],
+        'context': ex['context'],
+        'input_texts': [ex['utterance']]
+    }
+
+    for ex in dataset[1:]:
+
+      next_idx = ex['utterance_idx']
+      next_speaker_idx = ex['speaker_idx']
+      if clean_ex['conv_id'] != ex['conv_id']:
+        
+        clean_data.append(clean_ex)
+        if next_idx != 1 and next_idx != 2:
+          continue
+        clean_ex  = {
+          'conv_id': ex['conv_id'],
+          'context': ex['context'].replace('_comma_', ','),
+          'input_texts': []
+        }
+
+        if next_idx == 2:
+          clean_ex['input_texts'].append(ex['input_text'])
+        clean_ex['input_texts'].append(ex['utterance'])
+
+        utterance_idx, speaker_idx = next_idx, next_speaker_idx
+        continue
+
+      assert speaker_idx != ex['speaker_idx']
+      assert next_idx == utterance_idx + 1
+      utterance_idx, speaker_idx = next_idx, next_speaker_idx
+      clean_ex['input_texts'].append(ex['utterance'])
+    clean_data.append(clean_ex)
+
+    examples = []
+    for d_conv in clean_data:
+
+      input_texts = [text.replace('_comma_', ',') for text in d_conv['input_texts']]
+      for i in range(1, len(input_texts)):
+
+        ex = {
+            'context': d_conv['context'],
+            'conv_id': d_conv ['conv_id'],
+            'idx': i,
+            'input_text': '\n'.join(['- '+text for text in input_texts[:i]]),
+            'output_text': input_texts[i]
+        }
+        examples.append(ex)
+
+    return examples
     
     
 # utils functions 
