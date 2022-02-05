@@ -6,7 +6,7 @@
          "context",
          "input_text"
       ],
-      "tgt": "utterance"
+      "tgt": "output_text"
    },
    "prompt_T0": {
       "template_name": null
