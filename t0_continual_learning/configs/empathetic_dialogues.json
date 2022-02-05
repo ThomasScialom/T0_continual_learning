@@ -3,7 +3,8 @@
       "name": "empathetic_dialogues",
       "option": null,
       "src": [
-         "context",
+         "context_prompt",
+         "context_emotion",
          "input_text"
       ],
       "tgt": "output_text"
@@ -13,7 +14,7 @@
    },
    "prompt_cutsom": {
       "dialogue_with_emotion": [
-         "Given that you are \"[context]\", what would be your response to the the following dialogue:\n\n===\n\n[input_text]"
+         "The conversation context is \"[context_emotion]\" and the first prompt was \"[context_prompt]\". What would you say given the following ongoing conversation:\n\n===\n\n[input_text]"
       ]
    }
 }
