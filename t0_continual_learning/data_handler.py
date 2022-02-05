@@ -379,54 +379,53 @@ class DialogueEmpathic(PromptFormat):
     super().__init__(config)
   
   def filterDataset(self, dataset):
-      
+  
     clean_data = []
 
-    ex = dataset[0]
-    speaker_idx = ex['speaker_idx']
-    utterance_idx = ex['utterance_idx']
-    clean_ex  = {
-        'conv_id': ex['conv_id'],
-        'context': ex['context'],
-        'input_texts': [ex['utterance']]
-    }
+    temp = []
+    clean_ex = None
+    for ex in dataset:
 
-    for ex in dataset[1:]:
+      next_idx, next_speaker_idx = ex['utterance_idx'], ex['speaker_idx']
+      if clean_ex == None or clean_ex['conv_id'] != ex['conv_id']:
 
-      next_idx = ex['utterance_idx']
-      next_speaker_idx = ex['speaker_idx']
-      if clean_ex['conv_id'] != ex['conv_id']:
-        
-        clean_data.append(clean_ex)
-        if next_idx != 1 and next_idx != 2:
+        if clean_ex:
+          clean_data.append(clean_ex)
+
+        if next_idx != 1:
           continue
+
         clean_ex  = {
           'conv_id': ex['conv_id'],
-          'context': ex['context'].replace('_comma_', ','),
-          'input_texts': []
+          'context': ex['context'],
+          'prompt': ex['prompt'],
+          'input_texts': [ex['utterance']]
         }
-
-        if next_idx == 2:
-          clean_ex['input_texts'].append(ex['input_text'])
-        clean_ex['input_texts'].append(ex['utterance'])
 
         utterance_idx, speaker_idx = next_idx, next_speaker_idx
         continue
 
+      if speaker_idx == ex['speaker_idx'] or next_idx != utterance_idx + 1:
+        temp.append(ex['conv_id'])
+        continue
       assert speaker_idx != ex['speaker_idx']
       assert next_idx == utterance_idx + 1
       utterance_idx, speaker_idx = next_idx, next_speaker_idx
+
       clean_ex['input_texts'].append(ex['utterance'])
+
     clean_data.append(clean_ex)
 
     examples = []
     for d_conv in clean_data:
 
       input_texts = [text.replace('_comma_', ',') for text in d_conv['input_texts']]
+      prompt = d_conv['prompt'].replace('_comma_', ',')
       for i in range(1, len(input_texts)):
 
         ex = {
-            'context': d_conv['context'],
+            'context_emotion': d_conv['context'],
+            'context_prompt': prompt,
             'conv_id': d_conv ['conv_id'],
             'idx': i,
             'input_text': '\n'.join(['- '+text for text in input_texts[:i]]),
@@ -435,7 +434,7 @@ class DialogueEmpathic(PromptFormat):
         examples.append(ex)
 
     return examples
-    
+
     
 # utils functions 
 def write_data(srcs, tgts, src_infos, final_folder, prompt_name, eval_mode):
