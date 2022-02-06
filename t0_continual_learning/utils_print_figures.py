@@ -128,7 +128,8 @@ def printSequencialFigure(d_scores, models, config_evaluation, save_dir, model_s
 
   plt.xticks(range(len(all_steps)), all_steps, rotation='vertical')
   plt.legend(bbox_to_anchor=(1.1, 1.05))
-  plt.savefig(os.path.join(save_dir, '->'.join(models[-1][1] + [models[-1][0]])), format='pdf')
+  if save_dir is not None:
+    plt.savefig(os.path.join(save_dir, '->'.join(models[-1][1] + [models[-1][0]])), format='pdf')
   plt.show()
   return scores
   
