@@ -1,13 +1,5 @@
 import os
 import json
-import numpy as np
-from typing import List
-import scipy.stats
-import syllables
-from datasets import load_metric
-
-import matplotlib.pyplot as plt
-
 from t0_continual_learning import custom_metrics
 from t0_continual_learning.config_variables import evaluation_new_tasks, evaluation_T0evalsets
 
