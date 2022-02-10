@@ -18,10 +18,8 @@ class Clf():
   clf = Clf(path_folder_data, evalset, prompt_name, label_name)
   
   2) infer:
-  # path_prediction the path containing the predictions of your model
-  print(clf.compute_score(path_prediction))
+  print(clf.compute_score(evaluated_predictions))
   """
-
 
   def __init__(self, path_folder_data, evalset, prompt_name, label_name):
     self.path_folder_data = path_folder_data
@@ -88,11 +86,164 @@ class Clf():
 
     return predictions
 
-  def compute_score(self, path_pred):
-    with open(path_pred, 'r') as f:
-      outputs = json.load(f)['hyps']
+  def compute_score(self, outputs):
 
-    predictions = self.get_preds(outputs)
-    return {'CLF_acc': self.accuracy_score(self.y_test, predictions)}
+    clf_predictions = self.get_preds(outputs)
+    return {'CLF_acc': self.accuracy_score(self.y_test, clf_predictions)}
 
+def computeBERTScore(preds, list_refs):
+
+  metric = load_metric("bertscore", model_type='microsoft/deberta-large-mnli')
+  metric.add_batch(predictions=preds, references=list_refs)
+  scores = metric.compute(lang='en')
+
+  return {'BERTScore(f1)': np.average(scores['f1'])}
+
+def computeRouge(preds, refs):
+
+  rouge = load_metric("rouge")
+  rouge.add_batch(predictions=preds, references=refs)
+  d_res = rouge.compute()
+
+  return {k:v.mid.fmeasure  for k, v in d_res.items()}
+
+def computeSari(preds, list_refs, srcs):
+
+  sari = load_metric("sari")
+  sari.add_batch(predictions=preds, references=list_refs)
+  d_res = sari.compute(sources=srcs)
+
+  return d_res
+
+def computeBleu(preds, list_refs):
+
+  bleu = load_metric("bleu")
+  bleu.add_batch(
+      predictions=[pred.split() for pred in preds], 
+      references=[[ref.split() for ref in refs] for refs in list_refs]
+  )
+  d_res = bleu.compute()
+
+  return {'bleu': d_res['bleu']}
+
+def computeAcc(preds, refs):
+
+  total_correct = sum([pred==ref for pred, ref, in zip(preds, refs)])
+  total_nb = len(preds)
+
+  return {"accuracy": total_correct/total_nb}
+
+
+def computeConstrain(preds, refs, src_infos, metric):
+
+  correct = 0
+  for i, (src_info, pred) in enumerate(zip(src_infos, preds)):
+    constr_type = src_info["constrain_type"]
+    assert metric == f'constrain_{constr_type}'
+
+    span_to_insert = src_info["TO_REPLACE_1"] 
+
+    if constr_type == 'start':
+      if span_to_insert == pred[:len(span_to_insert)]:
+        correct += 1
+
+    if constr_type == 'contain':
+      if span_to_insert in pred: 
+        correct += 1
+
+    if constr_type == 'end':
+      if span_to_insert == pred[-len(span_to_insert):]:
+        correct += 1
+
+  return {constr_type: correct/len(src_infos)}
+
+  
+def computeHaiku(preds, refs, srcs, bleu_score):
+
+  normaliseDifScore = lambda nb_tgt, nb_hyp: 1-abs(nb_tgt - nb_hyp)/max([nb_tgt, nb_hyp])
+  constrainScorer = lambda src, hyp: 1 if ' '.join(src.split("'")[1:]).strip() in hyp else 0
+
+  d_score = {
+      'syllable': 0,
+      'comma': 0,
+      'constrain': 0,
+      'bleu': bleu_score
+  }
+
+  for tgt, hyp, src in zip(refs, preds, srcs):
+    d_score['syllable'] += normaliseDifScore(syllables.estimate(tgt), syllables.estimate(hyp)) 
+    d_score['comma'] += normaliseDifScore(len(tgt.split(',')), len(hyp.split(','))) 
+    d_score['constrain'] += constrainScorer(src, hyp) 
+
+  for k in ['syllable', 'comma', 'constrain']:
+    d_score[k] /= len(preds)
+
+  d_score['eq_weighted'] = sum(d_score.values()) / len(d_score)
+
+  return d_score
+
+class FirstWordSim():    
+  
+  def __init__(self, preds, refs):
+    return self.compute(preds, refs)
+  
+  def compute(self, preds, refs):
+    tok2idx = self.getTok2idx(preds + refs)
+    d = jensen_shannon_distance(self.getArray(tok2idx, preds), self.getArray(tok2idx, refs))
+    return {'jensenFirstToken': 1/d}
+  
+  def jensen_shannon_distance(self, p, q):
+      """
+      Thanks to @sourcedexter (https://medium.com/@sourcedexter/how-to-find-the-similarity-between-two-probability-distributions-using-python-a7546e90a08d)
+      method to compute the Jenson-Shannon Distance 
+      between two probability distributions
+      """
+
+      # convert the vectors into numpy arrays in case that they aren't
+      p = np.array(p)
+      q = np.array(q)
+
+      # calculate m
+      m = (p + q) / 2
+
+      # compute Jensen Shannon Divergence
+      divergence = (scipy.stats.entropy(p, m) + scipy.stats.entropy(q, m)) / 2
+
+      # compute the Jensen Shannon Distance
+      distance = np.sqrt(divergence)
+
+      return distance
+
+
+  def getFirstTok(self, sent):
+    tok = ""
+    if sent:
+      tok = sent.split()[0].lower()
+
+    return tok
+
+  def getTok2idx(self, all_sents):
+    
+    tok2idx = {}
+    count = 0
+    for sent in all_sents:
+
+      tok = self.getFirstTok(sent)
+      if tok not in tok2idx:
+        tok2idx[tok] = count
+        count += 1
+
+    return tok2idx
+
+  def getArray(self, tok2idx, sents):
+
+    arr = [0] * len(tok2idx)
+
+    for sent in sents:
+      tok = getFirstTok(sent)
+      arr[tok2idx[tok]] += 1
+
+    return arr
+
+  
 
