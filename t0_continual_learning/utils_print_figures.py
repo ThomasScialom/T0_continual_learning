@@ -14,36 +14,34 @@ list_zero_shot = [
   ]
 
 
-def whatMetricDefault(dataset_name, prompt_name, default_nlg='bleu', default_nlu='accuracy'):
+def whatMetricDefault(dataset_name, prompt_name, default_nlg=['bleu'], default_nlu=['accuracy']):
   
   nlg_datasets = {'haiku', 'eli5', 'wiki_auto', 'gigaword', 'covid_qa_deepset', 'empathetic_dialogues', 'twitter_top20', 'eSNLI'}
   nlu_datasets = { 'rte', 'copa', 'wic', 'winogrande', 'hellaswag', 'anli', 'cb', 'wsc', 'story_cloze', 'covidfact', 'rank_summary'}
 
   if 'constrain' in prompt_name:
     if 'constrain_start' in prompt_name:
-      metric = 'start'
+      metrics = ['start']
     elif 'constrain_contain' in prompt_name:
-      metric = 'contain'
+      metrics = ['contain']
     elif 'constrain_end' in prompt_name:
-      metric = 'end'
-  
+      metrics = ['end']
   elif dataset_name == 'asset': 
-    metric = 'sari'
+    metrics = ['sari']
   elif dataset_name == 'haiku': 
-    metric = 'eq_weighted'
+    metrics = ['eq_weighted']
   elif dataset_name == 'eli5': 
-    metric = 'jensenFirstToken'
-   
+    metrics = ['jensenFirstToken']
+  elif dataset_name == 'empathetic_dialogues': 
+    metric = ['BERTScore(f1)', 'bleu']
   elif dataset_name in nlg_datasets: 
-    metric = default_nlg
-
+    metrics = default_nlg
   elif dataset_name in nlu_datasets: 
-    metric = default_nlu
-  
+    metrics = default_nlu
   else:
     raise NotImplementedError
      
-  return metric
+  return metrics
 
 
 def get_color(group_name):
@@ -98,7 +96,8 @@ def getScoresSequencial(d_scores, models, config_evaluation, model_size, default
             print(f'Break for {group_datasets["list_dataset"]}: {key} does not exist')
             step_score = None
             break
-          step_score += d_scores[key][whatMetric(dataset_name, prompt_name, nlg_metric, default_nlu)]
+          metrics = whatMetric(dataset_name, prompt_name, nlg_metric, default_nlu)
+          step_score += np.average([d_scores[key][m] for m in metrics])
         
         if step_score is not None:
             step_score = step_score/len(group_datasets['list_dataset'])
@@ -158,8 +157,8 @@ def printNonSequencialFigure(
     d_rehearsals,
     save_dir,
     model_size='3B',
-    default_nlg='bleu', 
-    default_nlu='accuracy',
+    nlg_metric='bleu', 
+    nlu_metric='accuracy',
     do_normalise=True,
     get_color_custom=None,
     ):
@@ -183,9 +182,10 @@ def printNonSequencialFigure(
               key = f'{baseline_name}.{dataset_name}.{eval_mode}.{prompt_name}'
             else:
               key = f'{model_name}.{model_size}.rehearsal{rehearsal}.{step}.{dataset_name}.{eval_mode}.{prompt_name}'
-
-            step_scores.append(d_scores[key][whatMetric(dataset_name, prompt_name, default_nlg, default_nlu)])
-
+                
+            metrics = whatMetric(dataset_name, prompt_name, nlg_metric, nlu_metric)
+            step_scores.append(np.average([d_scores[key][m] for m in metrics]))
+            
           scores.append(sum(step_scores)/len(step_scores))
         
         d_scores_fig[f'{group_name}.{rehearsal}'] = scores
