@@ -153,5 +153,7 @@ class MetricScorer():
         all_metric_done = False
       if metric == 'firstWordSim' and 'jensenFirstToken' not in dict_res:
         all_metric_done = False
+      if metric == 'clf' and 'CLF_acc' not in dict_res:
+        all_metric_done = False
 
     return all_metric_done
