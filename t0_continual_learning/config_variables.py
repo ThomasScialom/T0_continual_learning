@@ -256,7 +256,7 @@ evaluation_new_tasks = {
         'dialogue_with_emotion': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['bertscore', 'rouge', 'bleu']
+            'metrics': ['bertscore', 'rouge', 'bleu', 'CLF_acc']
         }
       }
   },
@@ -274,7 +274,7 @@ evaluation_new_tasks = {
         'tweet_as+about': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['bertscore', 'rouge', 'bleu']
+            'metrics': ['bertscore', 'rouge', 'bleu', 'CLF_acc']
         }
       }
   },
