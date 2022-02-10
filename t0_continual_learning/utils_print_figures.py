@@ -14,7 +14,7 @@ list_zero_shot = [
   ]
 
 
-def whatMetric(dataset_name, prompt_name, default_nlg='bleu', default_nlu='accuracy'):
+def whatMetricDefault(dataset_name, prompt_name, default_nlg='bleu', default_nlu='accuracy'):
   
   nlg_datasets = {'haiku', 'eli5', 'wiki_auto', 'gigaword', 'covid_qa_deepset', 'empathetic_dialogues', 'twitter_top20', 'eSNLI'}
   nlu_datasets = { 'rte', 'copa', 'wic', 'winogrande', 'hellaswag', 'anli', 'cb', 'wsc', 'story_cloze', 'covidfact', 'rank_summary'}
@@ -65,8 +65,12 @@ def get_color(group_name):
   return color
 
 
-def getScoresSequencial(d_scores, models, config_evaluation, model_size, default_nlg='bleu', default_nlu='accuracy'):
+def getScoresSequencial(d_scores, models, config_evaluation, model_size, default_nlg='bleu', default_nlu='accuracy', whatMetric=None):
   
+  if not whatMetric:
+    whatMetric = whatMetricDefault
+    
+    
   scores = {}
 
   for group_name, group_datasets in config_evaluation.items(): 
@@ -104,9 +108,22 @@ def getScoresSequencial(d_scores, models, config_evaluation, model_size, default
       
   return scores, all_steps
 
-def printSequencialFigure(d_scores, models, config_evaluation, save_dir, model_size='3B', do_normalise=True):
+def printSequencialFigure(d_scores, models, config_evaluation, save_dir, 
+                          model_size='3B', do_normalise=True, 
+                          default_nlg='bleu', default_nlu='accuracy', 
+                          whatMetric=None
+                         ):
   
-  scores, all_steps = getScoresSequencial(d_scores, models, config_evaluation, model_size=model_size)
+
+  scores, all_steps = getScoresSequencial(
+      d_scores, 
+      models, 
+      config_evaluation, 
+      model_size=model_size,
+      default_nlg=default_nlg, 
+      default_nlu=default_nlu, 
+      whatMetric=whatMetric
+  )
   
   
   plt.figure(figsize=(8, 6))
@@ -129,7 +146,7 @@ def printSequencialFigure(d_scores, models, config_evaluation, save_dir, model_s
   plt.xticks(range(len(all_steps)), all_steps, rotation='vertical')
   plt.legend(bbox_to_anchor=(1.1, 1.05))
   if save_dir is not None:
-    plt.savefig(os.path.join(save_dir, '->'.join(models[-1][1] + [models[-1][0]])), format='pdf')
+    plt.savefig(os.path.join(save_dir, '->'.join(models[-1][1] + [models[-1][0]])), format='pdf', bbox_inches='tight')
   plt.show()
   return scores
   
@@ -144,7 +161,7 @@ def printNonSequencialFigure(
     default_nlg='bleu', 
     default_nlu='accuracy',
     do_normalise=True,
-    get_color_custom=None
+    get_color_custom=None,
     ):
   
   
