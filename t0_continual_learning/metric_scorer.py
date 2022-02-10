@@ -8,6 +8,7 @@ from datasets import load_metric
 
 import matplotlib.pyplot as plt
 
+from t0_continual_learning import custom_metrics
 from t0_continual_learning.config_variables import evaluation_new_tasks, evaluation_T0evalsets
 
 class MetricScorer():
@@ -20,7 +21,7 @@ class MetricScorer():
       with open(path_dscores, 'r') as f:
         self.d_scores = json.load(f)
   
-  def getScore(self, prompt_config, path_ex, path_pred):
+  def getScore(self, prompt_config, path_ex, path_pred, path_folder_data, evalset, prompt_name):
     
     format = lambda xs: xs# [x.strip() for x in xs]
 
@@ -37,32 +38,42 @@ class MetricScorer():
     assert len(preds) == len(refs)
       
     d_res = {}
+    
     for metric in prompt_config['metrics']:
-
+    
       if metric == "rouge":
-        d_res = {**d_res, **self.computeRouge(preds, refs)}
+        d_res = {**d_res, **custom_metrics.computeRouge(preds, refs)}
 
       if metric == "bleu":
-        d_res = {**d_res, **self.computeBleu(preds, list_refs)}
+        d_res = {**d_res, **custom_metrics.computeBleu(preds, list_refs)}
       
       if metric == "bertscore":
-        d_res = {**d_res, **self.computeBERTScore(preds, list_refs)}
+        d_res = {**d_res, **custom_metrics.computeBERTScore(preds, list_refs)}
         
       if metric == "sari":
-        d_res = {**d_res, **self.computeSari(preds, list_refs, exs['src'])} 
+        d_res = {**d_res, **custom_metrics.computeSari(preds, list_refs, exs['src'])} 
             
       if metric == "accuracy":
-        d_res = {**d_res, **self.computeAcc(preds, refs)}
+        d_res = {**d_res, **custom_metrics.computeAcc(preds, refs)}
       
       if "constrain" in metric:
-        d_res = {**d_res, **self.computeConstrain(preds, refs, exs['src_info'], metric)}
+        d_res = {**d_res, **custom_metrics.computeConstrain(preds, refs, exs['src_info'], metric)}
 
       if metric == "haikuMetric":
-        bleu_score = self.computeBleu(preds, list_refs)['bleu']
-        d_res = {**d_res, **self.computeHaiku(preds, refs, exs['src'], bleu_score)} 
+        bleu_score = custom_metrics.computeBleu(preds, list_refs)['bleu']
+        d_res = {**d_res, **custom_metrics.computeHaiku(preds, refs, exs['src'], bleu_score)} 
       
       if metric == "firstWordSim":
-        d_res = {**d_res, **self.computeFirstWordSim(preds, refs)}
+        d_res = {**d_res, **custom_metrics.FirstWordSim(preds, refs)}
+        
+      if metric == "clf":
+        
+        if evalset == 'twitter_top20':
+          label_name = 'author'
+        elif evalset == 'empathetic_dialogues':
+          label_name = 'context_emotion'
+        clf = custom_metrics.Clf(path_folder_data, evalset, prompt_name, label_name)
+        d_res = {**d_res, **clf.compute_score(preds)}
 
     return d_res
         
@@ -71,156 +82,6 @@ class MetricScorer():
     with open(path, 'r') as f:
       data = json.load(f)
     return data
-  
-  def computeBERTScore(self, preds, list_refs):
-    
-    metric = load_metric("bertscore", model_type='microsoft/deberta-large-mnli')
-    metric.add_batch(predictions=preds, references=list_refs)
-    scores = metric.compute(lang='en')
-
-    return {'BERTScore(f1)': np.average(scores['f1'])}
-  
-  def computeRouge(self, preds, refs):
-    
-    rouge = load_metric("rouge")
-    rouge.add_batch(predictions=preds, references=refs)
-    d_res = rouge.compute()
-
-    return {k:v.mid.fmeasure  for k, v in d_res.items()}
-
-  def computeSari(self, preds, list_refs, srcs):
-    
-    sari = load_metric("sari")
-    sari.add_batch(predictions=preds, references=list_refs)
-    d_res = sari.compute(sources=srcs)
-
-    return d_res
-
-  def computeBleu(self, preds, list_refs):
-    
-    bleu = load_metric("bleu")
-    bleu.add_batch(
-        predictions=[pred.split() for pred in preds], 
-        references=[[ref.split() for ref in refs] for refs in list_refs]
-    )
-    d_res = bleu.compute()
-
-    return {'bleu': d_res['bleu']}
-
-  def computeAcc(self, preds, refs):
-    
-    total_correct = sum([pred==ref for pred, ref, in zip(preds, refs)])
-    total_nb = len(preds)
-
-    return {"accuracy": total_correct/total_nb}
-
-  def computeConstrain(self, preds, refs, src_infos, metric):
-
-    correct = 0
-    for i, (src_info, pred) in enumerate(zip(src_infos, preds)):
-      constr_type = src_info["constrain_type"]
-      assert metric == f'constrain_{constr_type}'
-      
-      span_to_insert = src_info["TO_REPLACE_1"] 
-
-      if constr_type == 'start':
-        if span_to_insert == pred[:len(span_to_insert)]:
-          correct += 1
-      
-      if constr_type == 'contain':
-        if span_to_insert in pred: 
-          correct += 1
-      
-      if constr_type == 'end':
-        if span_to_insert == pred[-len(span_to_insert):]:
-          correct += 1
-    
-    return {constr_type: correct/len(src_infos)}
-
-
-  def computeHaiku(self, preds, refs, srcs, bleu_score):
-    
-    normaliseDifScore = lambda nb_tgt, nb_hyp: 1-abs(nb_tgt - nb_hyp)/max([nb_tgt, nb_hyp])
-    constrainScorer = lambda src, hyp: 1 if ' '.join(src.split("'")[1:]).strip() in hyp else 0
-
-    d_score = {
-        'syllable': 0,
-        'comma': 0,
-        'constrain': 0,
-        'bleu': bleu_score
-    }
-
-    for tgt, hyp, src in zip(refs, preds, srcs):
-      d_score['syllable'] += normaliseDifScore(syllables.estimate(tgt), syllables.estimate(hyp)) 
-      d_score['comma'] += normaliseDifScore(len(tgt.split(',')), len(hyp.split(','))) 
-      d_score['constrain'] += constrainScorer(src, hyp) 
-    
-    for k in ['syllable', 'comma', 'constrain']:
-      d_score[k] /= len(preds)
-
-    d_score['eq_weighted'] = sum(d_score.values()) / len(d_score)
-
-    return d_score
-
-  def computeFirstWordSim(self, preds, refs):    
-
-    def jensen_shannon_distance(p, q):
-        """
-        Thanks to @sourcedexter (https://medium.com/@sourcedexter/how-to-find-the-similarity-between-two-probability-distributions-using-python-a7546e90a08d)
-        method to compute the Jenson-Shannon Distance 
-        between two probability distributions
-        """
-
-        # convert the vectors into numpy arrays in case that they aren't
-        p = np.array(p)
-        q = np.array(q)
-
-        # calculate m
-        m = (p + q) / 2
-
-        # compute Jensen Shannon Divergence
-        divergence = (scipy.stats.entropy(p, m) + scipy.stats.entropy(q, m)) / 2
-
-        # compute the Jensen Shannon Distance
-        distance = np.sqrt(divergence)
-
-        return distance
-
-
-    def getFirstTok(sent):
-      tok = ""
-      if sent:
-        tok = sent.split()[0].lower()
-
-      return tok
-
-    def getTok2idx(all_sents):
-      tok2idx = {}
-
-      count = 0
-      for sent in all_sents:
-        
-        tok = getFirstTok(sent)
-        if tok not in tok2idx:
-          tok2idx[tok] = count
-          count += 1
-
-      return tok2idx
-
-
-    def getArray(tok2idx, sents):
-
-      arr = [0] * len(tok2idx)
-
-      for sent in sents:
-        tok = getFirstTok(sent)
-        arr[tok2idx[tok]] += 1
-
-      return arr
-
-    tok2idx = getTok2idx(preds + refs)
-    d = jensen_shannon_distance(getArray(tok2idx, preds), getArray(tok2idx, refs))
-    return {'jensenFirstToken': 1/d}
 
   def getAllScores(self, path_folder_preds, path_folder_data, init_from_sratch=False, evaluation_config=None):
     
@@ -261,8 +122,9 @@ class MetricScorer():
       path_pred = os.path.join(path_folder_preds, file)
       path_ex = os.path.join(path_folder_data, evalset, f'{prompt_name}.{eval_mode}.json')
       
-      self.d_scores[key] = self.getScore(prompt_config, path_ex, path_pred)
-
+      self.d_scores[key] = self.getScore(prompt_config, path_ex, path_pred, path_folder_data, evalset, prompt_name)
+      
+      
     if self.path_dscores:
       with open(self.path_dscores, 'w') as f:
         json.dump(self.d_scores, f, indent=3)
