@@ -74,7 +74,7 @@ class MetricScorer():
   
   def computeBERTScore(self, preds, list_refs):
     
-    metric = load_metric("bertscore")
+    metric = load_metric("bertscore", model_type='microsoft/deberta-large-mnli')
     metric.add_batch(predictions=preds, references=list_refs)
     scores = metric.compute(lang='en')
 
