@@ -45,6 +45,9 @@ class MetricScorer():
       if metric == "bleu":
         d_res = {**d_res, **self.computeBleu(preds, list_refs)}
       
+      if metric == "bertscore":
+        d_res = {**d_res, **self.computeBERTScore(preds, list_refs)}
+        
       if metric == "sari":
         d_res = {**d_res, **self.computeSari(preds, list_refs, exs['src'])} 
             
@@ -68,7 +71,15 @@ class MetricScorer():
     with open(path, 'r') as f:
       data = json.load(f)
     return data
+  
+  def computeBERTScore(self, preds, list_refs):
+    
+    metric = load_metric("bertscore")
+    metric.add_batch(predictions=preds, references=list_refs)
+    scores = metric.compute(lang='en')
 
+    return {'BERTScore(f1)': np.average(scores['f1'])}
+  
   def computeRouge(self, preds, refs):
     
     rouge = load_metric("rouge")
@@ -263,6 +274,8 @@ class MetricScorer():
       if metric == 'rouge' and 'rouge1' not in dict_res:
         all_metric_done = False
       if metric == 'bleu' and 'bleu' not in dict_res:
+        all_metric_done = False
+      if metric == 'bertscore' and 'BERTScore(f1)' not in dict_res:
         all_metric_done = False
       if metric == 'constrain_contain' and 'contain' not in dict_res:
         all_metric_done = False
