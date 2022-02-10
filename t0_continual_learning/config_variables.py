@@ -211,7 +211,7 @@ evaluation_new_tasks = {
         'generate_a_question_1': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['BERTScore', 'rouge', 'bleu', 'firstWordSim']
+            'metrics': ['bertscore', 'rouge', 'bleu', 'firstWordSim']
         }
       }
   },
@@ -220,7 +220,7 @@ evaluation_new_tasks = {
         '__RANDOM__': {
             'type': 't0_template',
             'choice': '',
-            'metrics': ['BERTScore', 'rouge', 'bleu', 'accuracy']
+            'metrics': ['bertscore', 'rouge', 'bleu', 'accuracy']
         }
       }
   },
@@ -229,7 +229,7 @@ evaluation_new_tasks = {
         'do_nothing': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['BERTScore', 'rouge', 'bleu', 'haikuMetric']
+            'metrics': ['bertscore', 'rouge', 'bleu', 'haikuMetric']
         }
       }
   },
@@ -256,7 +256,7 @@ evaluation_new_tasks = {
         'dialogue_with_emotion': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['BERTScore', 'rouge', 'bleu']
+            'metrics': ['bertscore', 'rouge', 'bleu']
         }
       }
   },
@@ -265,7 +265,7 @@ evaluation_new_tasks = {
         'explain_why': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['BERTScore', 'rouge', 'bleu']
+            'metrics': ['bertscore', 'rouge', 'bleu']
         }
       }
   },
@@ -274,7 +274,7 @@ evaluation_new_tasks = {
         'tweet_as+about': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['BERTScore', 'rouge', 'bleu']
+            'metrics': ['bertscore', 'rouge', 'bleu']
         }
       }
   },
