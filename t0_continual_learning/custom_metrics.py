@@ -211,7 +211,7 @@ class FirstWordSim():
   
   def compute(self, preds, refs):
     tok2idx = self.getTok2idx(preds + refs)
-    d = jensen_shannon_distance(self.getArray(tok2idx, preds), self.getArray(tok2idx, refs))
+    d = self.jensen_shannon_distance(self.getArray(tok2idx, preds), self.getArray(tok2idx, refs))
     return {'jensenFirstToken': 1/d}
   
   def jensen_shannon_distance(self, p, q):
