@@ -256,7 +256,7 @@ evaluation_new_tasks = {
         'dialogue_with_emotion': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge', 'bleu', 'CLF_acc']
+            'metrics': ['bleu', 'selfbleu']
         }
       }
   },
