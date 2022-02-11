@@ -39,7 +39,10 @@ class MetricScorer():
 
       elif metric == "bleu":
         d_res = {**d_res, **custom_metrics.computeBleu(preds, list_refs)}
-      
+        
+      elif metric == "selfbleu":
+        d_res = {**d_res, **custom_metrics.computeSelfBleu(preds)}
+
       elif metric == "bertscore":
         d_res = {**d_res, **custom_metrics.computeBERTScore(preds, list_refs)}
         
@@ -150,6 +153,8 @@ class MetricScorer():
       if metric == 'firstWordSim' and 'jensenFirstToken' not in dict_res:
         all_metric_done = False
       if metric == 'CLF_acc' and 'CLF_acc' not in dict_res:
+        all_metric_done = False
+      if metric == 'selfbleu' and 'selfbleu' not in dict_res:
         all_metric_done = False
 
     return all_metric_done
