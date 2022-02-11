@@ -60,7 +60,8 @@ class MetricScorer():
         d_res = {**d_res, **custom_metrics.computeHaiku(preds, refs, exs['src'], bleu_score)} 
       
       elif metric == "firstWordSim":
-        d_res = {**d_res, **custom_metrics.FirstWordSim(preds, refs)}
+        firstWordSim = custom_metrics.FirstWordSim()
+        d_res = {**d_res, **firstWordSim.compute(preds, refs)}
         
       elif metric == "CLF_acc":
         
