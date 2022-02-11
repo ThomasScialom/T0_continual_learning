@@ -108,14 +108,16 @@ class MetricScorer():
 
       prompt_config = evaluation_config[evalset][eval_mode][prompt_name]
 
+      d_key = {}
       if key in self.d_scores:
+        d_key = self.d_scores[key]
         if self.areMetricsDone(prompt_config['metrics'], self.d_scores[key]) == True:
           continue 
 
       path_pred = os.path.join(path_folder_preds, file)
       path_ex = os.path.join(path_folder_data, evalset, f'{prompt_name}.{eval_mode}.json')
       
-      self.d_scores[key] = self.getScore(prompt_config, path_ex, path_pred, path_folder_data, evalset, prompt_name)
+      self.d_scores[key] = self.getScore(prompt_config, path_ex, path_pred, path_folder_data, evalset, prompt_name, d_res=d_key)
       
       
     if self.path_dscores:
