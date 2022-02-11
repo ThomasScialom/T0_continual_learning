@@ -531,17 +531,5 @@ list_config_reharsals = {
       },
       'reharsal': {'inheritFrom': "sequencial.eSNLI.from.wiki_auto->gigaword->haiku->covid_qa_deepset->eli5->empathetic_dialogues"}
   },
-  
-  
-  "sequencial.rank_summary.from.wiki_auto->gigaword->haiku->eli5->covid_qa_deepset": {
-      'new_dataset': {
-          'eval_mode': 'train',
-          'name': 'rank_summary',
-          'prompts': {
-              'what_summary_is_the_best': 100000,
-          }
-      },
-      'reharsal': {'inheritFrom': "sequencial.covid_qa_deepset.from.wiki_auto->gigaword->haiku->eli5"}
-  },
 }
 
