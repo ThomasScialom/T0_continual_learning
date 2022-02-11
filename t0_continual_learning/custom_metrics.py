@@ -132,6 +132,22 @@ def computeBleu(preds, list_refs):
 
   return {'bleu': d_res['bleu']}
 
+def computeSelfBleu(preds):
+
+  bleu = load_metric("bleu")
+  
+  sum_bleu = 0
+  for i, pred in enumerate(preds):
+    
+    refs = preds[:i] + preds[i+1:]
+    bleu.add_batch(
+        predictions=[pred.split()], 
+        references=[[ref.split() for ref in refs]]
+    )
+    sum_bleu += bleu.compute()['bleu']
+
+  return {'selfbleu': sum_bleu/len(preds)}
+
 def computeAcc(preds, refs):
 
   total_correct = sum([pred==ref for pred, ref, in zip(preds, refs)])
