@@ -207,7 +207,7 @@ def computeHaiku(preds, refs, srcs, bleu_score):
 class FirstWordSim():    
   
   def __init__(self, preds, refs):
-    return self.compute(preds, refs)
+    pass
   
   def compute(self, preds, refs):
     tok2idx = self.getTok2idx(preds + refs)
