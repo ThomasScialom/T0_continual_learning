@@ -206,7 +206,7 @@ def computeHaiku(preds, refs, srcs, bleu_score):
 
 class FirstWordSim():    
   
-  def __init__(self, preds, refs):
+  def __init__(self):
     pass
   
   def compute(self, preds, refs):
