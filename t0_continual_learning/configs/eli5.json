@@ -12,13 +12,13 @@
    },
    "prompt_cutsom": {
       "generate_a_question_1": [
-         "Given the following text, what could have been an inquisive question: \"[text]\"",
+         "Given the following text, what could have been an inquisitive question: \"[text]\"",
          "Given the following text, write the possible curious question it answers: \"[text]\"",
-         "Write an inquisive question about the following text: \"[text]\"",
+         "Write an inquisitive question about the following text: \"[text]\"",
          "[text]\n\n===\n\nGiven the above text, write the possible curious question it answers:"
       ],
       "generate_a_question_2": [
-         "Write an inquisive question given the following text: \"[text]\""
+         "Write an inquisitive question given the following text: \"[text]\""
       ]
    }
 }
