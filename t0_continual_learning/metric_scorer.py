@@ -121,7 +121,8 @@ class MetricScorer():
       with open(self.path_dscores, 'w') as f:
         json.dump(self.d_scores, f, indent=3)
         
-  def areMetricsDone(self, metrics, dict_res):
+  @staticmethod
+  def areMetricsDone(metrics, dict_res):
     all_metric_done = True
         
     for metric in metrics:
@@ -145,7 +146,7 @@ class MetricScorer():
         all_metric_done = False
       if metric == 'firstWordSim' and 'jensenFirstToken' not in dict_res:
         all_metric_done = False
-      if metric == 'clf' and 'CLF_acc' not in dict_res:
+      if metric == 'CLF_acc' and 'CLF_acc' not in dict_res:
         all_metric_done = False
 
     return all_metric_done
