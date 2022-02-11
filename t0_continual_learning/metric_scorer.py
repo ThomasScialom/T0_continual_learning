@@ -13,7 +13,7 @@ class MetricScorer():
       with open(path_dscores, 'r') as f:
         self.d_scores = json.load(f)
   
-  def getScore(self, prompt_config, path_ex, path_pred, path_folder_data, evalset, prompt_name):
+  def getScore(self, prompt_config, path_ex, path_pred, path_folder_data, evalset, prompt_name, d_res = {}):
     
     format = lambda xs: xs# [x.strip() for x in xs]
 
@@ -28,37 +28,38 @@ class MetricScorer():
       list_refs = [[r] for r in refs]
 
     assert len(preds) == len(refs)
-      
-    d_res = {}
     
     for metric in prompt_config['metrics']:
-    
+      
+      if metric in d_res:
+        continue
+      
       if metric == "rouge":
         d_res = {**d_res, **custom_metrics.computeRouge(preds, refs)}
 
-      if metric == "bleu":
+      elif metric == "bleu":
         d_res = {**d_res, **custom_metrics.computeBleu(preds, list_refs)}
       
-      if metric == "bertscore":
+      elif metric == "bertscore":
         d_res = {**d_res, **custom_metrics.computeBERTScore(preds, list_refs)}
         
-      if metric == "sari":
+      elif metric == "sari":
         d_res = {**d_res, **custom_metrics.computeSari(preds, list_refs, exs['src'])} 
             
-      if metric == "accuracy":
+      elif metric == "accuracy":
         d_res = {**d_res, **custom_metrics.computeAcc(preds, refs)}
       
-      if "constrain" in metric:
+      elif "constrain" in metric:
         d_res = {**d_res, **custom_metrics.computeConstrain(preds, refs, exs['src_info'], metric)}
 
-      if metric == "haikuMetric":
+      elif metric == "haikuMetric":
         bleu_score = custom_metrics.computeBleu(preds, list_refs)['bleu']
         d_res = {**d_res, **custom_metrics.computeHaiku(preds, refs, exs['src'], bleu_score)} 
       
-      if metric == "firstWordSim":
+      elif metric == "firstWordSim":
         d_res = {**d_res, **custom_metrics.FirstWordSim(preds, refs)}
         
-      if metric == "clf":
+      elif metric == "CLF_acc":
         
         if evalset == 'twitter_top20':
           label_name = 'author'
