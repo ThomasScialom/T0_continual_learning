@@ -18,7 +18,7 @@ continual_train = {
   },
   'eli5': {
       'train_asks': [
-        ('custom', 'generate_a_question_1'),
+        ('custom', 'generate_a_question_2'),
       ]
   },
   'haiku': {
