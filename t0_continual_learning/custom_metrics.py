@@ -262,7 +262,7 @@ class FirstWordSim():
     arr = [0] * len(tok2idx)
 
     for sent in sents:
-      tok = getFirstTok(sent)
+      tok = self.getFirstTok(sent)
       arr[tok2idx[tok]] += 1
 
     return arr
