@@ -161,6 +161,7 @@ def printNonSequencialFigure(
     nlu_metric='accuracy',
     do_normalise=True,
     get_color_custom=None,
+    whatMetric=None
     ):
   
   
