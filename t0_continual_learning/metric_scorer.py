@@ -12,7 +12,22 @@ class MetricScorer():
     if path_dscores:
       with open(path_dscores, 'r') as f:
         self.d_scores = json.load(f)
-  
+    
+    self.d_metric_map_names = {
+        'rouge': 'rouge1',
+        'bleu': 'bleu',
+        'bertscore': 'BERTScore(f1)',
+        'constrain_contain': 'contain',
+        'constrain_end': 'end',
+        'constrain_start': 'start',
+        'accuracy': 'accuracy',
+        'sari': 'sari',
+        'haikuMetric': 'comma',
+        'firstWordSim': 'jensenFirstToken',
+        'CLF_acc': 'CLF_acc',
+        'selfbleu': 'selfbleu',
+    }
+    
   def getScore(self, prompt_config, path_ex, path_pred, path_folder_data, evalset, prompt_name, d_res = {}):
     
     format = lambda xs: xs# [x.strip() for x in xs]
@@ -31,8 +46,10 @@ class MetricScorer():
     
     for metric in prompt_config['metrics']:
       
-      if metric in d_res:
+      if self.d_metric_map_names[metric] in d_res:
         continue
+      
+      print('Computing', metric, path_pred)
       
       if metric == "rouge":
         d_res = {**d_res, **custom_metrics.computeRouge(preds, refs)}
