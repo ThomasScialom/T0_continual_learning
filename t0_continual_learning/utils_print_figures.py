@@ -27,7 +27,7 @@ def whatMetricDefault(dataset_name, prompt_name, default_nlg=['bleu'], default_n
       metrics = ['contain']
     elif 'constrain_end' in prompt_name:
       metrics = ['end']
-  elif dataset_name == 'asset': 
+  elif dataset_name == 'asset' or dataset_name == 'wiki_auto': 
     metrics = ['sari']
   elif dataset_name == 'haiku': 
     metrics = ['eq_weighted']
