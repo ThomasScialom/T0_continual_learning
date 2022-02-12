@@ -141,7 +141,7 @@ class MetricScorer():
       print(f'{i}/{nb_files}...... {path_pred}')
       start_time = time.time()
       self.d_scores[key] = self.getScore(prompt_config, path_ex, path_pred, path_folder_data, evalset, prompt_name, d_res=d_key)
-      print(f'\t..... took {round(time.time() - start_time}, 2)')
+      print(f'\t..... took {round(time.time() - start_time, 2)}')
       
     if self.path_dscores:
       with open(self.path_dscores, 'w') as f:
