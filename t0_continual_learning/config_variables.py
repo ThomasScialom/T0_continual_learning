@@ -31,11 +31,6 @@ continual_train = {
         ('custom', "covid_cloze_book_qa"),
       ]
   },
-  'rank_summary': {
-      'train': [
-        ('custom', "what_summary_is_the_best"),
-      ]
-  },
   'empathetic_dialogues': {
       'train': [
         ('custom', "dialogue_with_emotion"),
@@ -91,11 +86,6 @@ continual_test = {
   'covid_qa_deepset': {
       'train': [
         ('custom', "covid_cloze_book_qa"),
-      ]
-  },
-  'rank_summary': {
-      'test': [
-        ('custom', "what_summary_is_the_best"),
       ]
   },
   'empathetic_dialogues': {
@@ -193,7 +183,7 @@ evaluation_new_tasks = {
         'simplification_1': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge', 'bleu', 'sari']
+            'metrics': ['bleu', 'sari']
         }
       }
   },
@@ -201,7 +191,7 @@ evaluation_new_tasks = {
     'validation': {
       'simplification_1': {
         'choice': '',
-        'metrics': ['rouge', 'bleu', 'sari'],
+        'metrics': ['bleu', 'sari'],
         'type': 'custom'
       }
     }
@@ -215,21 +205,12 @@ evaluation_new_tasks = {
         }
       }
   },
-  'covidfact': {
-      'test': {
-        '__RANDOM__': {
-            'type': 't0_template',
-            'choice': '',
-            'metrics': ['bertscore', 'rouge', 'bleu', 'accuracy']
-        }
-      }
-  },
   'haiku': {
       'test': {
         'do_nothing': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['bertscore', 'rouge', 'bleu', 'haikuMetric']
+            'metrics': ['haikuMetric']
         }
       }
   },
@@ -242,15 +223,6 @@ evaluation_new_tasks = {
         }
       }
   },
-  'rank_summary': {
-      'test': {
-        'what_summary_is_the_best': {
-            'type': 'custom',
-            'choice': '',
-            'metrics': ['accuracy']
-        }
-      }
-  },  
   'empathetic_dialogues': {
       'test': {
         'dialogue_with_emotion': {
@@ -265,7 +237,7 @@ evaluation_new_tasks = {
         'explain_why': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['bertscore', 'rouge', 'bleu']
+            'metrics': ['bertscore', 'bleu']
         }
       }
   },
@@ -274,7 +246,7 @@ evaluation_new_tasks = {
         'tweet_as+about': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge', 'bleu', 'CLF_acc']
+            'metrics': ['bleu', 'CLF_acc']
         }
       }
   },
@@ -286,7 +258,7 @@ evaluation_T0evalsets = {
           "fill in the blank": {
             'type': 't0_template',
             'choice': 'option1_option2',
-            'metrics': ['rouge', 'bleu', 'accuracy']
+            'metrics': ['accuracy']
           }
       }
   },
@@ -295,7 +267,7 @@ evaluation_T0evalsets = {
           "can we infer": {
             'type': 't0_template',
             'choice': 'yes_no',
-            'metrics': ['rouge', 'bleu', 'accuracy']
+            'metrics': ['accuracy']
           }
       }
   },
@@ -304,7 +276,7 @@ evaluation_T0evalsets = {
           "same_sense": {
             'type': 't0_template',
             'choice': 'yes_no',
-            'metrics': ['rouge', 'bleu', 'accuracy']
+            'metrics': ['accuracy']
           }
       }
   },
@@ -313,7 +285,7 @@ evaluation_T0evalsets = {
       "choose": {
         'type': 't0_template',
         'choice': 'option1_option2',
-        'metrics': ['rouge', 'bleu', 'accuracy']
+        'metrics': ['accuracy']
       }
     }
   },
@@ -322,7 +294,7 @@ evaluation_T0evalsets = {
           "__RANDOM__": {
             'type': 't0_template',
             'choice': '',
-            'metrics': ['rouge', 'bleu', 'accuracy']
+            'metrics': ['accuracy']
           }
       }
   },
@@ -332,7 +304,7 @@ evaluation_T0evalsets = {
           "__RANDOM__": {
             'type': 't0_template',
             'choice': '',
-            'metrics': ['rouge', 'bleu', 'accuracy']
+            'metrics': ['accuracy']
           }
       }
   },
@@ -342,7 +314,7 @@ evaluation_T0evalsets = {
           "__RANDOM__": {
             'type': 't0_template',
             'choice': '',
-            'metrics': ['rouge', 'bleu', 'accuracy']
+            'metrics': ['accuracy']
           }
       }
   },
@@ -352,7 +324,7 @@ evaluation_T0evalsets = {
           "__RANDOM__": {
             'type': 't0_template',
             'choice': '',
-            'metrics': ['rouge', 'bleu', 'accuracy']
+            'metrics': ['accuracy']
           }
       }
   },
@@ -362,7 +334,7 @@ evaluation_T0evalsets = {
           "__RANDOM__": {
             'type': 't0_template',
             'choice': '',
-            'metrics': ['rouge', 'bleu', 'accuracy']
+            'metrics': ['accuracy']
           }
       }
   },
@@ -391,18 +363,6 @@ list_config_reharsals = {
           'name': 'wiki_auto',
           'prompts': {
               'simplification_1': 100000,
-          }
-      },
-      'reharsal': {
-          'inheritFrom': None
-      }
-  },
-  'covidfact': {
-      'new_dataset': {
-          'eval_mode': 'train',
-          'name': 'covidfact',
-          'prompts': {
-              "__RANDOM__": 100000,
           }
       },
       'reharsal': {
@@ -439,18 +399,6 @@ list_config_reharsals = {
           'name': 'covid_qa_deepset',
           'prompts': {
               'covid_cloze_book_qa': 100000,
-          }
-      },
-      'reharsal': {
-          'inheritFrom': None
-      }
-  },
-  'rank_summary': {
-      'new_dataset': {
-          'eval_mode': 'train',
-          'name': 'rank_summary',
-          'prompts': {
-              'what_summary_is_the_best': 100000,
           }
       },
       'reharsal': {
