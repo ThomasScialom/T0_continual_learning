@@ -166,7 +166,10 @@ def printNonSequencialFigure(
   
   if not get_color_custom:
     get_color_custom = get_color
-   
+    
+  if not whatMetric:
+    whatMetric = whatMetricDefault
+    
   d_line_styles = {0: (0, (1, 10)), 250: (0, (5, 10)), 1000: 'solid'}
   
   d_scores_fig = {}
