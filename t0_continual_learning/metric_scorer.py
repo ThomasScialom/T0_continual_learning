@@ -1,5 +1,7 @@
 import os
 import json
+import time
+
 from t0_continual_learning import custom_metrics
 from t0_continual_learning.config_variables import evaluation_new_tasks, evaluation_T0evalsets
 
@@ -48,8 +50,6 @@ class MetricScorer():
       
       if self.d_metric_map_names[metric] in d_res:
         continue
-      
-      print('Computing', metric, path_pred)
       
       if metric == "rouge":
         d_res = {**d_res, **custom_metrics.computeRouge(preds, refs)}
@@ -138,8 +138,10 @@ class MetricScorer():
       path_pred = os.path.join(path_folder_preds, file)
       path_ex = os.path.join(path_folder_data, evalset, f'{prompt_name}.{eval_mode}.json')
       
+      print(f'{i}/{nb_files}...... {path_pred}')
+      start_time = time.time()
       self.d_scores[key] = self.getScore(prompt_config, path_ex, path_pred, path_folder_data, evalset, prompt_name, d_res=d_key)
-      
+      print(f'\t..... took {round(time.time() - start_time}, 2)')
       
     if self.path_dscores:
       with open(self.path_dscores, 'w') as f:
