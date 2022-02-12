@@ -228,7 +228,7 @@ evaluation_new_tasks = {
         'dialogue_with_emotion': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['bleu', 'selfbleu']
+            'metrics': ['bleu']
         }
       }
   },
