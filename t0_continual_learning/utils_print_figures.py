@@ -64,7 +64,7 @@ def get_color(group_name):
   return color
 
 
-def getScoresSequencial(d_scores, models, config_evaluation, model_size, default_nlg='bleu', default_nlu='accuracy', whatMetric=None):
+def getScoresSequencial(d_scores, models, config_evaluation, model_size, default_nlg=['bleu'], default_nlu=['accuracy'], whatMetric=None):
   
   if not whatMetric:
     whatMetric = whatMetricDefault
@@ -110,7 +110,7 @@ def getScoresSequencial(d_scores, models, config_evaluation, model_size, default
 
 def printSequencialFigure(d_scores, models, config_evaluation, save_dir, 
                           model_size='3B', do_normalise=True, 
-                          default_nlg='bleu', default_nlu='accuracy', 
+                          default_nlg=['bleu'], default_nlu=['accuracy'], 
                           whatMetric=None
                          ):
   
