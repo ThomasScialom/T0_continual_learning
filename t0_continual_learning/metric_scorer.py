@@ -126,7 +126,11 @@ class MetricScorer():
       else:
         evalset, eval_mode , prompt_name, model_size, rehearsal, model_name, step, _ = file.split('.')
         key = f'{model_name}.{model_size}.{rehearsal}.{step}.{evalset}.{eval_mode}.{prompt_name}'
-
+      
+      if evalset not in evaluation_config:
+        print(f'evalset not in evaluation_config, continue: {evalset}')
+        continue
+        
       prompt_config = evaluation_config[evalset][eval_mode][prompt_name]
 
       d_key = {}
