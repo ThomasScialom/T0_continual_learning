@@ -21,11 +21,11 @@ def whatMetricDefault(dataset_name, prompt_name, default_nlg=['bleu'], default_n
 
   if 'constrain' in prompt_name:
     if 'constrain_start' in prompt_name:
-      metrics = ['start']
+      metrics = ['rouge1', 'start']
     elif 'constrain_contain' in prompt_name:
-      metrics = ['contain']
+      metrics = ['rouge1', 'contain']
     elif 'constrain_end' in prompt_name:
-      metrics = ['end']
+      metrics = ['rouge1', 'end']
   elif dataset_name == 'asset' or dataset_name == 'wiki_auto': 
     metrics = ['bleu', 'sari']
   elif dataset_name == 'haiku': 
