@@ -31,7 +31,7 @@ def whatMetricDefault(dataset_name, prompt_name, default_nlg=['bleu'], default_n
   elif dataset_name == 'haiku': 
     metrics = ['eq_weighted']
   elif dataset_name == 'eli5': 
-    metrics = ['jensenFirstToken' 'rouge1']
+    metrics = ['jensenFirstToken', 'rouge1']
   elif dataset_name == 'empathetic_dialogues': 
     metrics = ['bleu']
   elif dataset_name == 'covid_qa_deepset': 
