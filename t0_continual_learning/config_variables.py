@@ -3,6 +3,9 @@ t0_train_datasets = ['commonsense_qa', 'dream', 'quail', "quartz", 'social_i_qa'
 'app_reviews', 'amazon_polarity', 'imdb', 'rotten_tomatoes', 'gigaword', 'cnn_dailymail', 'multi_news', 'samsum',
 'xsum', 'ag_news', 'dbpedia_14', 'trec', 'paws_labeled_final', 'glue_mrpc', 'glue_qqp', 'yelp_review_full', 'kilt_tasks_hotpotqa']
 
+
+# ___Usage: for function **process_datasets** to load and format automatically the datasets___
+
 continual_train = {
   'gigaword': {
       'train': [
@@ -114,233 +117,8 @@ continual_test = {
   'story_cloze': {'validation': [('t0_template', "__RANDOM__")]}, 
 }
 
-
-
-evaluation_zero_shot  = {
-  'gigaword': {
-      'test': {
-        'write_its_sentence': {
-            'type': 't0_template',
-            'choice': '',
-            'metrics': ['rouge']
-        },
-        'constrain_start+write_its_sentence': {
-            'type': 'custom',
-            'choice': '',
-            'metrics': ['rouge', 'constrain_accuracy']
-        },
-        'constrain_contain+write_its_sentence': {
-            'type': 'custom',
-            'choice': '',
-            'metrics': ['rouge', 'constrain_accuracy']
-        },
-        'constrain_end+write_its_sentence': {
-            'type': 'custom',
-            'choice': '',
-            'metrics': ['rouge', 'constrain_accuracy']
-        },
-      }
-  },
-  'wiki_auto': {
-      'test': {
-        'simplification_2': {
-            'type': 'custom',
-            'choice': '',
-            'metrics': ['rouge', ]
-        }
-      },
-  },
-}
-
-
-evaluation_new_tasks = {
-  'gigaword': {
-      'test': {
-        'make_a_title': {
-            'type': 't0_template',
-            'choice': '',
-            'metrics': ['rouge', 'bleu']
-        },
-        'constrain_start+make_a_title': {
-            'type': 'custom',
-            'choice': '',
-            'metrics': ['rouge', 'bleu', 'constrain_start']
-        },
-        'constrain_contain+make_a_title': {
-            'type': 'custom',
-            'choice': '',
-            'metrics': ['rouge', 'bleu', 'constrain_contain']
-        },
-        'constrain_end+make_a_title': {
-            'type': 'custom',
-            'choice': '',
-            'metrics': ['rouge', 'bleu', 'constrain_end']
-        },
-      },
-  },
-  'wiki_auto': {
-      'test': {
-        'simplification_1': {
-            'type': 'custom',
-            'choice': '',
-            'metrics': ['bleu', 'sari']
-        }
-      }
-  },
-  'asset': {
-    'validation': {
-      'simplification_1': {
-        'choice': '',
-        'metrics': ['bleu', 'sari'],
-        'type': 'custom'
-      }
-    }
-  },
-  'eli5': {
-      'test_asks': {
-        'generate_a_question_1': {
-            'type': 'custom',
-            'choice': '',
-            'metrics': ['bertscore', 'rouge', 'bleu', 'firstWordSim']
-        }
-      }
-  },
-  'haiku': {
-      'test': {
-        'do_nothing': {
-            'type': 'custom',
-            'choice': '',
-            'metrics': ['haikuMetric']
-        }
-      }
-  },
-  'covid_qa_deepset': {
-      'train': {
-        'covid_cloze_book_qa': {
-            'type': 'custom',
-            'choice': '',
-            'metrics': ['rouge', 'bleu']
-        }
-      }
-  },
-  'empathetic_dialogues': {
-      'test': {
-        'dialogue_with_emotion': {
-            'type': 'custom',
-            'choice': '',
-            'metrics': ['bleu']
-        }
-      }
-  },
-  'eSNLI': {
-      'test': {
-        'explain_why': {
-            'type': 'custom',
-            'choice': '',
-            'metrics': ['bertscore', 'bleu']
-        }
-      }
-  },
-  'twitter_top20': {
-      'test': {
-        'tweet_as+about': {
-            'type': 'custom',
-            'choice': '',
-            'metrics': ['bleu', 'CLF_acc']
-        }
-      }
-  },
-}
-
-evaluation_T0evalsets = {
-  'winogrande': { 
-      'validation': {
-          "fill in the blank": {
-            'type': 't0_template',
-            'choice': 'option1_option2',
-            'metrics': ['accuracy']
-          }
-      }
-  },
-  'rte': { 
-      'validation': {
-          "can we infer": {
-            'type': 't0_template',
-            'choice': 'yes_no',
-            'metrics': ['accuracy']
-          }
-      }
-  },
-  'wic': { 
-      'validation': {
-          "same_sense": {
-            'type': 't0_template',
-            'choice': 'yes_no',
-            'metrics': ['accuracy']
-          }
-      }
-  },
-  'copa': { 
-    'validation': {
-      "choose": {
-        'type': 't0_template',
-        'choice': 'option1_option2',
-        'metrics': ['accuracy']
-      }
-    }
-  },
-  'hellaswag': { 
-      'validation': {
-          "__RANDOM__": {
-            'type': 't0_template',
-            'choice': '',
-            'metrics': ['accuracy']
-          }
-      }
-  },
-
-  'anli': { 
-      'test_r1': {
-          "__RANDOM__": {
-            'type': 't0_template',
-            'choice': '',
-            'metrics': ['accuracy']
-          }
-      }
-  },
-
-  'cb': { 
-      'validation': {
-          "__RANDOM__": {
-            'type': 't0_template',
-            'choice': '',
-            'metrics': ['accuracy']
-          }
-      }
-  },
-
-  'wsc': { 
-      'validation': {
-          "__RANDOM__": {
-            'type': 't0_template',
-            'choice': '',
-            'metrics': ['accuracy']
-          }
-      }
-  },
-
-  'story_cloze': { 
-      'validation': {
-          "__RANDOM__": {
-            'type': 't0_template',
-            'choice': '',
-            'metrics': ['accuracy']
-          }
-      }
-  },
-}
-
-
+# ____________________________________________________________________________________________
+# ___Usage: for function **format2train** to format the training files with the correct number of rehearsal examples
 
 list_config_reharsals = {
   "gigaword": {
@@ -481,3 +259,231 @@ list_config_reharsals = {
   },
 }
 
+
+# ____________________________________________________________________________________________
+# ___Usage: different evaluation sets group per type to run predictions systematically on them
+
+evaluation_T0evalsets = {
+  'winogrande': { 
+      'validation': {
+          "fill in the blank": {
+            'type': 't0_template',
+            'choice': 'option1_option2',
+            'metrics': ['accuracy']
+          }
+      }
+  },
+  'rte': { 
+      'validation': {
+          "can we infer": {
+            'type': 't0_template',
+            'choice': 'yes_no',
+            'metrics': ['accuracy']
+          }
+      }
+  },
+  'wic': { 
+      'validation': {
+          "same_sense": {
+            'type': 't0_template',
+            'choice': 'yes_no',
+            'metrics': ['accuracy']
+          }
+      }
+  },
+  'copa': { 
+    'validation': {
+      "choose": {
+        'type': 't0_template',
+        'choice': 'option1_option2',
+        'metrics': ['accuracy']
+      }
+    }
+  },
+  'hellaswag': { 
+      'validation': {
+          "__RANDOM__": {
+            'type': 't0_template',
+            'choice': '',
+            'metrics': ['accuracy']
+          }
+      }
+  },
+  'anli': { 
+      'test_r1': {
+          "__RANDOM__": {
+            'type': 't0_template',
+            'choice': '',
+            'metrics': ['accuracy']
+          }
+      }
+  },
+  'cb': { 
+      'validation': {
+          "__RANDOM__": {
+            'type': 't0_template',
+            'choice': '',
+            'metrics': ['accuracy']
+          }
+      }
+  },
+  'wsc': { 
+      'validation': {
+          "__RANDOM__": {
+            'type': 't0_template',
+            'choice': '',
+            'metrics': ['accuracy']
+          }
+      }
+  },
+
+  'story_cloze': { 
+      'validation': {
+          "__RANDOM__": {
+            'type': 't0_template',
+            'choice': '',
+            'metrics': ['accuracy']
+          }
+      }
+  },
+}
+
+
+
+
+evaluation_new_tasks = {
+  'gigaword': {
+      'test': {
+        'make_a_title': {
+            'type': 't0_template',
+            'choice': '',
+            'metrics': ['rouge', 'bleu']
+        },
+        'constrain_start+make_a_title': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['rouge', 'bleu', 'constrain_start']
+        },
+        'constrain_contain+make_a_title': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['rouge', 'bleu', 'constrain_contain']
+        },
+        'constrain_end+make_a_title': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['rouge', 'bleu', 'constrain_end']
+        },
+      },
+  },
+  'wiki_auto': {
+      'test': {
+        'simplification_1': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['bleu', 'sari']
+        }
+      }
+  },
+  'asset': {
+    'validation': {
+      'simplification_1': {
+        'choice': '',
+        'metrics': ['bleu', 'sari'],
+        'type': 'custom'
+      }
+    }
+  },
+  'eli5': {
+      'test_asks': {
+        'generate_a_question_1': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['bertscore', 'rouge', 'bleu', 'firstWordSim']
+        }
+      }
+  },
+  'haiku': {
+      'test': {
+        'do_nothing': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['haikuMetric']
+        }
+      }
+  },
+  'covid_qa_deepset': {
+      'train': {
+        'covid_cloze_book_qa': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['rouge', 'bleu']
+        }
+      }
+  },
+  'empathetic_dialogues': {
+      'test': {
+        'dialogue_with_emotion': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['bleu']
+        }
+      }
+  },
+  'eSNLI': {
+      'test': {
+        'explain_why': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['bertscore', 'bleu']
+        }
+      }
+  },
+  'twitter_top20': {
+      'test': {
+        'tweet_as+about': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['bleu', 'CLF_acc']
+        }
+      }
+  },
+}
+
+
+
+evaluation_zero_shot  = {
+  'gigaword': {
+      'test': {
+        'write_its_sentence': {
+            'type': 't0_template',
+            'choice': '',
+            'metrics': ['rouge']
+        },
+        'constrain_start+write_its_sentence': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['rouge', 'constrain_accuracy']
+        },
+        'constrain_contain+write_its_sentence': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['rouge', 'constrain_accuracy']
+        },
+        'constrain_end+write_its_sentence': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['rouge', 'constrain_accuracy']
+        },
+      }
+  },
+  'wiki_auto': {
+      'test': {
+        'simplification_2': {
+            'type': 'custom',
+            'choice': '',
+            'metrics': ['rouge', ]
+        }
+      },
+  },
+}
