@@ -14,7 +14,6 @@ list_zero_shot = [
     ('story_cloze', "__RANDOM__", 'validation'),
   ]
 
-
 def whatMetricDefault(dataset_name, prompt_name, default_nlg=['bleu'], default_nlu=['accuracy']):
   
   nlg_datasets = {'haiku', 'eli5', 'wiki_auto', 'gigaword', 'covid_qa_deepset', 'empathetic_dialogues', 'twitter_top20', 'eSNLI'}
@@ -32,16 +31,22 @@ def whatMetricDefault(dataset_name, prompt_name, default_nlg=['bleu'], default_n
   elif dataset_name == 'haiku': 
     metrics = ['eq_weighted']
   elif dataset_name == 'eli5': 
-    metrics = ['jensenFirstToken']
+    metrics = ['jensenFirstToken', 'BERTScore(f1)', 'rouge1', 'bleu']
   elif dataset_name == 'empathetic_dialogues': 
     metrics = ['bleu']
+  elif dataset_name == 'covid_qa_deepset': 
+    metrics = ['rouge1']
+  elif dataset_name == 'twitter_top20': 
+    metrics = ['CLF_acc']
+  elif dataset_name == 'eSNLI': 
+    metrics = ['BERTScore(f1)', 'bleu']
   elif dataset_name in nlg_datasets: 
     metrics = default_nlg
   elif dataset_name in nlu_datasets: 
     metrics = default_nlu
   else:
     raise NotImplementedError
-     
+  
   return metrics
 
 
