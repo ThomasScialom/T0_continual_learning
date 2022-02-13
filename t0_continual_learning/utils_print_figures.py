@@ -31,7 +31,7 @@ def whatMetricDefault(dataset_name, prompt_name, default_nlg=['bleu'], default_n
   elif dataset_name == 'haiku': 
     metrics = ['eq_weighted']
   elif dataset_name == 'eli5': 
-    metrics = ['jensenFirstToken', 'BERTScore(f1)', 'rouge1', 'bleu']
+    metrics = ['jensenFirstToken' 'rouge1']
   elif dataset_name == 'empathetic_dialogues': 
     metrics = ['bleu']
   elif dataset_name == 'covid_qa_deepset': 
@@ -39,7 +39,7 @@ def whatMetricDefault(dataset_name, prompt_name, default_nlg=['bleu'], default_n
   elif dataset_name == 'twitter_top20': 
     metrics = ['CLF_acc']
   elif dataset_name == 'eSNLI': 
-    metrics = ['BERTScore(f1)', 'bleu']
+    metrics = ['bleu']
   elif dataset_name in nlg_datasets: 
     metrics = default_nlg
   elif dataset_name in nlu_datasets: 
