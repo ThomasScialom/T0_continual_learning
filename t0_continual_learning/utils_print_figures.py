@@ -167,7 +167,8 @@ def printNonSequencialFigure(
     nlu_metric='accuracy',
     do_normalise=True,
     get_color_custom=None,
-    whatMetric=None
+    whatMetric=None,
+    d_line_styles=None,
     ):
   
   
@@ -176,8 +177,9 @@ def printNonSequencialFigure(
     
   if not whatMetric:
     whatMetric = whatMetricDefault
-    
-  d_line_styles = {0: (0, (1, 10)), 250: (0, (5, 10)), 1000: 'solid'}
+  
+  if d_line_styles is None:
+    d_line_styles = {0: (0, (3, 9)), 250: (0, (9, 3)), 1000: 'solid'}
   
   d_scores_fig = {}
   for group_name, group_datasets in d_datasets.items():
