@@ -155,7 +155,77 @@ def printSequencialFigure(d_scores, models, config_evaluation, save_dir,
   plt.show()
   return scores
   
+    
+    
+def printSequencialFigureV2(d_scores, models, config_evaluation, save_dir, 
+                          model_size='3B', do_normalise=True, 
+                          default_nlg=['bleu'], default_nlu=['accuracy'], 
+                          whatMetric=None
+                         ):
   
+
+  scores, all_steps = getScoresSequencial(
+      d_scores, 
+      models, 
+      config_evaluation, 
+      model_size=model_size,
+      default_nlg=default_nlg, 
+      default_nlu=default_nlu, 
+      whatMetric=whatMetric
+  )
+  
+  
+  nb_points_per_model = 5
+  score_trained = [[] for _ in all_steps]
+  
+  plt.figure(figsize=(8, 6))
+  plt.xlabel('Steps')
+  plt.ylabel('Relative Gain')
+
+  labels = []
+  for k_name, v_scores in scores.items():  
+
+    if do_normalise:
+        #v_scores = [v_scores[i]/v_scores[0]-1 for i in range(len(v_scores))]
+        v_scores = [v_scores[i]/v_scores[config_evaluation[k_name]['last_train']] 
+                    if v_scores[i] else None  for i in range(len(v_scores))]
+
+
+    x = config_evaluation[k_name]['steps']
+    y = [v_scores[i] for i in config_evaluation[k_name]['steps']]
+
+
+    
+    if k_name != 'T0_zero_shot_evalset':
+      
+      for idx in x[nb_points_per_model:]:
+        score_trained[idx].append(v_scores[idx])
+
+      x = x[:nb_points_per_model]
+      y = y[:nb_points_per_model]
+      linestyle = (0, (3, 9))
+      color = None
+    else:
+      linestyle = 'solid'
+      color = 'g'
+    plt.plot(x, y, label=k_name, linestyle=linestyle, color=color)
+
+
+  # plot score_trained:
+  x = range(len(all_steps))[nb_points_per_model:]
+  y = [np.average(scores) for scores in score_trained][nb_points_per_model:]
+  plt.plot(x, y, label='trained', color='b')
+
+  plt.xticks(range(len(all_steps)), all_steps, rotation='vertical')
+  plt.legend(bbox_to_anchor=(1.1, 1.05))
+  if save_dir is not None:
+    plt.savefig(os.path.join(save_dir, '->'.join(models[-1][1] + [models[-1][0]]), '.v2'), format='pdf', bbox_inches='tight')
+
+  plt.show()
+
+  return scores
+
+
 def printNonSequencialFigure(
     model_name, 
     d_datasets, 
