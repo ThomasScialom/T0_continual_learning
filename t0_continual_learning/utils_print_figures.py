@@ -219,7 +219,7 @@ def printSequencialFigureV2(d_scores, models, config_evaluation, save_dir,
   plt.xticks(range(len(all_steps)), all_steps, rotation='vertical')
   plt.legend(bbox_to_anchor=(1.1, 1.05))
   if save_dir is not None:
-    plt.savefig(os.path.join(save_dir, '->'.join(models[-1][1] + [models[-1][0]]), '.v2'), format='pdf', bbox_inches='tight')
+    plt.savefig(os.path.join(save_dir, '->'.join(models[-1][1] + [models[-1][0]]) + '.v2'), format='pdf', bbox_inches='tight')
 
   plt.show()
 
