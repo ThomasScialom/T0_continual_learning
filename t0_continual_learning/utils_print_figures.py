@@ -55,7 +55,7 @@ def get_color(group_name):
   color = None
   if group_name == 'T0_zero_shot_evalset':
     color = 'lime'
-  elif group_name in {'wiki_auto', 'covidfact', 'gigaword_constrain'} :
+  elif group_name in {'wiki_auto', 'haiku', 'gigaword_constrain'} :
     color = 'blue'
   elif group_name == 'gigaword':
     color = 'lightgreen'
