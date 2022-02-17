@@ -559,11 +559,7 @@ def buildReharsalDataset(config_name, list_config_reharsals, rehearsal_number, p
   
   return list_output
   
-def format2train(config_name, list_config_reharsals, rehearsal_number, path_data):
-  
-  final_folder = os.path.join(path_data, '_training_files')
-  if list_config_reharsals[config_name]['reharsal']['inheritFrom'] is not None:
-    final_folder = os.path.join(final_folder, 'sequential')
+def format2train(config_name, list_config_reharsals, rehearsal_number, path_data, final_folder):
 
   for mode, percentage in zip(['validation', 'train'], [0.03, 1]):
     print(mode, '.....')
