@@ -517,7 +517,7 @@ evaluation_new_tasks = {
         'covid_cloze_book_qa': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['rouge', 'bleu']
+            'metrics': ['rouge', 'bleu', 'bertscore']
         }
       }
   },
@@ -526,7 +526,7 @@ evaluation_new_tasks = {
         'dialogue_with_emotion': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['bleu']
+            'metrics': ['bleu', 'bertscore']
         }
       }
   },
@@ -544,7 +544,7 @@ evaluation_new_tasks = {
         'tweet_as+about': {
             'type': 'custom',
             'choice': '',
-            'metrics': ['bleu', 'CLF_acc']
+            'metrics': ['bleu', 'CLF_acc', 'bertscore']
         }
       }
   },
