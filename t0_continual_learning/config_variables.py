@@ -120,7 +120,7 @@ continual_test = {
 # ____________________________________________________________________________________________
 # ___Usage: for function **format2train** to format the training files with the correct number of rehearsal examples
 
-list_config_reharsals = {
+d_config_reharsal_non_seq = {
   "gigaword": {
       'new_dataset': {
           'eval_mode': 'train',
@@ -183,7 +183,21 @@ list_config_reharsals = {
           'inheritFrom': None
       }
   },
+}
 
+d_config_reharsal_seq = {
+  'wiki_auto': {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'wiki_auto',
+          'prompts': {
+              'simplification_1': 100000,
+          }
+      },
+      'reharsal': {
+          'inheritFrom': None
+      }
+  },
   "sequencial.gigaword.from.wiki_auto": {
       'new_dataset': {
           'eval_mode': 'train',
