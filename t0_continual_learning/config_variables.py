@@ -273,7 +273,7 @@ d_config_reharsal_seq = {
   },
 }
 
-list_config_reharsals_reverse = {
+d_config_reharsal_seq_inverse = {
   "twitter_top20": {
       'new_dataset': {
           'eval_mode': 'train',
