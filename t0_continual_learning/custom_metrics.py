@@ -3,6 +3,7 @@ import numpy as np
 from typing import List
 
 from datasets import load_metric
+from bert_score import score as bscore
 
 import scipy.stats
 import syllables
@@ -98,12 +99,9 @@ class Clf():
     return {'CLF_acc': self.accuracy_score(self.y_test, clf_predictions)}
 
 def computeBERTScore(preds, list_refs):
-
-  metric = load_metric("bertscore", model_type='microsoft/deberta-large-mnli')
-  metric.add_batch(predictions=preds, references=list_refs)
-  scores = metric.compute(lang='en')
-
-  return {'BERTScore(f1)': np.average(scores['f1'])}
+  
+  P, R, F1 = bscore(preds, list_refs, lang="en", model_type='microsoft/deberta-large-mnli')
+  return {'BERTScore(f1)': F1.mean().item()}
 
 def computeRouge(preds, refs):
 
