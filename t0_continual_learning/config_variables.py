@@ -259,6 +259,92 @@ list_config_reharsals = {
   },
 }
 
+list_config_reharsals_reverse = {
+  "twitter_top20": {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'twitter_top20',
+          'prompts': {
+              "tweet_as+about": 100000,
+          }
+      },
+      'reharsal': {'inheritFrom': None}
+  },
+  "sequencial.eSNLI.from.twitter_top20": {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'eSNLI',
+          'prompts': {
+              "explain_why": 100000,
+          }
+      },
+      'reharsal': {'inheritFrom': "twitter_top20"}
+  },
+  "sequencial.empathetic_dialogues.from.twitter_top20->eSNLI": {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'empathetic_dialogues',
+          'prompts': {
+              "dialogue_with_emotion": 100000,
+          }
+      },
+      'reharsal': {'inheritFrom': "sequencial.eSNLI.from.twitter_top20"}
+  },
+ "sequencial.eli5.from.twitter_top20->eSNLI->empathetic_dialogues": {
+      'new_dataset': {
+          'eval_mode': 'train_asks',
+          'name': 'eli5',
+          'prompts': {
+              "generate_a_question_2": 100000,
+          }
+      },
+      'reharsal': {'inheritFrom': "sequencial.empathetic_dialogues.from.twitter_top20->eSNLI"}
+  },
+ "sequencial.covid_qa_deepset.from.twitter_top20->eSNLI->empathetic_dialogues->eli5": {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'covid_qa_deepset',
+          'prompts': {
+              'covid_cloze_book_qa': 100000,
+          }
+      },
+      'reharsal': {'inheritFrom': "sequencial.eli5.from.twitter_top20->eSNLI->empathetic_dialogues"}
+  },
+ "sequencial.haiku.from.twitter_top20->eSNLI->empathetic_dialogues->eli5->covid_qa_deepset":  {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'haiku',
+          'prompts': {
+              "do_nothing": 100000,
+          }
+      },
+      'reharsal': {'inheritFrom': 'sequencial.covid_qa_deepset.from.twitter_top20->eSNLI->empathetic_dialogues->eli5'}
+  },
+ "sequencial.gigaword.from.twitter_top20->eSNLI->empathetic_dialogues->eli5->covid_qa_deepset->haiku": {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'gigaword',
+          'prompts': {
+              'constrain_start+make_a_title': 33000,
+              'constrain_contain+make_a_title': 33000,
+              'constrain_end+make_a_title': 34000,
+          }
+      },
+      'reharsal': {'inheritFrom': 'sequencial.haiku.from.twitter_top20->eSNLI->empathetic_dialogues->eli5->covid_qa_deepset'}
+  },
+  'sequencial.wiki_auto.from.twitter_top20->eSNLI->empathetic_dialogues->eli5->covid_qa_deepset->haiku->gigaword': {
+      'new_dataset': {
+          'eval_mode': 'train',
+          'name': 'wiki_auto',
+          'prompts': {
+              'simplification_1': 100000,
+          }
+      },
+      'reharsal': {
+          'inheritFrom': 'sequencial.gigaword.from.twitter_top20->eSNLI->empathetic_dialogues->eli5->covid_qa_deepset->haiku'
+      }
+  },
+}
 
 # ____________________________________________________________________________________________
 # ___Usage: different evaluation sets group per type to run predictions systematically on them
