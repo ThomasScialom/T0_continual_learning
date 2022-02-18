@@ -109,9 +109,11 @@ class PromptFormat():
 
   def setConstrainAttr(self, ex, prompt_name, src_keys):
     
+    if self.nb_tokens == None:
+      nb_tokens = 1
+      
     tgt = ex[self.config['hf_dataset_config']['tgt']]
     
-    nb_tokens = 1
     if 'start' in prompt_name:
       constrain_type = 'start'
       start_id = 0
