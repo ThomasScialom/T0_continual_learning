@@ -1,35 +1,12 @@
-import os
 import pandas as pd
 import numpy as np 
 import matplotlib.pyplot as plt
 
+import os
 from t0_continual_learning import metric_scorer
 from t0_continual_learning.config_variables import evaluation_new_tasks, evaluation_T0evalsets
 
 class SeqFormating():
-    
-  """
-  Usage:
-    list_path_folder_preds = [
-      os.path.join(GLOBAL_PATH, 'predictions/'),
-      os.path.join(GLOBAL_PATH, 'predictions/sequential'),
-      os.path.join(GLOBAL_PATH, 'predictions/11predictions')
-    ]
-    path_folder_data = os.path.join(GLOBAL_PATH, 'data')
-    path_dscores = os.path.join(GLOBAL_PATH, f'data/metricScorer.d_scores.json')
-
-    seqFormating = SeqFormating(list_path_folder_preds, path_folder_data, path_dscores)
-
-    save_dir = os.path.join(GLOBAL_PATH, 'IMG')
-    seqFormating.getFigureNonSequential(save_dir)
-    seqFormating.getFigureSequential(save_dir)
-    df = seqFormating.getTable()
-
-    seqFormating.setModelSize("11B")
-    seqFormating.getFigureSequential(save_dir)
-    df = seqFormating.getTable()
-    df.to_latex()
-  """
 
   def __init__(
       self, 
@@ -218,7 +195,7 @@ class SeqFormating():
           'rouge1': 'R1',
           'eq_weighted': r'$H_{cust}$',
           'jensenFirstToken': '1Tok',
-          'BERTScore(f1)': 'BERTs',
+          'BERTScore(f1)': 'BS',
           'CLF_acc': 'Clf',
       }
 
@@ -259,25 +236,25 @@ class SeqFormating():
 
     if 'constrain' in prompt_name:
       if 'constrain_start' in prompt_name:
-        metrics = ['rouge1', 'start']
+        metrics = ['start']
       elif 'constrain_contain' in prompt_name:
-        metrics = ['rouge1', 'contain']
+        metrics = ['contain']
       elif 'constrain_end' in prompt_name:
-        metrics = ['rouge1', 'end']
+        metrics = ['end']
     elif dataset_name == 'asset' or dataset_name == 'wiki_auto': 
       metrics = ['bleu', 'sari']
     elif dataset_name == 'haiku': 
       metrics = ['eq_weighted']
     elif dataset_name == 'eli5': 
-      metrics = ['jensenFirstToken', 'rouge1', 'BERTScore(f1)']
+      metrics = ['BERTScore(f1)'] #'jensenFirstToken', 'rouge1', 
     elif dataset_name == 'empathetic_dialogues': 
-      metrics = ['bleu', 'BERTScore(f1)']
+      metrics = ['BERTScore(f1)']
     elif dataset_name == 'covid_qa_deepset': 
-      metrics = ['rouge1', 'BERTScore(f1)']
+      metrics = ['BERTScore(f1)']
     elif dataset_name == 'twitter_top20': 
-      metrics = ['CLF_acc', 'BERTScore(f1)']
+      metrics = ['CLF_acc']
     elif dataset_name == 'eSNLI': 
-      metrics = ['bleu', 'BERTScore(f1)']
+      metrics = ['BERTScore(f1)']
     elif dataset_name in nlg_datasets: 
       metrics = default_nlg
     elif dataset_name in nlu_datasets: 
@@ -584,18 +561,18 @@ class SeqFormating():
             if do_normalise:
               scores = [scores[i]/scores[0]-1 for i in range(len(steps))]
             
-            plt.plot(scores, label=f'{self.d_map_tasks[group_name]}({rehearsal})', color=get_color_custom(group_name), linestyle=d_line_styles[rehearsal])
+            plt.plot(scores, label=f'{self.d_map_tasks[group_name]}({rehearsal/1000}%)', color=get_color_custom(group_name), linestyle=d_line_styles[rehearsal])
 
       d_mini_map = {
           'gigaword': 'Constrain (Cons)',
           'wiki_auto': 'Simplification (Simp)',
           'haiku': 'Haiku'
       }
-      plt.xlabel(d_mini_map[model_name], fontsize=20)
+      plt.xlabel('Steps')
       plt.ylabel('Relative Gain', fontsize=15)
-      plt.xticks(range(len(steps)), steps) #rotation='vertical')
+      plt.xticks(range(len(steps), fontsize=15), steps) #rotation='vertical')
       plt.legend(prop={'size': 11}, loc='lower right') #bbox_to_anchor=(1.1, 1.05)
-      #plt.title(f'{}')
+      plt.title(d_mini_map[model_name], fontsize=20)
       plt.savefig(os.path.join(save_dir, self.model_size + '.' + f'{model_name}.{"normalized" if do_normalise else "absolute"}'), format='pdf')
       plt.show()
     
@@ -603,5 +580,4 @@ class SeqFormating():
       getFig(model_name, d_datasets)
 
     return 
-
 
