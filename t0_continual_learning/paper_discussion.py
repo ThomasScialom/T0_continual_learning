@@ -252,7 +252,7 @@ def getHaikuEmotionResults(GLOBAL_PATH):
   return d_labels    
 
 def printDf(d_res):
-  df = pd.DataFrame(d_labels)
+  df = pd.DataFrame(d_res)
   df = df.transpose() 
   return df
 
