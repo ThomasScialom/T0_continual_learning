@@ -570,7 +570,7 @@ class SeqFormating():
       }
       plt.xlabel('Steps')
       plt.ylabel('Relative Gain', fontsize=15)
-      plt.xticks(range(len(steps), fontsize=15), steps) #rotation='vertical')
+      plt.xticks(range(len(steps)), steps, fontsize=15)
       plt.legend(prop={'size': 11}, loc='lower right') #bbox_to_anchor=(1.1, 1.05)
       plt.title(d_mini_map[model_name], fontsize=20)
       plt.savefig(os.path.join(save_dir, self.model_size + '.' + f'{model_name}.{"normalized" if do_normalise else "absolute"}'), format='pdf')
