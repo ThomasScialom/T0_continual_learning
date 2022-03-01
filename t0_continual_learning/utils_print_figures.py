@@ -205,10 +205,10 @@ class SeqFormating():
             'T0_zero_shot_evalset': 'T0zs',
             'wiki_auto': 'Simp',
             'asset': 'ASSET',
-            'gigaword_constrain': 'Cons',
-            'gigaword': 'Cons',
+            'gigaword_constrain': 'HGen',
+            'gigaword': 'HGen',
             'haiku': 'Haiku',
-            'covid_qa_deepset': 'CovQA',
+            'covid_qa_deepset': 'CQA',
             'eli5': 'InqQG',
             'empathetic_dialogues': 'EmDg',
             'eSNLI': 'Exp',
@@ -218,8 +218,8 @@ class SeqFormating():
       self.modelNames = modelNames
       if modelNames is None:
         self.modelNames = [
-           'T0', '+Simp','+Cons',
-           '+Haiku','+CovQA', '+InqQG',
+           'T0', '+Simp','+HGen',
+           '+Haiku','+CQA', '+InqQG',
            '+EmDg','+Exp', '+TwSt'
         ]
 
