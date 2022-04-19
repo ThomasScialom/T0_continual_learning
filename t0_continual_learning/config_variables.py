@@ -364,6 +364,13 @@ d_config_reharsal_seq_inverse = {
 # ___Usage: different evaluation sets group per type to run predictions systematically on them
 
 evaluation_T0evalsets = {
+  'T0_train_eval':{
+    'test':{
+      'type': 't0_template',
+      'choice': '',
+      'metrics': ['bleu']
+    }
+  },
   'winogrande': { 
       'validation': {
           "fill in the blank": {
