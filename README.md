@@ -1,7 +1,7 @@
 # T0_continual_learning
 Adding new tasks to LLM without catastrophic forgetting 
 
-### Papers: 
+### Paper: 
 https://arxiv.org/abs/2205.12393
 
 ### Models: [Todo]
