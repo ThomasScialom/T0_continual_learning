@@ -14,6 +14,7 @@ In particular the notebook contains
 * The steps to create the dataset and format them with reheasarl. Note that for some raw datasets it might not be possible to still download them (e.g. broken link), but you can find them in our [main folders](https://drive.google.com/drive/folders/1aQmnPmYGoQIYPK5jgbv4K4PXYYNwqisH?usp=sharing), just as the formated datasets. 
 * The evaluation scripts.
 
-For training, 
+For training, we plan to release the scripts but nothing fancy, simply finetuning T5 with HF framework, with the parameters mentioned in our paper. 
+
 ### Material:
 All the material used and created or used in the notebook etc., including the training data, the predictions and the checkpoints are publicly available in [main folders](https://drive.google.com/drive/folders/1aQmnPmYGoQIYPK5jgbv4K4PXYYNwqisH?usp=sharing)
