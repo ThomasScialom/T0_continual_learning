@@ -4,8 +4,8 @@ Adding new tasks to LLM without catastrophic forgetting
 ### Paper: 
 https://arxiv.org/abs/2205.12393
 
-### Models: [Todo]
-https://huggingface.co/ThomasNLG/ct0
+### Models:
+https://huggingface.co/ThomasNLG/CT0-11B
 
 ### Code:
 We haven't cleaned up all the code yet, but most of the different steps can be found in this [Collab](https://colab.research.google.com/drive/1Wp2mk5Dbzw5PAGcMOuuE_xB-6gFV0800#scrollTo=AIGI4ahyrD2s).
